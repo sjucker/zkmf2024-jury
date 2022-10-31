@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+@import 'src/zkmf2024-theme';
+
+@include mat.all-component-themes($zkmf2024-theme);
+
+html, body {
+  height: 100%;
+  background-color: $zkmf2024-silber;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins, "Helvetica Neue", sans-serif;
+}
+
+.mat-grid-tile-content {
+  align-items: flex-start !important;
+  justify-content: left !important;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card {
+  margin: 1em;
+}

@@ -1,0 +1,35 @@
+{
+  "name": "zkmf2024-jury",
+  "version": "0.0.1",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build-staging": "ng build --configuration staging",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "14.2.8",
+    "@angular/cdk": "14.2.6",
+    "@angular/common": "14.2.8",
+    "@angular/compiler": "14.2.8",
+    "@angular/core": "14.2.8",
+    "@angular/flex-layout": "14.0.0-beta.41",
+    "@angular/forms": "14.2.8",
+    "@angular/material": "14.2.6",
+    "@angular/platform-browser": "14.2.8",
+    "@angular/platform-browser-dynamic": "14.2.8",
+    "@angular/router": "14.2.8",
+    "rxjs": "7.5.7",
+    "tslib": "2.4.0",
+    "zone.js": "0.11.8"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "14.2.7",
+    "@angular/cli": "14.2.7",
+    "@angular/compiler-cli": "14.2.8",
+    "typescript": "4.8.4"
+  }
+}

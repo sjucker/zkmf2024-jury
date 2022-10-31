@@ -1,0 +1,101 @@
+@use '@angular/material' as mat;
+
+$zkmf2024-rot: rgb(252, 102, 28);
+$zkmf2024-gelb: rgb(255, 199, 0);
+$zkmf2024-silber: rgb(218, 219, 221);
+$zkmf2024-papier: rgb(242, 244, 246);
+$zkmf2024-gruen: rgb(12, 195, 141);
+$zkmf2024-hellblau: rgb(0, 164, 254);
+$zkmf2024-violett: rgb(170, 109, 211);
+$zkmf2024-black: rgba(black, 0.87);
+
+$zkmf2024-palette: (
+  50: #e2f1fc,
+  100: #b8dbf9,
+  200: #8bc5f5,
+  300: #5daef1,
+  400: #379def,
+  500: #048dec,
+  600: #057fde,
+  700: #026dcb,
+  800: #005db9,
+  900: #003f9a,
+  contrast: (
+    50: $zkmf2024-black,
+    100: $zkmf2024-black,
+    200: $zkmf2024-black,
+    300: $zkmf2024-papier,
+    400: $zkmf2024-papier,
+    500: $zkmf2024-papier,
+    600: $zkmf2024-papier,
+    700: $zkmf2024-papier,
+    800: $zkmf2024-papier,
+    900: $zkmf2024-papier,
+  )
+);
+
+$zkmf2024-palette-accent: (
+  50: $zkmf2024-hellblau,
+  100: $zkmf2024-hellblau,
+  200: $zkmf2024-hellblau,
+  300: $zkmf2024-hellblau,
+  400: $zkmf2024-hellblau,
+  500: $zkmf2024-hellblau,
+  600: $zkmf2024-hellblau,
+  700: $zkmf2024-hellblau,
+  800: $zkmf2024-hellblau,
+  900: $zkmf2024-hellblau,
+  contrast: (
+    50: $zkmf2024-papier,
+    100: $zkmf2024-papier,
+    200: $zkmf2024-papier,
+    300: $zkmf2024-papier,
+    400: $zkmf2024-papier,
+    500: $zkmf2024-papier,
+    600: $zkmf2024-papier,
+    700: $zkmf2024-papier,
+    800: $zkmf2024-papier,
+    900: $zkmf2024-papier,
+  )
+);
+
+$zkmf2024-palette-warn: (
+  50: $zkmf2024-rot,
+  100: $zkmf2024-rot,
+  200: $zkmf2024-rot,
+  300: $zkmf2024-rot,
+  400: $zkmf2024-rot,
+  500: $zkmf2024-rot,
+  600: $zkmf2024-rot,
+  700: $zkmf2024-rot,
+  800: $zkmf2024-rot,
+  900: $zkmf2024-rot,
+  contrast: (
+    50: $zkmf2024-black,
+    100: $zkmf2024-black,
+    200: $zkmf2024-black,
+    300: $zkmf2024-black,
+    400: $zkmf2024-black,
+    500: $zkmf2024-black,
+    600: $zkmf2024-black,
+    700: $zkmf2024-black,
+    800: $zkmf2024-black,
+    900: $zkmf2024-black,
+  )
+);
+
+$zkmf2024-primary: mat.define-palette($zkmf2024-palette, 800);
+$zkmf2024-accent: mat.define-palette($zkmf2024-palette-accent);
+$zkmf2024-warn: mat.define-palette($zkmf2024-palette-warn);
+$zkmf2024-typography: mat.define-typography-config(
+  $font-family: 'Poppins',
+);
+
+$zkmf2024-theme: mat.define-light-theme((
+  color: (
+    primary: $zkmf2024-primary,
+    accent: $zkmf2024-accent,
+    warn: $zkmf2024-palette-warn,
+  ),
+  typography: $zkmf2024-typography,
+));

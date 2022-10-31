@@ -1,0 +1,13 @@
+.header-logo {
+  max-height: 80%;
+  margin-right: 1em;
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.header-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

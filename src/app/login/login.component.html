@@ -1,0 +1,34 @@
+<div>
+  <app-header header="Vereinslogin"></app-header>
+
+  <mat-card>
+    <mat-card-title>
+      Login
+    </mat-card-title>
+    <mat-card-content fxLayout="row">
+      <form role="form" (ngSubmit)="login()" [formGroup]="loginForm" fxFlex.gt-md="25%">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Email</mat-label>
+          <input type="text"
+                 autocomplete="off"
+                 matInput
+                 name="email"
+                 id="email"
+                 formControlName="email"
+                 #email/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Passwort</mat-label>
+          <input type="password"
+                 autocomplete="off"
+                 matInput
+                 name="password"
+                 formControlName="password"
+                 id="password"/>
+        </mat-form-field>
+        <button color="primary" mat-flat-button [disabled]="authenticating">Login</button>
+        <span *ngIf="authenticationError">Email oder Passwort nicht korrekt!</span>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
