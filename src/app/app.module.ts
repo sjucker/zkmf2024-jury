@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
@@ -19,6 +18,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {HeaderComponent} from "./header/header.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {ActionButtonComponent} from "./components/action-button/action-button.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     LoginComponent,
     MainComponent,
     HeaderComponent,
+    ActionButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,6 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     MatToolbarModule,
     MatCardModule,
     MatInputModule,
@@ -43,6 +44,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     MatIconModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},],
   bootstrap: [AppComponent]

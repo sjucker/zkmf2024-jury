@@ -14,9 +14,8 @@ export class LoginComponent {
   authenticationError = false;
 
   loginForm = this.formBuilder.group({
-    email: [null, [Validators.required]],
-    password: [null, [Validators.required]],
-    rememberMe: [false],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   constructor(private formBuilder: FormBuilder,

@@ -1,16 +1,20 @@
-@use '@angular/material' as mat;
-@import 'src/zkmf2024-theme';
+@use "@angular/material" as mat;
+@use "variables";
+@import "@angular/cdk/overlay-prebuilt.css";
+@import "src/zkmf2024-theme";
+@import "responsive";
+
+@include mat.all-component-typographies();
+@include mat.core();
 
 @include mat.all-component-themes($zkmf2024-theme);
 
 html, body {
   height: 100%;
-  background-color: $zkmf2024-silber;
 }
 
 body {
   margin: 0;
-  font-family: Poppins, "Helvetica Neue", sans-serif;
 }
 
 .mat-grid-tile-content {
@@ -22,6 +26,53 @@ mat-form-field {
   width: 100%;
 }
 
-mat-card {
+.mat-mdc-card {
   margin: 1em;
+}
+
+.form-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: variables.$padding;
+
+  > * {
+    flex: 1;
+  }
+}
+
+@include responsive('lt-sm') {
+  .form-layout {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.success {
+  color: variables.$papier;
+  background-color: variables.$gruen;
+}
+
+.info {
+  color: variables.$papier;
+  background-color: variables.$violett;
+}
+
+.error {
+  color: variables.$papier;
+  background-color: variables.$rot;
+}
+
+.show-gt-sm {
+  display: none;
+
+  @include responsive('gt-sm') {
+    display: inherit;
+  }
+}
+
+.hide-gt-sm {
+  @include responsive('gt-sm') {
+    display: none;
+  }
 }

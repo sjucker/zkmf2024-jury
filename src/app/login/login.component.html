@@ -1,21 +1,22 @@
 <div>
   <app-header header="Jurylogin"></app-header>
 
-  <mat-card>
-    <mat-card-title>
-      Login
-    </mat-card-title>
-    <mat-card-content fxLayout="row">
-      <form role="form" (ngSubmit)="login()" [formGroup]="loginForm" fxFlex.gt-md="25%">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        Login
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Email</mat-label>
-          <input type="text"
+          <input type="email"
                  autocomplete="off"
                  matInput
                  name="email"
                  id="email"
-                 formControlName="email"
-                 #email/>
+                 formControlName="email"/>
         </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Passwort</mat-label>
@@ -26,8 +27,8 @@
                  formControlName="password"
                  id="password"/>
         </mat-form-field>
-        <button color="primary" mat-flat-button [disabled]="authenticating">Login</button>
-        <span *ngIf="authenticationError">Email oder Passwort nicht korrekt!</span>
+        <app-action-button buttonLabel="Login" [processing]="authenticating"></app-action-button>
+        <span *ngIf="authenticationError" class="error-msg">Email oder Passwort nicht korrekt!</span>
       </form>
     </mat-card-content>
   </mat-card>

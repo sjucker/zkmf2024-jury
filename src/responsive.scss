@@ -1,0 +1,78 @@
+@mixin responsive ($size) {
+  @if $size == 'xs' {
+    @media screen and (max-width: 599.98px) {
+      @content;
+    }
+  }
+
+  @if $size == 'sm' {
+    @media screen and (min-width: 600px) and (max-width: 959.98px) {
+      @content;
+    }
+  }
+
+  @if $size == 'md' {
+    @media screen and (min-width: 960px) and (max-width: 1279.98px) {
+      @content;
+    }
+  }
+
+  @if $size == 'lg' {
+    @media screen and (min-width: 1280px) and (max-width: 1919.98px) {
+      @content;
+    }
+  }
+
+  @if $size == 'xl' {
+    @media screen and (min-width: 1920px) and (max-width: 5000px) {
+      @content;
+    }
+  }
+
+  @if $size == 'lt-sm' {
+    @media screen and (max-width: 599px) {
+      @content;
+    }
+  }
+
+  @if $size == 'lt-md' {
+    @media screen and (max-width: 959px) {
+      @content;
+    }
+  }
+
+  @if $size == 'lt-lg' {
+    @media screen and (max-width: 1279px) {
+      @content;
+    }
+  }
+
+  @if $size == 'lt-xl' {
+    @media screen and (max-width: 1919px) {
+      @content;
+    }
+  }
+
+  @if $size == 'gt-xs' {
+    @media screen and (min-width: 600px) {
+      @content;
+    }
+  }
+
+  @if $size == 'gt-sm' {
+    @media screen and (min-width: 960px) {
+      @content;
+    }
+  }
+
+  @if $size == 'gt-md' {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  }
+  @if $size == 'gt-lg' {
+    @media screen and (min-width: 1920px) {
+      @content;
+    }
+  }
+}

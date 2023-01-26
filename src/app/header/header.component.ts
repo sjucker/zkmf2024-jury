@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {LOGIN_PATH} from "../app-routing.module";
@@ -8,16 +8,13 @@ import {LOGIN_PATH} from "../app-routing.module";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   @Input()
   header = '';
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {
-  }
-
-  ngOnInit(): void {
   }
 
   get loggedIn(): boolean {
