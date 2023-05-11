@@ -33,7 +33,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     if (err.status === 401 || err.status === 403) {
       this.authenticationService.logout();
       if (!this.router.url.endsWith(LOGIN_PATH)) {
-        this.router.navigate([LOGIN_PATH]);
+        this.router.navigate([LOGIN_PATH]).then();
         return of(err.message);
       }
     }

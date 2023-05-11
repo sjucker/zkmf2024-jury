@@ -1,0 +1,10 @@
+@use "../../variables";
+@import "../../responsive";
+
+.max-width-container {
+  padding: variables.$padding;
+}
+
+.loading-indicator {
+  height: 4px;
+}
