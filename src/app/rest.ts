@@ -4,6 +4,17 @@ export interface ForgotPasswordRequestDTO {
   email: string;
 }
 
+export interface JudgeReportDTO {
+  verein: string;
+  location: string;
+  modul: Modul;
+  klasse?: Klasse;
+  besetzung?: Besetzung;
+  date: DateAsString;
+  start: DateAsString;
+  end: DateAsString;
+}
+
 export interface KontaktDTO extends IsValid {
   vorname?: string;
   nachname?: string;
@@ -191,11 +202,42 @@ export interface IsValid {
 
 export type DateAsString = string;
 
+export enum Modul {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F",
+  G = "G",
+  H = "H",
+}
+
+export enum Klasse {
+  HOECHSTKLASSE = "HOECHSTKLASSE",
+  KLASSE_1 = "KLASSE_1",
+  KLASSE_2 = "KLASSE_2",
+  KLASSE_3 = "KLASSE_3",
+  KLASSE_4 = "KLASSE_4",
+  OBERSTUFE = "OBERSTUFE",
+  MITTELSTUFE = "MITTELSTUFE",
+  UNTERSTUFE = "UNTERSTUFE",
+}
+
+export enum Besetzung {
+  HARMONIE = "HARMONIE",
+  BRASS_BAND = "BRASS_BAND",
+  FANFARE = "FANFARE",
+  TAMBOUREN = "TAMBOUREN",
+  PERKUSSIONSENSEMBLE = "PERKUSSIONSENSEMBLE",
+}
+
 export enum UserRole {
   VEREIN = "VEREIN",
   HELPER = "HELPER",
   PLANER = "PLANER",
   ADMIN = "ADMIN",
+  JUDGE = "JUDGE",
 }
 
 export enum Aufgaben {
@@ -225,34 +267,4 @@ export enum PhaseStatus {
   NEW = "NEW",
   IN_PROGRESS = "IN_PROGRESS",
   DONE = "DONE",
-}
-
-export enum Klasse {
-  HOECHSTKLASSE = "HOECHSTKLASSE",
-  KLASSE_1 = "KLASSE_1",
-  KLASSE_2 = "KLASSE_2",
-  KLASSE_3 = "KLASSE_3",
-  KLASSE_4 = "KLASSE_4",
-  OBERSTUFE = "OBERSTUFE",
-  MITTELSTUFE = "MITTELSTUFE",
-  UNTERSTUFE = "UNTERSTUFE",
-}
-
-export enum Modul {
-  A = "A",
-  B = "B",
-  C = "C",
-  D = "D",
-  E = "E",
-  F = "F",
-  G = "G",
-  H = "H",
-}
-
-export enum Besetzung {
-  HARMONIE = "HARMONIE",
-  BRASS_BAND = "BRASS_BAND",
-  FANFARE = "FANFARE",
-  TAMBOUREN = "TAMBOUREN",
-  PERKUSSIONSENSEMBLE = "PERKUSSIONSENSEMBLE",
 }

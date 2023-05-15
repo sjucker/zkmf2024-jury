@@ -1,6 +1,19 @@
 <div>
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
-    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" color="accent"
+                      *ngIf="(!judge && !notFound && !error) || saving"></mat-progress-bar>
   </div>
+
+  <mat-card appearance="outlined" *ngIf="notFound">
+    <mat-card-content>
+      <p>Es wurde kein Jury-Mitglied für diesen Login gefunden.</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" *ngIf="error">
+    <mat-card-content>
+      <p>Ein Fehler ist aufgetreten.</p>
+    </mat-card-content>
+  </mat-card>
 </div>
