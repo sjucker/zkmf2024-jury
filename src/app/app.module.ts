@@ -20,6 +20,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {ActionButtonComponent} from "./components/action-button/action-button.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatDividerModule} from "@angular/material/divider";
+import {ReportComponent} from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MainComponent,
     HeaderComponent,
     ActionButtonComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatTooltipModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},],
   bootstrap: [AppComponent]

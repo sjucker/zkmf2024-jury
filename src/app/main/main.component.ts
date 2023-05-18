@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from "../service/backend.service";
-import {JudgeReportDTO} from "../rest";
+import {JudgeReportOverviewDTO} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {REPORT_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-main',
@@ -10,14 +12,15 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class MainComponent implements OnInit {
 
-  judge?: JudgeReportDTO[];
+  reports?: JudgeReportOverviewDTO[];
 
   notFound = false;
   error = false;
 
   saving = false;
 
-  constructor(private backendService: BackendService) {
+  constructor(private backendService: BackendService,
+              private readonly router: Router) {
   }
 
   ngOnInit(): void {
@@ -25,9 +28,9 @@ export class MainComponent implements OnInit {
   }
 
   private load() {
-    this.backendService.get().subscribe({
+    this.backendService.getAll().subscribe({
       next: response => {
-        this.judge = response;
+        this.reports = response;
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 404) {
@@ -37,5 +40,9 @@ export class MainComponent implements OnInit {
         }
       }
     });
+  }
+
+  openReport(report: JudgeReportOverviewDTO) {
+    this.router.navigate([REPORT_PATH, report.id]).then();
   }
 }

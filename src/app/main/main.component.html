@@ -2,7 +2,28 @@
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
     <mat-progress-bar mode="indeterminate" color="accent"
-                      *ngIf="(!judge && !notFound && !error) || saving"></mat-progress-bar>
+                      *ngIf="(!reports && !notFound && !error) || saving"></mat-progress-bar>
+  </div>
+
+  <div class="max-width-container" *ngIf="reports">
+    <mat-card *ngFor="let report of reports">
+      <mat-card-header>
+        <mat-card-subtitle>{{report.start | date:'dd.MM.yyyy, HH:mm'}}-{{report.end | date:'HH:mm'}}</mat-card-subtitle>
+        <mat-card-title>{{report.verein}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{report.modul}} {{report.klasse}} {{report.besetzung}}</p>
+        <p>
+          <a [href]="report.locationUrl" target="_blank">{{report.location}}</a>
+        </p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary"
+                (click)="openReport(report)">Öffnen
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 
   <mat-card appearance="outlined" *ngIf="notFound">

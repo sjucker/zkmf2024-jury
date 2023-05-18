@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {JudgeReportDTO} from "../rest";
+import {JudgeReportDTO, JudgeReportOverviewDTO} from "../rest";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,12 @@ export class BackendService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  public get(): Observable<JudgeReportDTO[]> {
-    return this.httpClient.get<JudgeReportDTO[]>(`${this.baseUrl}/secured/judge`);
+  public getAll(): Observable<JudgeReportOverviewDTO[]> {
+    return this.httpClient.get<JudgeReportOverviewDTO[]>(`${this.baseUrl}/secured/judge`);
+  }
+
+  public get(id: number): Observable<JudgeReportDTO> {
+    return this.httpClient.get<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${id}`);
   }
 
 }

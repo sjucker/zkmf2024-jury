@@ -1,0 +1,10 @@
+<div>
+  <app-header header="ZKMF2024 - Jury"></app-header>
+  <div class="loading-indicator">
+    <mat-progress-bar mode="indeterminate" color="accent"
+                      *ngIf="!report || saving"></mat-progress-bar>
+  </div>
+  <div class="max-width-container" *ngIf="report">
+    <pre>{{report}}</pre>
+  </div>
+</div>
