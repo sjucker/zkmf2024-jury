@@ -22,6 +22,9 @@ import {ActionButtonComponent} from "./components/action-button/action-button.co
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDividerModule} from "@angular/material/divider";
 import {ReportComponent} from './report/report.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import {ReportComponent} from './report/report.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatExpansionModule,
+    MatButtonToggleModule,
+    MatSnackBarModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},],
   bootstrap: [AppComponent]

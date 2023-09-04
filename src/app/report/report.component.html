@@ -2,9 +2,116 @@
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
     <mat-progress-bar mode="indeterminate" color="accent"
-                      *ngIf="!report || saving"></mat-progress-bar>
+                      *ngIf="loading || saving"></mat-progress-bar>
   </div>
   <div class="max-width-container" *ngIf="report">
-    <pre>{{report}}</pre>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{report.verein}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <span><b>Modul</b>: {{report.modul}}</span>
+          <span *ngIf="report.klasse">, <b>Klasse</b>: {{report.klasse}}</span>
+          <span *ngIf="report.besetzung">, <b>Besetzung</b>: {{report.besetzung}}</span>
+        </div>
+        <div><b>Wettspiellokal</b>: {{report.location}}</div>
+        <div><b>Dirigent/in</b>: {{report.dirigent}}</div>
+        <div *ngIf="report.programmTitel">
+          <b>Programmtitel</b>: {{report.programmTitel}}
+        </div>
+        <div *ngIf="report.programmInfo">
+          <b>Erläuterungen</b>: {{report.programmInfo}}
+        </div>
+        <div *ngIf="hasVorgabeDauer"><b>Vorgabe Dauer</b>:
+          {{formatDuration(report.minDurationInSeconds)}} - {{formatDuration(report.maxDurationInSeconds)}}
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let title of report.titles">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{title.titel.titelName}}<span *ngIf="title.titel.pflichtStueck">*</span></mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div>
+            <span>{{title.titel.composer}}</span>
+            <span *ngIf="title.titel.arrangeur"> (Arrangeur: {{title.titel.arrangeur}})</span>
+            <span *ngIf="title.titel.grad">, Grad: {{title.titel.grad}}</span>
+            <span>, Dauer: {{formatDuration(title.titel.durationInSeconds)}}</span>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Kurzbericht</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="3"
+                      cdkAutosizeMaxRows="6"
+                      [(ngModel)]="title.comment"></textarea>
+          </mat-form-field>
+
+          <div *ngFor="let rating of title.ratings">
+            <div><b>{{rating.categoryDescription}}</b></div>
+
+            <div style="display: flex; align-items: baseline; gap: 16px">
+              <div>
+              <mat-button-toggle-group [(ngModel)]="rating.rating">
+                <mat-button-toggle [value]="negative">-</mat-button-toggle>
+                <mat-button-toggle [value]="neutral">=</mat-button-toggle>
+                <mat-button-toggle [value]="positive">+</mat-button-toggle>
+              </mat-button-toggle-group>
+              </div>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Optionale Bemerkung</mat-label>
+                <input type="text"
+                       autocomplete="off"
+                       matInput
+                       [(ngModel)]="rating.comment"/>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <app-action-button [processing]="saving"
+                             buttonLabel="Speichern"
+                             (buttonClicked)="saveReport(report)"></app-action-button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Punktzahl</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="rating-container">
+          <mat-form-field appearance="outline">
+            <mat-label>min. 51 Punkte, max. 100 Punkte</mat-label>
+            <input type="text"
+                   autocomplete="off"
+                   matInput
+                   min="51"
+                   max="100"
+                   [(ngModel)]="report.score"/>
+          </mat-form-field>
+
+          <ul>
+            <li>91 - 100 Punkte ausgezeichnete Leistung</li>
+            <li>81 – 90 Punkte sehr gute Leistung</li>
+            <li>71 - 80 Punkte gute Leistung</li>
+            <li>61 - 70 Punkte genügende Leistung</li>
+            <li>51 - 60 Punkte ungenügende Leistung</li>
+          </ul>
+        </div>
+        <app-action-button [processing]="saving"
+                           buttonLabel="Speichern"
+                           (buttonClicked)="saveReport(report)"></app-action-button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="errorMessage" class="max-width-container error-msg">
+    {{errorMessage}}
   </div>
 </div>

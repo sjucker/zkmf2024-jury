@@ -22,4 +22,7 @@ export class BackendService {
     return this.httpClient.get<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${id}`);
   }
 
+  public update(report: JudgeReportDTO): Observable<JudgeReportDTO> {
+    return this.httpClient.put<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${report.id}`, report);
+  }
 }

@@ -1,0 +1,25 @@
+@use "../../variables";
+@import "../../responsive";
+
+.error-msg {
+  color: variables.$rot
+}
+
+.max-width-container {
+  padding: variables.$padding;
+
+  .rating-container {
+    display: flex;
+    gap: variables.$padding;
+    align-items: start;
+
+    .mat-mdc-form-field {
+      width: 300px;
+      max-width: 100%;
+    }
+
+    ul {
+      margin: 0;
+    }
+  }
+}
