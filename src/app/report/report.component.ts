@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
-import {JudgeReportCategoryRating, JudgeReportDTO} from "../rest";
+import {JudgeReportCategoryRating, JudgeReportDTO, JudgeReportStatus} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {ReportFinishComponent} from "../report-finish/report-finish.component";
 
 @Component({
   selector: 'app-report',
@@ -19,14 +21,18 @@ export class ReportComponent implements OnInit {
 
   loading = false;
   saving = false;
+  finishing = false;
+
+  pendingChanges = false;
+  readOnly = false;
 
   errorMessage?: string;
 
-  ratingSelection?: string;
 
   constructor(private readonly route: ActivatedRoute,
               private backendService: BackendService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -36,6 +42,7 @@ export class ReportComponent implements OnInit {
       this.backendService.get(parseInt(id)).subscribe({
         next: value => {
           this.report = value;
+          this.readOnly = this.report.status === JudgeReportStatus.DONE;
           this.loading = false;
         },
         error: err => {
@@ -71,6 +78,7 @@ export class ReportComponent implements OnInit {
     this.backendService.update(report).subscribe({
       next: _ => {
         this.saving = false;
+        this.pendingChanges = false;
         this.snackBar.open('Speichern war erfolgreich', undefined, {
           verticalPosition: 'top',
           horizontalPosition: 'center',
@@ -80,6 +88,48 @@ export class ReportComponent implements OnInit {
       },
       error: _ => {
         this.saving = false;
+        this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          duration: 4000,
+          panelClass: 'error'
+        });
+      }
+    });
+  }
+
+  onChange(): void {
+    this.pendingChanges = true;
+  }
+
+  get valid(): boolean {
+    const score = this.report?.score ?? 0;
+    return (score > 50 && score <= 100) && !this.pendingChanges;
+  }
+
+  finishReport(report: JudgeReportDTO) {
+    this.dialog.open(ReportFinishComponent).afterClosed().subscribe(decision => {
+      if (decision) {
+        this.doFinishReport(report);
+      }
+    });
+  }
+
+  doFinishReport(report: JudgeReportDTO): void {
+    this.finishing = true;
+    this.backendService.finish(report).subscribe({
+      next: _ => {
+        this.finishing = false;
+        this.readOnly = true;
+        this.snackBar.open('Erfolgreich abgeschlossen', undefined, {
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          duration: 2000,
+          panelClass: 'success'
+        });
+      },
+      error: _ => {
+        this.finishing = false;
         this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
           verticalPosition: 'top',
           horizontalPosition: 'center',

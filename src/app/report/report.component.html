@@ -42,40 +42,49 @@
             <span>, Dauer: {{formatDuration(title.titel.durationInSeconds)}}</span>
           </div>
           <mat-form-field appearance="outline">
-            <mat-label>Kurzbericht</mat-label>
+            <mat-label>{{readOnly ? '' : 'Kurzbericht'}}</mat-label>
             <textarea matInput
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="3"
                       cdkAutosizeMaxRows="6"
-                      [(ngModel)]="title.comment"></textarea>
+                      [disabled]="readOnly"
+                      [(ngModel)]="title.comment"
+                      (ngModelChange)="onChange()"></textarea>
           </mat-form-field>
 
           <div *ngFor="let rating of title.ratings">
             <div><b>{{rating.categoryDescription}}</b></div>
 
-            <div style="display: flex; align-items: baseline; gap: 16px">
+            <div class="rating-container">
               <div>
-              <mat-button-toggle-group [(ngModel)]="rating.rating">
-                <mat-button-toggle [value]="negative">-</mat-button-toggle>
-                <mat-button-toggle [value]="neutral">=</mat-button-toggle>
-                <mat-button-toggle [value]="positive">+</mat-button-toggle>
-              </mat-button-toggle-group>
+                <mat-button-toggle-group [(ngModel)]="rating.rating"
+                                         (ngModelChange)="onChange()"
+                                         [disabled]="readOnly">
+                  <mat-button-toggle [value]="negative">-</mat-button-toggle>
+                  <mat-button-toggle [value]="neutral">=</mat-button-toggle>
+                  <mat-button-toggle [value]="positive">+</mat-button-toggle>
+                </mat-button-toggle-group>
               </div>
 
               <mat-form-field appearance="outline">
-                <mat-label>Optionale Bemerkung</mat-label>
+                <mat-label>{{readOnly ? '' : 'Optionale Bemerkung'}}</mat-label>
                 <input type="text"
                        autocomplete="off"
                        matInput
-                       [(ngModel)]="rating.comment"/>
+                       [disabled]="readOnly"
+                       [(ngModel)]="rating.comment"
+                       (ngModelChange)="onChange()"/>
               </mat-form-field>
             </div>
           </div>
 
-          <app-action-button [processing]="saving"
-                             buttonLabel="Speichern"
-                             (buttonClicked)="saveReport(report)"></app-action-button>
+          <div class="action-container" *ngIf="!readOnly">
+            <app-action-button [processing]="saving"
+                               [disabled]="!pendingChanges"
+                               buttonLabel="Speichern"
+                               (buttonClicked)="saveReport(report)"></app-action-button>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
@@ -85,7 +94,7 @@
         <mat-card-title>Punktzahl</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="rating-container">
+        <div class="overall-rating-container">
           <mat-form-field appearance="outline">
             <mat-label>min. 51 Punkte, max. 100 Punkte</mat-label>
             <input type="text"
@@ -93,7 +102,9 @@
                    matInput
                    min="51"
                    max="100"
-                   [(ngModel)]="report.score"/>
+                   [disabled]="readOnly"
+                   [(ngModel)]="report.score"
+                   (ngModelChange)="onChange()"/>
           </mat-form-field>
 
           <ul>
@@ -104,9 +115,18 @@
             <li>51 - 60 Punkte ungenügende Leistung</li>
           </ul>
         </div>
-        <app-action-button [processing]="saving"
-                           buttonLabel="Speichern"
-                           (buttonClicked)="saveReport(report)"></app-action-button>
+        <div class="action-container" *ngIf="!readOnly">
+          <app-action-button [processing]="saving"
+                             [color]="undefined"
+                             [disabled]="!pendingChanges"
+                             buttonLabel="Speichern"
+                             (buttonClicked)="saveReport(report)"></app-action-button>
+
+          <app-action-button [processing]="finishing"
+                             [disabled]="!valid"
+                             buttonLabel="Abschliessen"
+                             (buttonClicked)="finishReport(report)"></app-action-button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

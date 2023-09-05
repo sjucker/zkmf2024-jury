@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from "../service/backend.service";
-import {JudgeReportOverviewDTO} from "../rest";
+import {JudgeReportOverviewDTO, JudgeReportStatus} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {REPORT_PATH} from "../app-routing.module";
@@ -44,5 +44,9 @@ export class MainComponent implements OnInit {
 
   openReport(report: JudgeReportOverviewDTO) {
     this.router.navigate([REPORT_PATH, report.id]).then();
+  }
+
+  isFinished(report: JudgeReportOverviewDTO) {
+    return report.status === JudgeReportStatus.DONE;
   }
 }

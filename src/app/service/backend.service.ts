@@ -25,4 +25,8 @@ export class BackendService {
   public update(report: JudgeReportDTO): Observable<JudgeReportDTO> {
     return this.httpClient.put<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${report.id}`, report);
   }
+
+  public finish(report: JudgeReportDTO): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/secured/judge/${report.id}/finish`, undefined);
+  }
 }

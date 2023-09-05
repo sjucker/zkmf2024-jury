@@ -25,6 +25,8 @@ import {ReportComponent} from './report/report.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ReportFinishComponent} from './report-finish/report-finish.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HeaderComponent,
     ActionButtonComponent,
     ReportComponent,
+    ReportFinishComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatDividerModule,
     MatExpansionModule,
     MatButtonToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},],
   bootstrap: [AppComponent]

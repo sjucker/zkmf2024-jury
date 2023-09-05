@@ -10,6 +10,12 @@
 
   .rating-container {
     display: flex;
+    align-items: baseline;
+    gap: variables.$padding;
+  }
+
+  .overall-rating-container {
+    display: flex;
     gap: variables.$padding;
     align-items: start;
 
@@ -21,5 +27,11 @@
     ul {
       margin: 0;
     }
+  }
+
+  .action-container {
+    display: flex;
+    justify-content: end;
+    gap: variables.$padding;
   }
 }

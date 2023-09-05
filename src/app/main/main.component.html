@@ -9,10 +9,19 @@
     <mat-card *ngFor="let report of reports">
       <mat-card-header>
         <mat-card-subtitle>{{report.start | date:'dd.MM.yyyy, HH:mm'}}-{{report.end | date:'HH:mm'}}</mat-card-subtitle>
-        <mat-card-title>{{report.verein}}</mat-card-title>
+        <mat-card-title>
+          <span *ngIf="isFinished(report)">
+            <mat-icon color="primary">check_small</mat-icon>
+          </span>
+          {{report.verein}}
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>{{report.modul}} {{report.klasse}} {{report.besetzung}}</p>
+        <p>
+          <span>{{report.modul}}</span>
+          <span *ngIf="report.klasse">, {{report.klasse}}</span>
+          <span *ngIf="report.besetzung">, {{report.besetzung}}</span>
+        </p>
         <p>
           <a [href]="report.locationUrl" target="_blank">{{report.location}}</a>
         </p>
@@ -20,7 +29,8 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-flat-button color="primary"
-                (click)="openReport(report)">Öffnen
+                (click)="openReport(report)">
+          {{isFinished(report) ? 'Ansehen' : 'Bearbeiten'}}
         </button>
       </mat-card-actions>
     </mat-card>

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ThemePalette} from "@angular/material/core";
 
 @Component({
   selector: 'app-action-button',
@@ -9,17 +10,14 @@ export class ActionButtonComponent {
 
   @Input()
   buttonLabel = ''
-
   @Input()
   processing = false
-
   @Input()
   disabled = false;
+  @Input()
+  color: ThemePalette = 'primary';
 
   @Output()
   buttonClicked = new EventEmitter<any>()
-
-  constructor() {
-  }
 
 }
