@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
-import {JudgeReportCategoryRating, JudgeReportDTO, JudgeReportStatus} from "../rest";
+import {JudgeReportDTO, JudgeReportStatus} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportFinishComponent} from "../report-finish/report-finish.component";
@@ -13,10 +13,6 @@ import {ReportFinishComponent} from "../report-finish/report-finish.component";
 })
 export class ReportComponent implements OnInit {
 
-  negative = JudgeReportCategoryRating.NEGATIVE;
-  neutral = JudgeReportCategoryRating.NEUTRAL;
-  positive = JudgeReportCategoryRating.POSITIVE;
-
   report?: JudgeReportDTO;
 
   loading = false;
@@ -27,7 +23,6 @@ export class ReportComponent implements OnInit {
   readOnly = false;
 
   errorMessage?: string;
-
 
   constructor(private readonly route: ActivatedRoute,
               private backendService: BackendService,
