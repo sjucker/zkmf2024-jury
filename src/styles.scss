@@ -17,6 +17,27 @@ body {
   margin: 0;
 }
 
+a {
+  color: variables.$gruen;
+}
+
+.mat-mdc-snack-bar-container {
+  &.success {
+    color: variables.$papier;
+    --mdc-snackbar-container-color: #{variables.$gruen};
+  }
+
+  &.info {
+    color: variables.$papier;
+    --mdc-snackbar-container-color: #{variables.$hellblau};
+  }
+
+  &.error {
+    color: variables.$papier;
+    --mdc-snackbar-container-color: #{variables.$rot};
+  }
+}
+
 .mat-grid-tile-content {
   align-items: flex-start !important;
   justify-content: left !important;
@@ -75,4 +96,8 @@ mat-form-field {
   @include responsive('gt-sm') {
     display: none;
   }
+}
+
+.max-width-container {
+  max-width: $max-width;
 }

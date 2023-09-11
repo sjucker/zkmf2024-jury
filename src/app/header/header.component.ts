@@ -26,4 +26,7 @@ export class HeaderComponent {
     this.router.navigate([LOGIN_PATH]);
   }
 
+  home() {
+    this.router.navigate(['/']);
+  }
 }

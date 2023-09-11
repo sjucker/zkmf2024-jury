@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Bewertung abschliessen</h2>
+<mat-dialog-content class="mat-typography">
+  <p>Willst du wirklich abschliessen?<br/>
+    Es können keine Änderungen mehr vorgenommen werden.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="primary" mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Abschliessen</button>
+</mat-dialog-actions>

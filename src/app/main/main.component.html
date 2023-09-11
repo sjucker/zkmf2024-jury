@@ -1,6 +1,50 @@
 <div>
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
-    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" color="accent"
+                      *ngIf="(!reports && !notFound && !error) || saving"></mat-progress-bar>
   </div>
+
+  <div class="max-width-container" *ngIf="reports">
+    <mat-card *ngFor="let report of reports">
+      <mat-card-header>
+        <mat-card-subtitle>{{report.start | date:'dd.MM.yyyy, HH:mm'}}-{{report.end | date:'HH:mm'}}</mat-card-subtitle>
+        <mat-card-title>
+          <span *ngIf="isFinished(report)">
+            <mat-icon color="primary">check_small</mat-icon>
+          </span>
+          {{report.verein}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <span>{{report.modul}}</span>
+          <span *ngIf="report.klasse">, {{report.klasse}}</span>
+          <span *ngIf="report.besetzung">, {{report.besetzung}}</span>
+        </p>
+        <p>
+          <a [href]="report.locationUrl" target="_blank">{{report.location}}</a>
+        </p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary"
+                (click)="openReport(report)">
+          {{isFinished(report) ? 'Ansehen' : 'Bearbeiten'}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" *ngIf="notFound">
+    <mat-card-content>
+      <p>Es wurde kein Jury-Mitglied für diesen Login gefunden.</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" *ngIf="error">
+    <mat-card-content>
+      <p>Ein Fehler ist aufgetreten.</p>
+    </mat-card-content>
+  </mat-card>
 </div>
