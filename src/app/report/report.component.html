@@ -52,29 +52,29 @@
           </mat-form-field>
 
           <div *ngFor="let rating of title.ratings">
-            <div><b>{{rating.categoryDescription}}</b></div>
+            <app-report-rating [rating]="rating"
+                               [readOnly]="readOnly"
+                               (changed)="onChange()"></app-report-rating>
+          </div>
 
-            <div class="rating-container">
-              <div>
-                <mat-button-toggle-group [(ngModel)]="rating.rating"
-                                         (ngModelChange)="onChange()"
-                                         [disabled]="readOnly">
-                  <mat-button-toggle [value]="negative">-</mat-button-toggle>
-                  <mat-button-toggle [value]="neutral">=</mat-button-toggle>
-                  <mat-button-toggle [value]="positive">+</mat-button-toggle>
-                </mat-button-toggle-group>
-              </div>
+          <div class="action-container" *ngIf="!readOnly">
+            <app-action-button [processing]="saving"
+                               [disabled]="!pendingChanges"
+                               buttonLabel="Speichern"
+                               (buttonClicked)="saveReport(report)"></app-action-button>
+          </div>
+        </div>
+      </mat-expansion-panel>
 
-              <mat-form-field appearance="outline">
-                <mat-label>{{readOnly ? '' : 'Optionale Bemerkung'}}</mat-label>
-                <input type="text"
-                       autocomplete="off"
-                       matInput
-                       [disabled]="readOnly"
-                       [(ngModel)]="rating.comment"
-                       (ngModelChange)="onChange()"/>
-              </mat-form-field>
-            </div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Gesamteindruck</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div *ngFor="let rating of report.overallRatings">
+            <app-report-rating [rating]="rating"
+                               [readOnly]="readOnly"
+                               (changed)="onChange()"></app-report-rating>
           </div>
 
           <div class="action-container" *ngIf="!readOnly">
@@ -93,11 +93,11 @@
         <div>
           <div class="overall-rating-container">
             <mat-form-field appearance="outline">
-              <mat-label>min. 51 Punkte, max. 100 Punkte</mat-label>
+              <mat-label>min. 50 Punkte, max. 100 Punkte</mat-label>
               <input type="text"
                      autocomplete="off"
                      matInput
-                     min="51"
+                     min="50"
                      max="100"
                      [disabled]="readOnly"
                      [(ngModel)]="report.score"
@@ -105,11 +105,11 @@
             </mat-form-field>
 
             <ul>
-              <li>91 - 100 Punkte ausgezeichnete Leistung</li>
-              <li>81 – 90 Punkte sehr gute Leistung</li>
-              <li>71 - 80 Punkte gute Leistung</li>
-              <li>61 - 70 Punkte genügende Leistung</li>
-              <li>51 - 60 Punkte ungenügende Leistung</li>
+              <li>90-100 Punkte für ausgezeichnete Leistungen</li>
+              <li>80-89 Punkte für sehr gute Leistungen</li>
+              <li>70-79 Punkte für gute Leistungen</li>
+              <li>60-69 Punkte für genügende Leistungen</li>
+              <li>50-59 Punkte für ungenügende Leistungen</li>
             </ul>
           </div>
           <div class="action-container" *ngIf="!readOnly">

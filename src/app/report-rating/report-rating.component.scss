@@ -1,0 +1,7 @@
+@use "../../variables";
+
+.rating-container {
+  display: flex;
+  align-items: baseline;
+  gap: variables.$padding;
+}

@@ -8,12 +8,6 @@
 .max-width-container {
   padding: variables.$padding;
 
-  .rating-container {
-    display: flex;
-    align-items: baseline;
-    gap: variables.$padding;
-  }
-
   .overall-rating-container {
     display: flex;
     gap: variables.$padding;
