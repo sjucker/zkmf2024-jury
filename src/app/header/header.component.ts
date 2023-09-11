@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
-import {LOGIN_PATH} from "../app-routing.module";
+import {LOGIN_PATH, SUMMARY_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-header',
@@ -28,5 +28,9 @@ export class HeaderComponent {
 
   home() {
     this.router.navigate(['/']);
+  }
+
+  summaries() {
+    this.router.navigate([SUMMARY_PATH]);
   }
 }

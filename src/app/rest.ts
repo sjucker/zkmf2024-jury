@@ -47,6 +47,23 @@ export interface JudgeReportRatingDTO {
   rating: JudgeReportCategoryRating;
 }
 
+export interface JudgeReportScoreDTO {
+  reportId: number;
+  judgeName: string;
+  score?: number;
+  status: JudgeReportStatus;
+}
+
+export interface JudgeReportSummaryDTO {
+  modul: string;
+  klasse?: string;
+  besetzung?: string;
+  verein: string;
+  overallScore?: number;
+  scores: JudgeReportScoreDTO[];
+  done: boolean;
+}
+
 export interface JudgeReportTitleDTO {
   titel: TitelDTO;
   comment?: string;

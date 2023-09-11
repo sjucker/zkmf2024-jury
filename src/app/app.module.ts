@@ -28,6 +28,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ReportFinishComponent} from './report-finish/report-finish.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReportRatingComponent} from './report-rating/report-rating.component';
+import {SummaryComponent} from './summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {ReportRatingComponent} from './report-rating/report-rating.component';
     ReportComponent,
     ReportFinishComponent,
     ReportRatingComponent,
+    SummaryComponent,
   ],
   imports: [
     BrowserModule,

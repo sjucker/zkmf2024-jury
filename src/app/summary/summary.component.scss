@@ -1,0 +1,37 @@
+@use "../../variables";
+@import "../../responsive";
+
+.summary-container {
+  max-width: 100%;
+
+  display: flex;
+  gap: variables.$padding;
+  align-items: center;
+
+  .verein-container {
+    width: 250px;
+  }
+
+  .score-container {
+    width: 40px;
+    height: 40px;
+    border: 2px solid variables.$gruen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &.overall {
+      border: 2px solid variables.$rot;
+      cursor: auto;
+
+      &.done {
+        background-color: variables.$rot-half;
+      }
+    }
+
+    &.done {
+      background-color: variables.$gruen-half;
+    }
+  }
+}

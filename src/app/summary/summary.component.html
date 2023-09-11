@@ -1,0 +1,32 @@
+<div>
+  <app-header header="ZKMF2024 - Jury"></app-header>
+  <div class="loading-indicator">
+    <mat-progress-bar mode="indeterminate" color="accent"
+                      *ngIf="loading"></mat-progress-bar>
+  </div>
+  <div class="max-width-container">
+    <mat-card *ngFor="let category of categories">
+      <mat-card-header>
+        <mat-card-title>{{category}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let summary of getEntriesForCategory(category)" class="summary-container">
+          <div class="verein-container">
+            {{summary.verein}}
+          </div>
+          <div *ngFor="let score of summary.scores"
+               class="score-container"
+               [ngClass]="{'done': score.status === JudgeReportStatus.DONE}"
+               [matTooltip]="score.judgeName"
+               (click)="openReport(score.reportId)">
+            {{score.score}}
+          </div>
+          <div class="score-container overall"
+               [ngClass]="{'done': summary.done}">
+            {{summary.overallScore}}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
