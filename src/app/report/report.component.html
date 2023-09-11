@@ -5,11 +5,11 @@
                       *ngIf="loading || saving"></mat-progress-bar>
   </div>
   <div class="max-width-container" *ngIf="report">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{report.verein}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{report.verein}}</mat-panel-title>
+        </mat-expansion-panel-header>
         <div>
           <span><b>Modul</b>: {{report.modul}}</span>
           <span *ngIf="report.klasse">, <b>Klasse</b>: {{report.klasse}}</span>
@@ -26,10 +26,8 @@
         <div *ngIf="hasVorgabeDauer"><b>Vorgabe Dauer</b>:
           {{formatDuration(report.minDurationInSeconds)}} - {{formatDuration(report.maxDurationInSeconds)}}
         </div>
-      </mat-card-content>
-    </mat-card>
+      </mat-expansion-panel>
 
-    <mat-accordion>
       <mat-expansion-panel *ngFor="let title of report.titles">
         <mat-expansion-panel-header>
           <mat-panel-title>{{title.titel.titelName}}<span *ngIf="title.titel.pflichtStueck">*</span></mat-panel-title>
@@ -87,48 +85,48 @@
           </div>
         </div>
       </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Punktzahl & Abschliessen</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div class="overall-rating-container">
+            <mat-form-field appearance="outline">
+              <mat-label>min. 51 Punkte, max. 100 Punkte</mat-label>
+              <input type="text"
+                     autocomplete="off"
+                     matInput
+                     min="51"
+                     max="100"
+                     [disabled]="readOnly"
+                     [(ngModel)]="report.score"
+                     (ngModelChange)="onChange()"/>
+            </mat-form-field>
+
+            <ul>
+              <li>91 - 100 Punkte ausgezeichnete Leistung</li>
+              <li>81 – 90 Punkte sehr gute Leistung</li>
+              <li>71 - 80 Punkte gute Leistung</li>
+              <li>61 - 70 Punkte genügende Leistung</li>
+              <li>51 - 60 Punkte ungenügende Leistung</li>
+            </ul>
+          </div>
+          <div class="action-container" *ngIf="!readOnly">
+            <app-action-button [processing]="saving"
+                               [color]="undefined"
+                               [disabled]="!pendingChanges"
+                               buttonLabel="Speichern"
+                               (buttonClicked)="saveReport(report)"></app-action-button>
+
+            <app-action-button [processing]="finishing"
+                               [disabled]="!valid"
+                               buttonLabel="Abschliessen"
+                               (buttonClicked)="finishReport(report)"></app-action-button>
+          </div>
+        </div>
+      </mat-expansion-panel>
     </mat-accordion>
-
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Punktzahl</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="overall-rating-container">
-          <mat-form-field appearance="outline">
-            <mat-label>min. 51 Punkte, max. 100 Punkte</mat-label>
-            <input type="text"
-                   autocomplete="off"
-                   matInput
-                   min="51"
-                   max="100"
-                   [disabled]="readOnly"
-                   [(ngModel)]="report.score"
-                   (ngModelChange)="onChange()"/>
-          </mat-form-field>
-
-          <ul>
-            <li>91 - 100 Punkte ausgezeichnete Leistung</li>
-            <li>81 – 90 Punkte sehr gute Leistung</li>
-            <li>71 - 80 Punkte gute Leistung</li>
-            <li>61 - 70 Punkte genügende Leistung</li>
-            <li>51 - 60 Punkte ungenügende Leistung</li>
-          </ul>
-        </div>
-        <div class="action-container" *ngIf="!readOnly">
-          <app-action-button [processing]="saving"
-                             [color]="undefined"
-                             [disabled]="!pendingChanges"
-                             buttonLabel="Speichern"
-                             (buttonClicked)="saveReport(report)"></app-action-button>
-
-          <app-action-button [processing]="finishing"
-                             [disabled]="!valid"
-                             buttonLabel="Abschliessen"
-                             (buttonClicked)="finishReport(report)"></app-action-button>
-        </div>
-      </mat-card-content>
-    </mat-card>
   </div>
 
   <div *ngIf="errorMessage" class="max-width-container error-msg">
