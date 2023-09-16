@@ -29,6 +29,7 @@ import {ReportFinishComponent} from './report-finish/report-finish.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReportRatingComponent} from './report-rating/report-rating.component';
 import {SummaryComponent} from './summary/summary.component';
+import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-changes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {SummaryComponent} from './summary/summary.component';
     ReportFinishComponent,
     ReportRatingComponent,
     SummaryComponent,
+    PendingChangesDialogComponent,
   ],
   imports: [
     BrowserModule,

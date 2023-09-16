@@ -22,8 +22,11 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this.authenticationService.logout();
-    this.router.navigate([LOGIN_PATH]);
+    this.router.navigate([LOGIN_PATH]).then(value => {
+      if (value) {
+        this.authenticationService.logout();
+      }
+    });
   }
 
   home() {
