@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {JudgeReportDTO, JudgeReportStatus} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportFinishComponent} from "../report-finish/report-finish.component";
+import {Observable, of} from "rxjs";
+import {PendingChangesDialogComponent} from "../pending-changes-dialog/pending-changes-dialog.component";
 
 @Component({
   selector: 'app-report',
@@ -46,6 +48,13 @@ export class ReportComponent implements OnInit {
           this.loading = false;
         }
       });
+    }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleClose($event: BeforeUnloadEvent) {
+    if (this.pendingChanges) {
+      $event.returnValue = 'pendingChanges';
     }
   }
 
@@ -133,5 +142,16 @@ export class ReportComponent implements OnInit {
         });
       }
     });
+  }
+
+  canDeactivate(): Observable<boolean> {
+    if (this.pendingChanges) {
+      return this.dialog.open(PendingChangesDialogComponent, {
+        disableClose: true,
+        autoFocus: false
+      }).afterClosed();
+    } else {
+      return of(true);
+    }
   }
 }
