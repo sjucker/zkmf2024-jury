@@ -21,7 +21,8 @@ const routes: Routes = [
   {
     path: `${REPORT_PATH}/:id`,
     component: ReportComponent,
-    canActivate: [canActivateFn]
+    canActivate: [canActivateFn],
+    canDeactivate: [(component: ReportComponent) => component.canDeactivate()]
   },
   {
     path: `${SUMMARY_PATH}`,
