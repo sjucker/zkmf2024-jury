@@ -12,8 +12,7 @@ export class ReportRatingComponent {
   positive = JudgeReportCategoryRating.POSITIVE;
 
   @Input({required: true})
-  // @ts-ignore
-  rating: JudgeReportRatingDTO;
+  rating!: JudgeReportRatingDTO;
 
   @Input({required: true})
   readOnly = false;

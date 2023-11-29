@@ -32,13 +32,15 @@ export class LoginComponent {
         next: response => {
           this.authenticating = false;
           this.authenticationService.setCredentials(response);
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).catch(reason => {
+            console.error(reason);
+          });
         },
-        error: _ => {
+        error: () => {
           this.authenticating = false;
           this.authenticationError = true;
-        }
-      })
+        },
+      });
     }
   }
 

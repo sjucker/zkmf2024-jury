@@ -18,6 +18,9 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "es2020",
       "dom"
@@ -29,5 +32,8 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

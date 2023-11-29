@@ -10,7 +10,7 @@ import {LOGIN_PATH, SUMMARY_PATH} from "../app-routing.module";
 })
 export class HeaderComponent {
 
-  @Input()
+  @Input({required: true})
   header = '';
 
   constructor(private router: Router,
@@ -30,10 +30,14 @@ export class HeaderComponent {
   }
 
   home() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/']).catch(reason => {
+      console.error(reason);
+    });
   }
 
   summaries() {
-    this.router.navigate([SUMMARY_PATH]);
+    this.router.navigate([SUMMARY_PATH]).catch(reason => {
+      console.error(reason);
+    });
   }
 }
