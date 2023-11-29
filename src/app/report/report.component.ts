@@ -80,7 +80,7 @@ export class ReportComponent implements OnInit {
   saveReport(report: JudgeReportDTO) {
     this.saving = true;
     this.backendService.update(report).subscribe({
-      next: _ => {
+      next: () => {
         this.saving = false;
         this.pendingChanges = false;
         this.snackBar.open('Speichern war erfolgreich', undefined, {
@@ -90,7 +90,7 @@ export class ReportComponent implements OnInit {
           panelClass: 'success'
         });
       },
-      error: _ => {
+      error: () => {
         this.saving = false;
         this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
           verticalPosition: 'top',
@@ -122,7 +122,7 @@ export class ReportComponent implements OnInit {
   doFinishReport(report: JudgeReportDTO): void {
     this.finishing = true;
     this.backendService.finish(report).subscribe({
-      next: _ => {
+      next: () => {
         this.finishing = false;
         this.readOnly = true;
         this.snackBar.open('Erfolgreich abgeschlossen', undefined, {
@@ -132,7 +132,7 @@ export class ReportComponent implements OnInit {
           panelClass: 'success'
         });
       },
-      error: _ => {
+      error: () => {
         this.finishing = false;
         this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
           verticalPosition: 'top',

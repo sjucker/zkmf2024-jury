@@ -8,9 +8,9 @@ import {ThemePalette} from "@angular/material/core";
 })
 export class ActionButtonComponent {
 
-  @Input()
+  @Input({required: true})
   buttonLabel = ''
-  @Input()
+  @Input({required: true})
   processing = false
   @Input()
   disabled = false;
@@ -18,6 +18,6 @@ export class ActionButtonComponent {
   color: ThemePalette = 'primary';
 
   @Output()
-  buttonClicked = new EventEmitter<any>()
+  buttonClicked = new EventEmitter<void>()
 
 }

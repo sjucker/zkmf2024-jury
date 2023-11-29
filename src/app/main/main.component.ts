@@ -43,7 +43,9 @@ export class MainComponent implements OnInit {
   }
 
   openReport(report: JudgeReportOverviewDTO) {
-    this.router.navigate([REPORT_PATH, report.id]).then();
+    this.router.navigate([REPORT_PATH, report.id]).catch(reason => {
+      console.error(reason);
+    });
   }
 
   isFinished(report: JudgeReportOverviewDTO) {
