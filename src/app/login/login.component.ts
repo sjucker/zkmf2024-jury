@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
+import {SUMMARY_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,15 @@ export class LoginComponent {
         next: response => {
           this.authenticating = false;
           this.authenticationService.setCredentials(response);
-          this.router.navigate(['/']).catch(reason => {
-            console.error(reason);
-          });
+          if (this.authenticationService.isAdmin()) {
+            this.router.navigate([SUMMARY_PATH]).catch(reason => {
+              console.error(reason);
+            })
+          } else {
+            this.router.navigate(['/']).catch(reason => {
+              console.error(reason);
+            });
+          }
         },
         error: () => {
           this.authenticating = false;

@@ -1,5 +1,5 @@
 @use "../../variables";
-@import "../../responsive";
+@use "../../responsive";
 
 .error-msg {
   color: variables.$rot
@@ -7,6 +7,7 @@
 
 .max-width-container {
   padding: variables.$padding;
+  position: relative;
 
   .overall-rating-container {
     display: flex;
@@ -21,6 +22,34 @@
     ul {
       margin: 0;
     }
+  }
+
+  .ranking-container {
+    border: solid 2px variables.$gruen;
+    border-radius: var(--mat-expansion-container-shape);
+    background-color: variables.$gruen-quarter;
+    padding: variables.$padding;
+    margin-top: variables.$padding;
+  }
+
+  @media screen and (min-width: calc(responsive.$max-width + 300px)) {
+    .ranking-container {
+      position: fixed;
+      top: calc(var(--mat-toolbar-standard-height) + variables.$padding);
+      right: variables.$padding;
+      margin: 0;
+      max-width: 300px;
+    }
+  }
+
+  .ranking {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: variables.$padding-half;
+  }
+
+  .overall-container {
+    margin-top: variables.$padding;
   }
 
   .action-container {

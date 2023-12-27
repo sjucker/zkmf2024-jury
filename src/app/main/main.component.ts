@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {JudgeReportOverviewDTO, JudgeReportStatus} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -12,15 +12,18 @@ import {REPORT_PATH} from "../app-routing.module";
 })
 export class MainComponent implements OnInit {
 
-  reports?: JudgeReportOverviewDTO[];
+  openReports: JudgeReportOverviewDTO[] = [];
+  doneReports: JudgeReportOverviewDTO[] = [];
 
-  notFound = false;
-  error = false;
+  notFound = signal(false);
+  error = signal(false);
 
-  saving = false;
+  loading = signal(false);
+  saving = signal(false);
 
-  constructor(private backendService: BackendService,
-              private readonly router: Router) {
+  showProgressBar = computed(() => (this.loading() || this.saving()));
+
+  constructor(private backendService: BackendService) {
   }
 
   ngOnInit(): void {
@@ -28,27 +31,26 @@ export class MainComponent implements OnInit {
   }
 
   private load() {
+    this.loading.set(true);
     this.backendService.getAll().subscribe({
       next: response => {
-        this.reports = response;
+        for (const dto of response) {
+          if (dto.status === JudgeReportStatus.DONE) {
+            this.doneReports = [...this.doneReports, dto];
+          } else {
+            this.openReports = [...this.openReports, dto];
+          }
+        }
+        this.loading.set(false);
       },
       error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
         if (err.status === 404) {
-          this.notFound = true;
+          this.notFound.set(true);
         } else {
-          this.error = true;
+          this.error.set(true);
         }
       }
     });
-  }
-
-  openReport(report: JudgeReportOverviewDTO) {
-    this.router.navigate([REPORT_PATH, report.id]).catch(reason => {
-      console.error(reason);
-    });
-  }
-
-  isFinished(report: JudgeReportOverviewDTO) {
-    return report.status === JudgeReportStatus.DONE;
   }
 }

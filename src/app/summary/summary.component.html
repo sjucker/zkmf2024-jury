@@ -1,32 +1,53 @@
 <div>
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
-    <mat-progress-bar mode="indeterminate" color="accent"
-                      *ngIf="loading"></mat-progress-bar>
+    @if (showProgressBar()) {
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    }
   </div>
   <div class="max-width-container">
-    <mat-card *ngFor="let category of categories">
-      <mat-card-header>
-        <mat-card-title>{{category}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngFor="let summary of getEntriesForCategory(category)" class="summary-container">
-          <div class="verein-container">
-            {{summary.verein}}
-          </div>
-          <div *ngFor="let score of summary.scores"
-               class="score-container"
-               [ngClass]="{'done': score.status === JudgeReportStatus.DONE}"
-               [matTooltip]="score.judgeName"
-               (click)="openReport(score.reportId)">
-            {{score.score}}
-          </div>
-          <div class="score-container overall"
-               [ngClass]="{'done': summary.done}">
-            {{summary.overallScore}}
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    @for (category of categories; track category) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ category }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @for (summary of getEntriesForCategory(category); track summary) {
+            <div class="summary-container">
+              <div class="verein-container">
+                {{ summary.verein }}
+              </div>
+              @for (score of summary.scores; track score) {
+                <div
+                  class="score-container"
+                  [ngClass]="{'done': score.done}"
+                  [matTooltip]="score.judgeName"
+                  (click)="openReport(score.reportId)">
+                  {{ score.score | number: '1.0-0' }}
+                  @if (score.ratingFixed) {
+                    <mat-icon color="primary">check_small</mat-icon>
+                  }
+                </div>
+              }
+              <div class="score-container overall"
+                   [ngClass]="{'done': summary.done}">
+                {{ summary.overallScore | number: '1.2-2' }}
+              </div>
+              @if (admin && summary.done) {
+                @if (summary.scoresConfirmed) {
+                  <mat-icon color="primary" [matTooltip]="getConfirmedTooltip(summary)">task_alt</mat-icon>
+                } @else {
+                  <button color="primary" mat-stroked-button
+                          [disabled]="confirming()"
+                          (click)="confirmScores(summary)">
+                    freigeben
+                  </button>
+                }
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
   </div>
 </div>

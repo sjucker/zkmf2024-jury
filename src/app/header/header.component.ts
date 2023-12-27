@@ -21,6 +21,10 @@ export class HeaderComponent {
     return this.authenticationService.isLoggedIn()
   }
 
+  get judge(): boolean {
+    return this.authenticationService.isJudge();
+  }
+
   logout(): void {
     this.router.navigate([LOGIN_PATH]).then(value => {
       if (value) {

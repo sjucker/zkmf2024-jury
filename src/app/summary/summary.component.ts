@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, Inject, LOCALE_ID, OnInit, signal} from '@angular/core';
 import {JudgeReportStatus, JudgeReportSummaryDTO} from "../rest";
 import {BackendService} from "../service/backend.service";
+import {AuthenticationService} from "../service/authentication.service";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-summary',
@@ -12,13 +14,21 @@ export class SummaryComponent implements OnInit {
   summaries = new Map<string, JudgeReportSummaryDTO[]>;
   categories: string[] = [];
 
-  loading = false;
+  loading = signal(false);
+  confirming = signal(false);
+  showProgressBar = computed(() => this.loading() || this.confirming());
 
-  constructor(private backendService: BackendService) {
+  constructor(private backendService: BackendService,
+              private authenticationService: AuthenticationService,
+              @Inject(LOCALE_ID) private locale: string) {
   }
 
   ngOnInit(): void {
-    this.loading = true;
+    this.load();
+  }
+
+  private load() {
+    this.loading.set(true);
     this.backendService.summaries().subscribe({
       next: value => {
         this.summaries = new Map<string, JudgeReportSummaryDTO[]>();
@@ -34,18 +44,17 @@ export class SummaryComponent implements OnInit {
         }
         this.categories = [...this.summaries.keys()]
 
-        this.loading = false;
+        this.loading.set(false);
       },
       error: err => {
         console.error(err);
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }
 
   getEntriesForCategory(category: string): JudgeReportSummaryDTO[] {
-    // TODO sort it correctly
-    return this.summaries.get(category) ?? [];
+    return this.summaries.get(category)?.sort((a, b) => (b.overallScore ?? 0) - (a.overallScore ?? 0)) ?? [];
   }
 
 
@@ -54,5 +63,31 @@ export class SummaryComponent implements OnInit {
   openReport(reportId: number) {
     // TODO open report
     console.log(reportId);
+  }
+
+  get admin(): boolean {
+    return this.authenticationService.isAdmin();
+  }
+
+  confirmScores(summary: JudgeReportSummaryDTO): void {
+    this.confirming.set(true);
+    this.backendService.confirmScores(summary.programmId).subscribe({
+      next: () => {
+        this.confirming.set(false);
+        this.load();
+      },
+      error: err => {
+        console.error(err);
+        this.confirming.set(false);
+      }
+    })
+  }
+
+  getConfirmedTooltip(summary: JudgeReportSummaryDTO): string {
+    if (summary.scoresConfirmedAt) {
+      return `${summary.scoresConfirmedBy}, ${formatDate(summary.scoresConfirmedAt, 'dd.MM.yyyy, HH:mm', this.locale)}`;
+    } else {
+      return '';
+    }
   }
 }

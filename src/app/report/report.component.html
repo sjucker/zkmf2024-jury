@@ -1,109 +1,154 @@
 <div>
   <app-header header="ZKMF2024 - Jury"></app-header>
   <div class="loading-indicator">
-    <mat-progress-bar mode="indeterminate" color="accent"
-                      *ngIf="loading || saving"></mat-progress-bar>
+    @if (showProgressBar()) {
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    }
   </div>
-  <div class="max-width-container" *ngIf="report">
-    <mat-accordion>
-      <mat-expansion-panel expanded>
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{report.verein}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div>
-          <span><b>Modul</b>: {{report.modul}}</span>
-          <span *ngIf="report.klasse">, <b>Klasse</b>: {{report.klasse}}</span>
-          <span *ngIf="report.besetzung">, <b>Besetzung</b>: {{report.besetzung}}</span>
-        </div>
-        <div><b>Wettspiellokal</b>: {{report.location}}</div>
-        <div><b>Dirigent/in</b>: {{report.dirigent}}</div>
-        <div *ngIf="report.programmTitel">
-          <b>Programmtitel</b>: {{report.programmTitel}}
-        </div>
-        <div *ngIf="report.programmInfo">
-          <b>Erläuterungen</b>: {{report.programmInfo}}
-        </div>
-        <div *ngIf="hasVorgabeDauer"><b>Vorgabe Dauer</b>:
-          {{formatDuration(report.minDurationInSeconds)}} - {{formatDuration(report.maxDurationInSeconds)}}
-        </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel *ngFor="let title of report.titles">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{title.titel.titelName}}<span *ngIf="title.titel.pflichtStueck">*</span></mat-panel-title>
-        </mat-expansion-panel-header>
-        <div>
+  @if (report) {
+    <div class="max-width-container">
+      <h2>{{ report.verein }}</h2>
+      <mat-accordion>
+        <mat-expansion-panel expanded>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Allgemeine Informationen</mat-panel-title>
+          </mat-expansion-panel-header>
           <div>
-            <span>{{title.titel.composer}}</span>
-            <span *ngIf="title.titel.arrangeur"> (Arrangeur: {{title.titel.arrangeur}})</span>
-            <span *ngIf="title.titel.grad">, Grad: {{title.titel.grad}}</span>
-            <span>, Dauer: {{formatDuration(title.titel.durationInSeconds)}}</span>
+            <span><b>Modul</b>: {{ report.modul }}</span>
+            @if (report.klasse) {
+              <span>, <b>Klasse</b>: {{ report.klasse }}</span>
+            }
+            @if (report.besetzung) {
+              <span>, <b>Besetzung</b>: {{ report.besetzung }}</span>
+            }
           </div>
-          <mat-form-field appearance="outline">
-            <mat-label>{{readOnly ? '' : 'Kurzbericht'}}</mat-label>
-            <textarea matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="3"
-                      cdkAutosizeMaxRows="6"
-                      [disabled]="readOnly"
-                      [(ngModel)]="title.comment"
-                      (ngModelChange)="onChange()"></textarea>
-          </mat-form-field>
-
-          <div *ngFor="let rating of title.ratings">
-            <app-report-rating [rating]="rating"
-                               [readOnly]="readOnly"
-                               (changed)="onChange()"></app-report-rating>
+          <div><b>Wettspiellokal</b>: {{ report.location }}</div>
+          <div><b>Dirigent/in</b>: {{ report.dirigent }}</div>
+          @if (report.programmTitel) {
+            <div>
+              <b>Programmtitel</b>: {{ report.programmTitel }}
+            </div>
+          }
+          @if (report.programmInfo) {
+            <div>
+              <b>Erläuterungen</b>: {{ report.programmInfo }}
+            </div>
+          }
+          @if (hasVorgabeDauer) {
+            <div><b>Vorgabe Dauer</b>:
+              {{ formatDuration(report.minDurationInSeconds) }} - {{ formatDuration(report.maxDurationInSeconds) }}
+            </div>
+          }
+        </mat-expansion-panel>
+        @for (title of report.titles; track title) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ title.titel.titelName }}
+                @if (title.titel.pflichtStueck) {
+                  <span>*</span>
+                }
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <span>{{ title.titel.composer }}</span>
+                @if (title.titel.arrangeur) {
+                  <span> (Arrangeur: {{ title.titel.arrangeur }})</span>
+                }
+                @if (title.titel.grad) {
+                  <span>, Grad: {{ title.titel.grad }}</span>
+                }
+                <span>, Dauer: {{ formatDuration(title.titel.durationInSeconds) }}</span>
+              </div>
+              <mat-form-field appearance="outline">
+                <mat-label>{{ readOnly ? '' : 'Kurzbericht' }}</mat-label>
+                <textarea matInput
+                          cdkTextareaAutosize
+                          #autosize="cdkTextareaAutosize"
+                          cdkAutosizeMinRows="3"
+                          cdkAutosizeMaxRows="6"
+                          [disabled]="readOnly"
+                          [(ngModel)]="title.comment"
+                          (ngModelChange)="onChange()"></textarea>
+              </mat-form-field>
+              @for (rating of title.ratings; track rating) {
+                <div>
+                  <app-report-rating [rating]="rating"
+                                     [readOnly]="readOnly"
+                                     (changed)="onChange()"></app-report-rating>
+                </div>
+              }
+              @if (!readOnly) {
+                <div class="action-container">
+                  <app-action-button [processing]="saving()"
+                                     [disabled]="!pendingChanges"
+                                     buttonLabel="Speichern"
+                                     (buttonClicked)="saveReport(report)"></app-action-button>
+                </div>
+              }
+            </div>
+          </mat-expansion-panel>
+        }
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Gesamteindruck</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            @for (rating of report.overallRatings; track rating) {
+              <div>
+                <app-report-rating [rating]="rating"
+                                   [readOnly]="readOnly"
+                                   (changed)="onChange()"></app-report-rating>
+              </div>
+            }
+            @if (!readOnly) {
+              <div class="action-container">
+                <app-action-button [processing]="saving()"
+                                   [disabled]="!pendingChanges"
+                                   buttonLabel="Speichern"
+                                   (buttonClicked)="saveReport(report)"></app-action-button>
+              </div>
+            }
           </div>
-
-          <div class="action-container" *ngIf="!readOnly">
-            <app-action-button [processing]="saving"
-                               [disabled]="!pendingChanges"
-                               buttonLabel="Speichern"
-                               (buttonClicked)="saveReport(report)"></app-action-button>
+        </mat-expansion-panel>
+      </mat-accordion>
+      @if (ranking.length > 0) {
+        <div class="ranking-container">
+          <h3>Aktuelle Rangliste</h3>
+          <div class="ranking">
+            @for (entry of ranking; track entry.verein) {
+              <div>{{ $index + 1 }}</div>
+              <div>{{ entry.verein }}</div>
+              <div>{{ entry.score | number: '1.2-2' }}</div>
+            }
           </div>
         </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Gesamteindruck</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div>
-          <div *ngFor="let rating of report.overallRatings">
-            <app-report-rating [rating]="rating"
-                               [readOnly]="readOnly"
-                               (changed)="onChange()"></app-report-rating>
-          </div>
-
-          <div class="action-container" *ngIf="!readOnly">
-            <app-action-button [processing]="saving"
-                               [disabled]="!pendingChanges"
-                               buttonLabel="Speichern"
-                               (buttonClicked)="saveReport(report)"></app-action-button>
-          </div>
-        </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Punktzahl & Abschliessen</mat-panel-title>
-        </mat-expansion-panel-header>
+      }
+      <div class="overall-container">
+        <h3>Punktzahl & Abschliessen</h3>
         <div>
           <div class="overall-rating-container">
-            <mat-form-field appearance="outline">
-              <mat-label>min. 50 Punkte, max. 100 Punkte</mat-label>
-              <input type="text"
-                     autocomplete="off"
-                     matInput
-                     min="50"
-                     max="100"
-                     [disabled]="readOnly"
-                     [(ngModel)]="report.score"
-                     (ngModelChange)="onChange()"/>
-            </mat-form-field>
-
+            <div style="display: flex; flex-direction: column">
+              <mat-form-field appearance="outline">
+                <mat-label>min. 50 Punkte, max. 100 Punkte</mat-label>
+                <input type="number"
+                       autocomplete="off"
+                       matInput
+                       min="50"
+                       max="100"
+                       step="1"
+                       [disabled]="report.ratingFixed"
+                       [(ngModel)]="report.score"
+                       (ngModelChange)="onChange()"/>
+              </mat-form-field>
+              @if (!report.ratingFixed) {
+                <app-action-button [processing]="fixing()"
+                                   [disabled]="pendingChanges || !validScore"
+                                   buttonLabel="Punktzahl einreichen"
+                                   (buttonClicked)="fixRating(report)"></app-action-button>
+              }
+            </div>
             <ul>
               <li>90-100 Punkte für ausgezeichnete Leistungen</li>
               <li>80-89 Punkte für sehr gute Leistungen</li>
@@ -112,24 +157,27 @@
               <li>50-59 Punkte für ungenügende Leistungen</li>
             </ul>
           </div>
-          <div class="action-container" *ngIf="!readOnly">
-            <app-action-button [processing]="saving"
-                               [color]="undefined"
-                               [disabled]="!pendingChanges"
-                               buttonLabel="Speichern"
-                               (buttonClicked)="saveReport(report)"></app-action-button>
-
-            <app-action-button [processing]="finishing"
-                               [disabled]="!valid"
-                               buttonLabel="Abschliessen"
-                               (buttonClicked)="finishReport(report)"></app-action-button>
-          </div>
+          @if (!readOnly) {
+            <div class="action-container">
+              <app-action-button [processing]="saving()"
+                                 [color]="undefined"
+                                 [disabled]="!pendingChanges"
+                                 buttonLabel="Speichern"
+                                 (buttonClicked)="saveReport(report)"></app-action-button>
+              <app-action-button [processing]="finishing()"
+                                 [disabled]="!valid"
+                                 buttonLabel="Abschliessen"
+                                 (buttonClicked)="finishReport(report)"></app-action-button>
+            </div>
+          }
         </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+      </div>
+    </div>
+  }
 
-  <div *ngIf="errorMessage" class="max-width-container error-msg">
-    {{errorMessage}}
-  </div>
+  @if (errorMessage) {
+    <div class="max-width-container error-msg">
+      {{ errorMessage }}
+    </div>
+  }
 </div>
