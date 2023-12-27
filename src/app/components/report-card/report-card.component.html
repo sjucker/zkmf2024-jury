@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>{{ report.start | date: 'dd.MM.yyyy, HH:mm' }}-{{ report.end | date:'HH:mm' }}
+    </mat-card-subtitle>
+    <mat-card-title>
+      @if (isFinished(report)) {
+        <span><mat-icon color="primary">check_small</mat-icon></span>
+      }
+      {{ report.verein }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <span>{{ report.modul }}</span>
+      @if (report.klasse) {
+        <span>, {{ report.klasse }}</span>
+      }
+      @if (report.besetzung) {
+        <span>, {{ report.besetzung }}</span>
+      }
+    </p>
+    <p>
+      <a [href]="report.locationUrl" target="_blank">{{ report.location }}</a>
+    </p>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-flat-button color="primary" (click)="openReport(report)">
+      {{ isFinished(report) ? 'Ansehen' : 'Bearbeiten' }}
+    </button>
+  </mat-card-actions>
+</mat-card>

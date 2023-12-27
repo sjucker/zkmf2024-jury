@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LoginRequestDTO, LoginResponseDTO} from "../rest";
+import {LoginRequestDTO, LoginResponseDTO, UserRole} from "../rest";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 
@@ -51,6 +51,14 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     return localStorage.getItem(this.token) !== null;
+  }
+
+  isJudge(): boolean {
+    return localStorage.getItem(this.role) === UserRole.JUDGE;
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem(this.role) === UserRole.ADMIN;
   }
 
 }

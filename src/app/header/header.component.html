@@ -1,21 +1,24 @@
 <mat-toolbar color="primary">
   <img src="/assets/logo.png" class="header-logo" alt="ZKMF2024 Logo"/>
-  <span class="header-title">{{header}}</span>
+  <span class="header-title">{{ header }}</span>
   <span class="header-spacer"></span>
-  <button mat-icon-button *ngIf="loggedIn"
-          (click)="home()"
-          matTooltip="Home">
-    <mat-icon>home</mat-icon>
-  </button>
-  <button mat-icon-button *ngIf="loggedIn"
-          (click)="summaries()"
-          matTooltip="Übersicht">
-    <mat-icon>fact_check</mat-icon>
-  </button>
-
-  <button mat-icon-button *ngIf="loggedIn"
-          (click)="logout()"
-          matTooltip="Logout">
-    <mat-icon>logout</mat-icon>
-  </button>
+  @if (loggedIn) {
+    @if (judge) {
+      <button mat-icon-button
+              (click)="home()"
+              matTooltip="Home">
+        <mat-icon>home</mat-icon>
+      </button>
+    }
+    <button mat-icon-button
+            (click)="summaries()"
+            matTooltip="Übersicht">
+      <mat-icon>fact_check</mat-icon>
+    </button>
+    <button mat-icon-button
+            (click)="logout()"
+            matTooltip="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  }
 </mat-toolbar>

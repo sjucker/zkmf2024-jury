@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {JudgeReportDTO, JudgeReportOverviewDTO, JudgeReportSummaryDTO} from "../rest";
+import {JudgeRankingEntryDTO, JudgeReportDTO, JudgeReportOverviewDTO, JudgeReportSummaryDTO} from "../rest";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class BackendService {
     return this.httpClient.get<JudgeReportOverviewDTO[]>(`${this.baseUrl}/secured/judge`);
   }
 
-  public get(id: number): Observable<JudgeReportDTO> {
-    return this.httpClient.get<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${id}`);
+  public get(reportId: number): Observable<JudgeReportDTO> {
+    return this.httpClient.get<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${reportId}`);
   }
 
   public update(report: JudgeReportDTO): Observable<JudgeReportDTO> {
@@ -30,7 +30,19 @@ export class BackendService {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/${report.id}/finish`, {});
   }
 
+  public fixRating(report: JudgeReportDTO): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/${report.id}/fix-rating`, {});
+  }
+
   public summaries(): Observable<JudgeReportSummaryDTO[]> {
     return this.httpClient.get<JudgeReportSummaryDTO[]>(`${this.baseUrl}/secured/judge/summary`);
+  }
+
+  public ranking(reportId: number): Observable<JudgeRankingEntryDTO[]> {
+    return this.httpClient.get<JudgeRankingEntryDTO[]>(`${this.baseUrl}/secured/judge/ranking/${reportId}`);
+  }
+
+  confirmScores(programmId: number) {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/confirm-scores/${programmId}`, {});
   }
 }

@@ -4,17 +4,20 @@
     <mat-button-toggle-group [(ngModel)]="rating.rating"
                              (ngModelChange)="onChange()"
                              [disabled]="readOnly">
+      <mat-button-toggle [value]="veryNegative">--</mat-button-toggle>
       <mat-button-toggle [value]="negative">-</mat-button-toggle>
       <mat-button-toggle [value]="neutral">=</mat-button-toggle>
       <mat-button-toggle [value]="positive">+</mat-button-toggle>
+      <mat-button-toggle [value]="veryPositive">++</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>{{readOnly ? '' : 'Optionale Bemerkung'}}</mat-label>
+    <mat-label>{{label}}</mat-label>
     <input type="text"
            autocomplete="off"
            matInput
+           [required]="required"
            [disabled]="readOnly"
            [(ngModel)]="rating.comment"
            (ngModelChange)="onChange()"/>

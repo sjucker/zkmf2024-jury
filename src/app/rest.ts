@@ -1,5 +1,10 @@
 /* eslint-disable */
 
+export interface CoordinatesDTO {
+  latitude: number;
+  longitude: number;
+}
+
 export interface DoppelEinsatzDTO {
   otherVerein: VereinSelectionDTO;
   mitspielerName: string;
@@ -7,6 +12,11 @@ export interface DoppelEinsatzDTO {
 
 export interface ForgotPasswordRequestDTO {
   email: string;
+}
+
+export interface JudgeRankingEntryDTO {
+  verein: string;
+  score: number;
 }
 
 export interface JudgeReportDTO {
@@ -22,6 +32,7 @@ export interface JudgeReportDTO {
   minDurationInSeconds?: number;
   maxDurationInSeconds?: number;
   score?: number;
+  ratingFixed: boolean;
   status: JudgeReportStatus;
   titles: JudgeReportTitleDTO[];
   overallRatings: JudgeReportRatingDTO[];
@@ -51,10 +62,12 @@ export interface JudgeReportScoreDTO {
   reportId: number;
   judgeName: string;
   score?: number;
-  status: JudgeReportStatus;
+  ratingFixed: boolean;
+  done: boolean;
 }
 
 export interface JudgeReportSummaryDTO {
+  programmId: number;
   modul: string;
   klasse?: string;
   besetzung?: string;
@@ -62,6 +75,9 @@ export interface JudgeReportSummaryDTO {
   overallScore?: number;
   scores: JudgeReportScoreDTO[];
   done: boolean;
+  scoresConfirmed: boolean;
+  scoresConfirmedBy?: string;
+  scoresConfirmedAt?: DateAsString;
 }
 
 export interface JudgeReportTitleDTO {
@@ -83,6 +99,7 @@ export interface KontaktDTO extends IsValid {
 
 export interface LocationDTO {
   id: number;
+  identifier: string;
   name: string;
   address: string;
   latitude: number;
@@ -92,9 +109,13 @@ export interface LocationDTO {
   type: LocationType;
   capacity: string;
   modules: string;
+  sortOrder: number;
+  cloudflareId?: string;
+  kuulaId?: string;
   einspiellokal?: LocationDTO;
   instrumentendepot?: LocationDTO;
   juryfeedback?: LocationDTO;
+  coordinates?: CoordinatesDTO;
 }
 
 export interface LoginRequestDTO {
@@ -156,6 +177,40 @@ export interface ResetPasswordRequestDTO {
   newPassword: string;
 }
 
+export interface SponsorDTO {
+  name: string;
+  cloudflareId: string;
+  url?: string;
+}
+
+export interface SponsoringDTO {
+  hauptsponsor: SponsorDTO[];
+  premium: SponsorDTO[];
+  deluxe: SponsorDTO[];
+  sponsor: SponsorDTO[];
+  musikfan: SponsorDTO[];
+  goenner: SponsorDTO[];
+}
+
+export interface TimetableDayOverviewDTO {
+  day: string;
+  entries: TimetableOverviewEntryDTO[];
+}
+
+export interface TimetableOverviewEntryDTO {
+  vereinId: number;
+  vereinIdentifier: string;
+  vereinsname: string;
+  modul: string;
+  competition: string;
+  type: string;
+  location: LocationDTO;
+  date: DateAsString;
+  start: DateAsString;
+  end: DateAsString;
+  time: string;
+}
+
 export interface TitelDTO extends IsValid {
   id?: number;
   modul?: Modul;
@@ -179,8 +234,35 @@ export interface VereinDTO {
   info: VereinsinfoDTO;
   registrationConfirmed: boolean;
   programme: VereinProgrammDTO[];
-  phase1Status: PhaseStatus;
+  phase1Done: boolean;
+  phase2Done: boolean;
+  phase2ConfirmedBy?: string;
+  phase2ConfirmedAt?: DateAsString;
+  timetableEntries: TimetableOverviewEntryDTO[];
+  messages: VereinMessageDTO[];
+  errata: VereinErrataDTO[];
+  programmUpdated: boolean;
   phase2Status: PhaseStatus;
+  phase1Status: PhaseStatus;
+}
+
+export interface VereinMessageDTO {
+  message: string;
+  createdAt: DateAsString;
+  createdBy: string;
+  ownMessage: boolean;
+}
+
+export interface VereinPresentationDTO {
+  id: number;
+  name: string;
+  logoImgId?: string;
+  bildImgId?: string;
+  homepage?: string;
+  facebook?: string;
+  instagram?: string;
+  websiteText?: string;
+  timetableEntries: VereinTimetableEntryDTO[];
 }
 
 export interface VereinProgrammDTO extends IsValid {
@@ -224,11 +306,21 @@ export interface VereinSelectionDTO {
 }
 
 export interface VereinTeilnahmeDTO {
+  id: number;
+  identifier: string;
   name: string;
-  logoImgId?: number;
-  bildImgId?: number;
+  logoImgId?: string;
+  bildImgId?: string;
   homepage?: string;
+  facebook?: string;
+  instagram?: string;
   websiteText?: string;
+}
+
+export interface VereinTimetableEntryDTO {
+  competition: string;
+  location: LocationDTO;
+  dateTime: string;
 }
 
 export interface VereinsangabenDTO extends IsValid {
@@ -237,6 +329,8 @@ export interface VereinsangabenDTO extends IsValid {
   plz?: number;
   ort?: string;
   homepage?: string;
+  facebook?: string;
+  instagram?: string;
   iban?: string;
   direktionDoppeleinsatz: boolean;
   direktionDoppeleinsatzVerein?: string;
@@ -270,6 +364,8 @@ export interface VereinsanmeldungDTO extends IsValid {
 export interface VereinsinfoDTO extends IsValid {
   logoImgId?: number;
   bildImgId?: number;
+  logoImgCloudflareId?: string;
+  bildImgCloudflareId?: string;
   websiteText?: string;
 }
 
@@ -278,10 +374,37 @@ export interface VerifyEmailRequestDTO {
   verification: string;
 }
 
+export interface BroadcastCreateDTO {
+  ids: number[];
+  message: string;
+}
+
+export interface ErrataDTO {
+  id: number;
+  modul: Modul;
+  klasse: Klasse;
+  besetzung: Besetzung;
+  description: string;
+  text?: string;
+}
+
+export interface ErrataSendDTO {
+  modul: Modul;
+  klasse: Klasse;
+  besetzung: Besetzung;
+}
+
 export interface JudgeDTO {
   id: number;
   name: string;
   email: string;
+}
+
+export interface JudgeReportCreateDTO {
+  timetableEntryId: number;
+  judge1Id: number;
+  judge2Id: number;
+  judge3Id: number;
 }
 
 export interface JuryLoginCreateDTO {
@@ -296,15 +419,21 @@ export interface LocationSelectionDTO {
 }
 
 export interface TimetableEntryCreateDTO {
-  vereinId: number;
   vereinProgrammId: number;
+  modul: Modul;
+  modulDescription: string;
+  klasse?: string;
+  besetzung?: string;
+  entries: TimeTableEntryDTO[];
+}
+
+export interface TimeTableEntryDTO {
+  type: TimetableEntryType;
   locationId: number;
+  availableLocations: LocationSelectionDTO[];
   date: DateAsString;
   start: DateAsString;
   end: DateAsString;
-  judge1Id: number;
-  judge2Id: number;
-  judge3Id: number;
 }
 
 export interface TimetableEntryDTO {
@@ -312,14 +441,16 @@ export interface TimetableEntryDTO {
   modul: string;
   klasse?: string;
   besetzung?: string;
+  locationId: number;
   location: string;
   verein: string;
   date: DateAsString;
   start: DateAsString;
   end: DateAsString;
-  judge1: string;
-  judge2: string;
-  judge3: string;
+  type: TimetableEntryType;
+  judge1?: string;
+  judge2?: string;
+  judge3?: string;
 }
 
 export interface UserCreateDTO {
@@ -334,6 +465,20 @@ export interface UserDTO {
   lastLogin?: DateAsString;
 }
 
+export interface VereinAssignmentDTO {
+  id: number;
+  name: string;
+  programme: VereinAssignmentProgrammDTO[];
+}
+
+export interface VereinAssignmentProgrammDTO {
+  id: number;
+  modul: Modul;
+  modulDescription: string;
+  klasse?: string;
+  besetzung?: string;
+}
+
 export interface VereinCommentCreateDTO {
   comment: string;
 }
@@ -342,6 +487,15 @@ export interface VereinCommentDTO {
   comment: string;
   createdAt: DateAsString;
   createdBy: string;
+}
+
+export interface VereinErrataDTO {
+  description: string;
+  text: string;
+}
+
+export interface VereinMessageCreateDTO {
+  message: string;
 }
 
 export interface VereinOverviewDTO {
@@ -367,14 +521,20 @@ export interface VereinOverviewDTO {
   tambouren: boolean;
   perkussionsensemble: boolean;
   registrationConfirmed: boolean;
+  phase2Confirmed: boolean;
   phase1: PhaseStatus;
   phase2: PhaseStatus;
   hasComments: boolean;
+  hasMessages: boolean;
+  programmLastUpdated?: DateAsString;
 }
 
 export interface VereinProgrammSelectionDTO {
   id: number;
-  name: string;
+  modul: Modul;
+  modulDescription: string;
+  klasse?: string;
+  besetzung?: string;
 }
 
 export interface IsValid {
@@ -407,9 +567,11 @@ export enum JudgeReportCategory {
 }
 
 export enum JudgeReportCategoryRating {
+  VERY_NEGATIVE = "VERY_NEGATIVE",
   NEGATIVE = "NEGATIVE",
   NEUTRAL = "NEUTRAL",
   POSITIVE = "POSITIVE",
+  VERY_POSITIVE = "VERY_POSITIVE",
 }
 
 export enum LocationType {
@@ -418,14 +580,14 @@ export enum LocationType {
   INSTRUMENTENDEPOT = "INSTRUMENTENDEPOT",
   WETTSPIELLOKAL = "WETTSPIELLOKAL",
   JURYFEEDBACK = "JURYFEEDBACK",
+  PLATZKONZERT = "PLATZKONZERT",
 }
 
 export enum UserRole {
   VEREIN = "VEREIN",
-  HELPER = "HELPER",
-  PLANER = "PLANER",
   ADMIN = "ADMIN",
   JUDGE = "JUDGE",
+  IMPERSONATE = "IMPERSONATE",
 }
 
 export enum Aufgaben {
@@ -493,4 +655,12 @@ export enum Besetzung {
   FANFARE = "FANFARE",
   TAMBOUREN = "TAMBOUREN",
   PERKUSSIONSENSEMBLE = "PERKUSSIONSENSEMBLE",
+}
+
+export enum TimetableEntryType {
+  EINSPIEL = "EINSPIEL",
+  WETTSPIEL = "WETTSPIEL",
+  BESPRECHUNG = "BESPRECHUNG",
+  PLATZKONZERT = "PLATZKONZERT",
+  MARSCHMUSIK = "MARSCHMUSIK",
 }

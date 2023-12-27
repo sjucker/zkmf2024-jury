@@ -1,5 +1,7 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -30,6 +32,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ReportRatingComponent} from './report-rating/report-rating.component';
 import {SummaryComponent} from './summary/summary.component';
 import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-changes-dialog.component';
+import {registerLocaleData} from "@angular/common";
+import {ReportCardComponent} from "./components/report-card/report-card.component";
 
 @NgModule({
   declarations: [
@@ -64,10 +68,17 @@ import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-ch
     MatExpansionModule,
     MatButtonToggleModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    ReportCardComponent
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: 'de-DE'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
 }
