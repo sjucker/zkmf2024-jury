@@ -165,7 +165,7 @@
                                  buttonLabel="Speichern"
                                  (buttonClicked)="saveReport(report)"></app-action-button>
               <app-action-button [processing]="finishing()"
-                                 [disabled]="!valid"
+                                 [disabled]="!canFinish"
                                  buttonLabel="Abschliessen"
                                  (buttonClicked)="finishReport(report)"></app-action-button>
             </div>
