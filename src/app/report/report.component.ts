@@ -141,8 +141,11 @@ export class ReportComponent implements OnInit {
     this.pendingChanges = true;
   }
 
-  get valid(): boolean {
-    return this.validScore && !this.pendingChanges;
+  get canFinish(): boolean {
+    if (this.report) {
+      return this.validScore && this.report.ratingFixed && !this.pendingChanges;
+    }
+    return false;
   }
 
   get validScore(): boolean {
