@@ -8,13 +8,14 @@
   @if (report) {
     <div class="max-width-container">
       <h2>{{ report.verein }}</h2>
+      <h3>{{ report.roleDescription }}</h3>
       <mat-accordion>
         <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
             <mat-panel-title>Allgemeine Informationen</mat-panel-title>
           </mat-expansion-panel-header>
           <div>
-            <span><b>Modul</b>: {{ report.modul }}</span>
+            <span><b>Modul</b>: {{ report.modulDescription }}</span>
             @if (report.klasse) {
               <span>, <b>Klasse</b>: {{ report.klasse }}</span>
             }

@@ -21,7 +21,10 @@ export interface JudgeRankingEntryDTO {
 
 export interface JudgeReportDTO {
   id: number;
-  modul: string;
+  modul: Modul;
+  modulDescription: string;
+  role: JudgeRole;
+  roleDescription: string;
   klasse?: string;
   besetzung?: string;
   location: string;
@@ -43,7 +46,10 @@ export interface JudgeReportOverviewDTO {
   verein: string;
   location: string;
   locationUrl: string;
-  modul: string;
+  modul: Modul;
+  modulDescription: string;
+  role: JudgeRole;
+  roleDescription: string;
   klasse?: string;
   besetzung?: string;
   start: DateAsString;
@@ -61,6 +67,7 @@ export interface JudgeReportRatingDTO {
 export interface JudgeReportScoreDTO {
   reportId: number;
   judgeName: string;
+  judgeRole: string;
   score?: number;
   ratingFixed: boolean;
   done: boolean;
@@ -544,6 +551,27 @@ export interface IsValid {
 
 export type DateAsString = string;
 
+export enum Modul {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F",
+  G = "G",
+  H = "H",
+}
+
+export enum JudgeRole {
+  JUROR_1 = "JUROR_1",
+  JUROR_2 = "JUROR_2",
+  JUROR_3 = "JUROR_3",
+  JUROR_1_OPTISCH = "JUROR_1_OPTISCH",
+  JUROR_2_MUSIKALISCH = "JUROR_2_MUSIKALISCH",
+  JUROR_3_MUSIKALISCH = "JUROR_3_MUSIKALISCH",
+  JUROR_4_OPTISCH = "JUROR_4_OPTISCH",
+}
+
 export enum JudgeReportStatus {
   NEW = "NEW",
   IN_PROGRESS = "IN_PROGRESS",
@@ -652,17 +680,6 @@ export enum Einsatzzeit {
   NACHMITTAG = "NACHMITTAG",
   ABEND = "ABEND",
   NACHT = "NACHT",
-}
-
-export enum Modul {
-  A = "A",
-  B = "B",
-  C = "C",
-  D = "D",
-  E = "E",
-  F = "F",
-  G = "G",
-  H = "H",
 }
 
 export enum PhaseStatus {

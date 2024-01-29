@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-header>
     <mat-card-subtitle>{{ report.start | date: 'dd.MM.yyyy, HH:mm' }}-{{ report.end | date:'HH:mm' }}
+      | {{ report.roleDescription }}
     </mat-card-subtitle>
     <mat-card-title>
       @if (isFinished(report)) {
@@ -11,7 +12,7 @@
   </mat-card-header>
   <mat-card-content>
     <p>
-      <span>{{ report.modul }}</span>
+      <span>{{ report.modulDescription }}</span>
       @if (report.klasse) {
         <span>, {{ report.klasse }}</span>
       }

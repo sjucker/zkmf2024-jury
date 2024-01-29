@@ -1,5 +1,5 @@
 import {Component, computed, Inject, LOCALE_ID, OnInit, signal} from '@angular/core';
-import {JudgeReportStatus, JudgeReportSummaryDTO} from "../rest";
+import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
 import {formatDate} from "@angular/common";
@@ -90,4 +90,9 @@ export class SummaryComponent implements OnInit {
       return '';
     }
   }
+
+  getTooltip(score: JudgeReportScoreDTO): string {
+    return `${score.judgeName} (${score.judgeRole})`;
+  }
+
 }
