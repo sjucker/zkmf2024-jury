@@ -21,7 +21,7 @@
                 <div
                   class="score-container"
                   [ngClass]="{'done': score.done}"
-                  [matTooltip]="score.judgeName"
+                  [matTooltip]="getTooltip(score)"
                   (click)="openReport(score.reportId)">
                   {{ score.score | number: '1.0-0' }}
                   @if (score.ratingFixed) {
