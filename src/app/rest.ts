@@ -115,6 +115,7 @@ export interface LocationDTO {
   einspiellokal?: LocationDTO;
   instrumentendepot?: LocationDTO;
   juryfeedback?: LocationDTO;
+  percussionEquipmentType?: PercussionEquipmentType;
   coordinates?: CoordinatesDTO;
 }
 
@@ -148,13 +149,9 @@ export interface RegisterHelperRequestDTO {
   vereinszugehoerigkeit: string;
   aufgaben: Aufgaben[];
   anzahlEinsaetze: string;
-  einsatzMittwoch: Einsatzzeit[];
-  einsatzDonnerstag: Einsatzzeit[];
   einsatzFreitag: Einsatzzeit[];
   einsatzSamstag: Einsatzzeit[];
   einsatzSonntag: Einsatzzeit[];
-  einsatzMontag: Einsatzzeit[];
-  einsatzDienstag: Einsatzzeit[];
   groesseShirt: string;
   comment: string;
 }
@@ -179,7 +176,7 @@ export interface ResetPasswordRequestDTO {
 
 export interface SponsorDTO {
   name: string;
-  cloudflareId: string;
+  cloudflareId?: string;
   url?: string;
 }
 
@@ -242,8 +239,8 @@ export interface VereinDTO {
   messages: VereinMessageDTO[];
   errata: VereinErrataDTO[];
   programmUpdated: boolean;
-  phase2Status: PhaseStatus;
   phase1Status: PhaseStatus;
+  phase2Status: PhaseStatus;
 }
 
 export interface VereinMessageDTO {
@@ -402,9 +399,11 @@ export interface JudgeDTO {
 
 export interface JudgeReportCreateDTO {
   timetableEntryId: number;
+  modul: Modul;
   judge1Id: number;
   judge2Id: number;
   judge3Id: number;
+  judge4Id?: number;
 }
 
 export interface JuryLoginCreateDTO {
@@ -438,7 +437,8 @@ export interface TimeTableEntryDTO {
 
 export interface TimetableEntryDTO {
   id: number;
-  modul: string;
+  modul: Modul;
+  modulDescription: string;
   klasse?: string;
   besetzung?: string;
   locationId: number;
@@ -451,6 +451,7 @@ export interface TimetableEntryDTO {
   judge1?: string;
   judge2?: string;
   judge3?: string;
+  judge4?: string;
 }
 
 export interface UserCreateDTO {
@@ -564,6 +565,40 @@ export enum JudgeReportCategory {
   SCHWIERIGKEITSGRAD = "SCHWIERIGKEITSGRAD",
   PROGRAMMWAHL = "PROGRAMMWAHL",
   GESAMTEINDRUCK = "GESAMTEINDRUCK",
+  PRAESENTATION_MELDUNG = "PRAESENTATION_MELDUNG",
+  PRAESENTATION_VERHALTEN = "PRAESENTATION_VERHALTEN",
+  PRAESENTATION_AUSSTRAHLUNG = "PRAESENTATION_AUSSTRAHLUNG",
+  PRAESENTATION_AUFSTELLUNG = "PRAESENTATION_AUFSTELLUNG",
+  PRAESENTATION_INSTRUMENTENHALTUNG = "PRAESENTATION_INSTRUMENTENHALTUNG",
+  PRAESENTATION_AUSRICHTUNG = "PRAESENTATION_AUSRICHTUNG",
+  PRAESENTATION_ABSTAENDE = "PRAESENTATION_ABSTAENDE",
+  ABMARSCH_KOMMANDI = "ABMARSCH_KOMMANDI",
+  ABMARSCH_ABMARSCH = "ABMARSCH_ABMARSCH",
+  ABMARSCH_TAMBOURBEGINN = "ABMARSCH_TAMBOURBEGINN",
+  ABMARSCH_INSTRUMENTE_ANHEBEN = "ABMARSCH_INSTRUMENTE_ANHEBEN",
+  ABMARSCH_SPIELWECHSEL_SPIEL = "ABMARSCH_SPIELWECHSEL_SPIEL",
+  PARADE_TEMPO = "PARADE_TEMPO",
+  PARADE_SCHRITTLAENGE = "PARADE_SCHRITTLAENGE",
+  PARADE_GLEICHSCHRITT = "PARADE_GLEICHSCHRITT",
+  PARADE_INSTRUMENTENHALTUNG = "PARADE_INSTRUMENTENHALTUNG",
+  PARADE_AUSRICHTUNG = "PARADE_AUSRICHTUNG",
+  PARADE_ABSTAENDE = "PARADE_ABSTAENDE",
+  PARADE_GESAMTWIRKUNG = "PARADE_GESAMTWIRKUNG",
+  MUSIKALISCH_GESAMTEINDRUCK1 = "MUSIKALISCH_GESAMTEINDRUCK1",
+  MUSIK_STIMMUNG = "MUSIK_STIMMUNG",
+  MUSIK_TONKULTUR = "MUSIK_TONKULTUR",
+  MUSIK_RHYTHMUS = "MUSIK_RHYTHMUS",
+  MUSIK_DYNAMIK = "MUSIK_DYNAMIK",
+  MUSIK_TECHNIK = "MUSIK_TECHNIK",
+  MUSIK_AUSDRUCK = "MUSIK_AUSDRUCK",
+  MUSIK_INTERPRETATION = "MUSIK_INTERPRETATION",
+  OPTISCH_GESAMTWIRKUNG = "OPTISCH_GESAMTWIRKUNG",
+  SCHLUSSPHASE_KOMMANDI = "SCHLUSSPHASE_KOMMANDI",
+  SCHLUSSPHASE_SPIELWECHSEL = "SCHLUSSPHASE_SPIELWECHSEL",
+  SCHLUSSPHASE_INSTRUMENTE_SENKEN = "SCHLUSSPHASE_INSTRUMENTE_SENKEN",
+  SCHLUSSPHASE_ARME_SCHWINGEN = "SCHLUSSPHASE_ARME_SCHWINGEN",
+  SCHLUSSPHASE_ANHALTEN = "SCHLUSSPHASE_ANHALTEN",
+  MUSIKALISCH_GESAMTEINDRUCK4 = "MUSIKALISCH_GESAMTEINDRUCK4",
 }
 
 export enum JudgeReportCategoryRating {
@@ -581,6 +616,11 @@ export enum LocationType {
   WETTSPIELLOKAL = "WETTSPIELLOKAL",
   JURYFEEDBACK = "JURYFEEDBACK",
   PLATZKONZERT = "PLATZKONZERT",
+}
+
+export enum PercussionEquipmentType {
+  STANDARD = "STANDARD",
+  FULL = "FULL",
 }
 
 export enum UserRole {
