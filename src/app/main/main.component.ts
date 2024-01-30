@@ -2,8 +2,6 @@ import {Component, computed, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {JudgeReportOverviewDTO, JudgeReportStatus} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {REPORT_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-main',

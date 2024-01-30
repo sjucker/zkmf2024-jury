@@ -73,7 +73,36 @@
                           [(ngModel)]="title.comment"
                           (ngModelChange)="onChange()"></textarea>
               </mat-form-field>
-              @for (rating of title.ratings; track rating) {
+              @for (group of getGroups(title); track group) {
+                @if (group.length > 0) {
+                  <h3>{{ group }}</h3>
+                }
+                @for (rating of getRatings(title, group); track rating) {
+                  <div>
+                    <app-report-rating [rating]="rating"
+                                       [readOnly]="readOnly"
+                                       (changed)="onChange()"></app-report-rating>
+                  </div>
+                }
+              }
+              @if (!readOnly) {
+                <div class="action-container">
+                  <app-action-button [processing]="saving()"
+                                     [disabled]="!pendingChanges"
+                                     buttonLabel="Speichern"
+                                     (buttonClicked)="saveReport(report)"></app-action-button>
+                </div>
+              }
+            </div>
+          </mat-expansion-panel>
+        }
+        @if (report.overallRatings.length > 0) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Gesamteindruck</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              @for (rating of report.overallRatings; track rating) {
                 <div>
                   <app-report-rating [rating]="rating"
                                      [readOnly]="readOnly"
@@ -91,28 +120,6 @@
             </div>
           </mat-expansion-panel>
         }
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Gesamteindruck</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div>
-            @for (rating of report.overallRatings; track rating) {
-              <div>
-                <app-report-rating [rating]="rating"
-                                   [readOnly]="readOnly"
-                                   (changed)="onChange()"></app-report-rating>
-              </div>
-            }
-            @if (!readOnly) {
-              <div class="action-container">
-                <app-action-button [processing]="saving()"
-                                   [disabled]="!pendingChanges"
-                                   buttonLabel="Speichern"
-                                   (buttonClicked)="saveReport(report)"></app-action-button>
-              </div>
-            }
-          </div>
-        </mat-expansion-panel>
       </mat-accordion>
       @if (ranking.length > 0) {
         <div class="ranking-container">
