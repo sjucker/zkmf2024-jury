@@ -75,7 +75,7 @@
               </mat-form-field>
               @for (group of getGroups(title); track group) {
                 @if (group.length > 0) {
-                  <h3>{{ group }}</h3>
+                  <h4>{{ group }}</h4>
                 }
                 @for (rating of getRatings(title, group); track rating) {
                   <div>
