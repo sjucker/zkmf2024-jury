@@ -60,6 +60,7 @@ export interface JudgeReportOverviewDTO {
 export interface JudgeReportRatingDTO {
   category: JudgeReportCategory;
   categoryDescription: string;
+  group: string;
   comment?: string;
   rating: JudgeReportCategoryRating;
 }
