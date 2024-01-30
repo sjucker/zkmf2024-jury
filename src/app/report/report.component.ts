@@ -6,7 +6,8 @@ import {
   JudgeReportCategoryRating,
   JudgeReportDTO,
   JudgeReportRatingDTO,
-  JudgeReportStatus
+  JudgeReportStatus,
+  JudgeReportTitleDTO
 } from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
@@ -216,5 +217,13 @@ export class ReportComponent implements OnInit {
     } else {
       return of(true);
     }
+  }
+
+  getGroups(title: JudgeReportTitleDTO): string[] {
+    return [...new Set(title.ratings.map(r => r.group))];
+  }
+
+  getRatings(title: JudgeReportTitleDTO, group: string): JudgeReportRatingDTO[] {
+    return title.ratings.filter(r => r.group === group);
   }
 }
