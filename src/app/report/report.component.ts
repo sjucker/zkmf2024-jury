@@ -31,8 +31,10 @@ export class ReportComponent implements OnInit {
   fixing = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving() || this.finishing() || this.fixing())
 
-  pendingChanges = false;
-  readOnly = false;
+  pendingChanges = signal(false);
+  readOnly = signal(false);
+
+  ratingAverage = signal(0.5);
 
   errorMessage?: string;
 
@@ -50,8 +52,9 @@ export class ReportComponent implements OnInit {
       this.backendService.get(reportId).subscribe({
         next: value => {
           this.report = value;
-          this.readOnly = this.report.status === JudgeReportStatus.DONE;
+          this.readOnly.set(this.report.status === JudgeReportStatus.DONE);
           this.loading.set(false);
+          this.calculateRatingAverage();
         },
         error: err => {
           console.error(err);
@@ -70,7 +73,7 @@ export class ReportComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   handleClose($event: BeforeUnloadEvent) {
-    if (this.pendingChanges) {
+    if (this.pendingChanges()) {
       $event.returnValue = 'pendingChanges';
     }
   }
@@ -99,7 +102,7 @@ export class ReportComponent implements OnInit {
     this.backendService.update(report).subscribe({
       next: () => {
         this.saving.set(false);
-        this.pendingChanges = false;
+        this.pendingChanges.set(false);
         this.snackBar.open('Speichern war erfolgreich', undefined, {
           verticalPosition: 'top',
           horizontalPosition: 'center',
@@ -139,7 +142,40 @@ export class ReportComponent implements OnInit {
   }
 
   onChange(): void {
-    this.pendingChanges = true;
+    this.calculateRatingAverage();
+    this.pendingChanges.set(true);
+  }
+
+  private calculateRatingAverage() {
+    let count = 0;
+    let ratingsSum = 0;
+    this.report?.titles.forEach(title => {
+      title.ratings.forEach(rating => {
+        count++;
+        ratingsSum += this.getRatingValue(rating)
+      });
+    });
+
+    if (count === 0) {
+      this.ratingAverage.set(0);
+    } else {
+      this.ratingAverage.set(ratingsSum / count);
+    }
+  }
+
+  private getRatingValue(rating: JudgeReportRatingDTO) {
+    switch (rating.rating) {
+      case JudgeReportCategoryRating.VERY_NEGATIVE:
+        return 0;
+      case JudgeReportCategoryRating.NEGATIVE:
+        return 0.25;
+      case JudgeReportCategoryRating.NEUTRAL:
+        return 0.5;
+      case JudgeReportCategoryRating.POSITIVE:
+        return 0.75;
+      case JudgeReportCategoryRating.VERY_POSITIVE:
+        return 1;
+    }
   }
 
   get canFinish(): boolean {
@@ -188,7 +224,7 @@ export class ReportComponent implements OnInit {
     this.backendService.finish(report).subscribe({
       next: () => {
         this.finishing.set(false);
-        this.readOnly = true;
+        this.readOnly.set(true);
         this.snackBar.open('Erfolgreich abgeschlossen', undefined, {
           verticalPosition: 'top',
           horizontalPosition: 'center',
@@ -209,7 +245,7 @@ export class ReportComponent implements OnInit {
   }
 
   canDeactivate(): Observable<boolean> {
-    if (this.pendingChanges) {
+    if (this.pendingChanges()) {
       return this.dialog.open(PendingChangesDialogComponent, {
         disableClose: true,
         autoFocus: false
