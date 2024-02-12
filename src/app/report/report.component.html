@@ -63,13 +63,13 @@
                 <span>, Dauer: {{ formatDuration(title.titel.durationInSeconds) }}</span>
               </div>
               <mat-form-field appearance="outline">
-                <mat-label>{{ readOnly ? '' : 'Kurzbericht' }}</mat-label>
+                <mat-label>{{ readOnly() ? '' : 'Kurzbericht' }}</mat-label>
                 <textarea matInput
                           cdkTextareaAutosize
                           #autosize="cdkTextareaAutosize"
                           cdkAutosizeMinRows="3"
                           cdkAutosizeMaxRows="6"
-                          [disabled]="readOnly"
+                          [disabled]="readOnly()"
                           [(ngModel)]="title.comment"
                           (ngModelChange)="onChange()"></textarea>
               </mat-form-field>
@@ -80,12 +80,12 @@
                 @for (rating of getRatings(title, group); track rating) {
                   <div>
                     <app-report-rating [rating]="rating"
-                                       [readOnly]="readOnly"
+                                       [readOnly]="readOnly()"
                                        (changed)="onChange()"></app-report-rating>
                   </div>
                 }
               }
-              @if (!readOnly) {
+              @if (!readOnly()) {
                 <div class="action-container">
                   <app-action-button [processing]="saving()"
                                      [disabled]="!pendingChanges"
@@ -105,11 +105,11 @@
               @for (rating of report.overallRatings; track rating) {
                 <div>
                   <app-report-rating [rating]="rating"
-                                     [readOnly]="readOnly"
+                                     [readOnly]="readOnly()"
                                      (changed)="onChange()"></app-report-rating>
                 </div>
               }
-              @if (!readOnly) {
+              @if (!readOnly()) {
                 <div class="action-container">
                   <app-action-button [processing]="saving()"
                                      [disabled]="!pendingChanges"
@@ -126,9 +126,13 @@
           <h3>Aktuelle Rangliste</h3>
           <div class="ranking">
             @for (entry of ranking; track entry.verein) {
-              <div>{{ $index + 1 }}</div>
+              <div>{{ $index + 1 | number: '2.0-0' }}</div>
               <div>{{ entry.verein }}</div>
-              <div>{{ entry.score | number: '1.2-2' }}</div>
+              @if (entry.score) {
+                <div>{{ entry.score | number: '1.2-2' }}</div>
+              } @else {
+                <div>n.v.</div>
+              }
             }
           </div>
         </div>
@@ -152,20 +156,26 @@
               </mat-form-field>
               @if (!report.ratingFixed) {
                 <app-action-button [processing]="fixing()"
-                                   [disabled]="pendingChanges || !validScore"
+                                   [disabled]="pendingChanges() || !validScore"
                                    buttonLabel="Punktzahl einreichen"
                                    (buttonClicked)="fixRating(report)"></app-action-button>
               }
             </div>
             <ul>
-              <li>90-100 Punkte für ausgezeichnete Leistungen</li>
-              <li>80-89 Punkte für sehr gute Leistungen</li>
-              <li>70-79 Punkte für gute Leistungen</li>
-              <li>60-69 Punkte für genügende Leistungen</li>
-              <li>50-59 Punkte für ungenügende Leistungen</li>
+              <li [ngClass]="{'suggested': ratingAverage() >= 0.8}">90-100 Punkte für ausgezeichnete Leistungen</li>
+              <li [ngClass]="{'suggested': ratingAverage() >= 0.6 && ratingAverage() < 0.8}">
+                80-89 Punkte für sehr gute Leistungen
+              </li>
+              <li [ngClass]="{'suggested': ratingAverage() >= 0.4 && ratingAverage() < 0.6}">
+                70-79 Punkte für gute Leistungen
+              </li>
+              <li [ngClass]="{'suggested': ratingAverage() >= 0.2 && ratingAverage() < 0.4}">
+                60-69 Punkte für genügende Leistungen
+              </li>
+              <li [ngClass]="{'suggested': ratingAverage() < 0.2}">50-59 Punkte für ungenügende Leistungen</li>
             </ul>
           </div>
-          @if (!readOnly) {
+          @if (!readOnly()) {
             <div class="action-container">
               <app-action-button [processing]="saving()"
                                  [color]="undefined"

@@ -9,6 +9,10 @@ h4 {
   color: variables.$gruen;
 }
 
+.suggested {
+  background-color: variables.$gruen-half;
+}
+
 .max-width-container {
   padding: variables.$padding;
   position: relative;
@@ -34,6 +38,7 @@ h4 {
     background-color: variables.$gruen-quarter;
     padding: variables.$padding;
     margin-top: variables.$padding;
+    font-size: 11px;
   }
 
   @media screen and (min-width: calc(responsive.$max-width + 300px)) {
