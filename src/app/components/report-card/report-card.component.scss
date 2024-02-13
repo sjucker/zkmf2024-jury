@@ -1,0 +1,6 @@
+@use "../../../variables";
+@use "../../../responsive";
+
+.actions {
+  gap: variables.$padding;
+}

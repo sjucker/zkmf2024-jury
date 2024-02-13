@@ -8,4 +8,8 @@
   .invalid {
     border: solid variables.$rot 1px;
   }
+
+  .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    background-color: variables.$gruen-half;
+  }
 }

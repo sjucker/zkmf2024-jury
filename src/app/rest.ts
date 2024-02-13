@@ -138,6 +138,15 @@ export interface LoginResponseDTO {
   jwt: string;
 }
 
+export interface ModulDSelectionDTO {
+  vereinProgrammId: number;
+  verein: string;
+  titel1: string;
+  titel2: string;
+  selection: ModulDSelection;
+  start: DateAsString;
+}
+
 export interface NewsletterRecipientDTO {
   vorname: string;
   name: string;
@@ -658,6 +667,11 @@ export enum UserRole {
   ADMIN_READ_ONLY = "ADMIN_READ_ONLY",
   JUDGE = "JUDGE",
   IMPERSONATE = "IMPERSONATE",
+}
+
+export enum ModulDSelection {
+  TITEL_1 = "TITEL_1",
+  TITEL_2 = "TITEL_2",
 }
 
 export enum Aufgaben {

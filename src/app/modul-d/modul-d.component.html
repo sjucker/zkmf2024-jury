@@ -1,0 +1,26 @@
+<div>
+  <app-header header="ZKMF2024 - Jury"></app-header>
+  <div class="loading-indicator">
+    @if (showProgressBar()) {
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    }
+  </div>
+  <div class="max-width-container">
+    @for (selection of modulDSelections; track selection.vereinProgrammId) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ selection.verein }}</mat-card-title>
+          <mat-card-subtitle>{{ selection.start | date: 'dd.MM.yyyy, HH:mm' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-button-toggle-group [(ngModel)]="selection.selection"
+                                   (ngModelChange)="onChange()">
+            <mat-button-toggle [value]="titel1">{{ selection.titel1 }}</mat-button-toggle>
+            <mat-button-toggle [value]="titel2">{{ selection.titel2 }}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+</div>

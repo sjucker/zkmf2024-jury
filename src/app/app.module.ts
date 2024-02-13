@@ -34,6 +34,7 @@ import {SummaryComponent} from './summary/summary.component';
 import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-changes-dialog.component';
 import {registerLocaleData} from "@angular/common";
 import {ReportCardComponent} from "./components/report-card/report-card.component";
+import {ModulDComponent} from "./modul-d/modul-d.component";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,8 @@ import {ReportCardComponent} from "./components/report-card/report-card.componen
     ReportRatingComponent,
     SummaryComponent,
     PendingChangesDialogComponent,
+    ReportCardComponent,
+    ModulDComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,6 @@ import {ReportCardComponent} from "./components/report-card/report-card.componen
     MatButtonToggleModule,
     MatSnackBarModule,
     MatDialogModule,
-    ReportCardComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
