@@ -1,0 +1,5 @@
+@use "../../variables";
+
+.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+  background-color: variables.$gruen-half;
+}

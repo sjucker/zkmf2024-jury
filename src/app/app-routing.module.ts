@@ -5,9 +5,11 @@ import {AuthenticationGuard} from "./service/authentication.guard";
 import {LoginComponent} from "./login/login.component";
 import {ReportComponent} from "./report/report.component";
 import {SummaryComponent} from "./summary/summary.component";
+import {ModulDComponent} from "./modul-d/modul-d.component";
 
 export const LOGIN_PATH = 'login';
 export const REPORT_PATH = 'report';
+export const MODUL_D = 'modul-d';
 export const SUMMARY_PATH = 'summary';
 
 const canActivateFn: CanActivateFn = () => inject(AuthenticationGuard).canActivate();
@@ -25,8 +27,13 @@ const routes: Routes = [
     canDeactivate: [(component: ReportComponent) => component.canDeactivate()]
   },
   {
-    path: `${SUMMARY_PATH}`,
+    path: SUMMARY_PATH,
     component: SummaryComponent,
+    canActivate: [canActivateFn]
+  },
+  {
+    path: MODUL_D,
+    component: ModulDComponent,
     canActivate: [canActivateFn]
   },
   {

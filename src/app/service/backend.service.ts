@@ -2,7 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {JudgeRankingEntryDTO, JudgeReportDTO, JudgeReportOverviewDTO, JudgeReportSummaryDTO} from "../rest";
+import {
+  JudgeRankingEntryDTO,
+  JudgeReportDTO,
+  JudgeReportOverviewDTO,
+  JudgeReportSummaryDTO,
+  ModulDSelectionDTO
+} from "../rest";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +48,15 @@ export class BackendService {
     return this.httpClient.get<JudgeRankingEntryDTO[]>(`${this.baseUrl}/secured/judge/ranking/${reportId}`);
   }
 
-  confirmScores(programmId: number) {
+  public confirmScores(programmId: number): Observable<void> {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/confirm-scores/${programmId}`, {});
+  }
+
+  public modulD(): Observable<ModulDSelectionDTO[]> {
+    return this.httpClient.get<ModulDSelectionDTO[]>(`${this.baseUrl}/secured/judge/modul-d`);
+  }
+
+  public updateModulD(dtos: ModulDSelectionDTO[]): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/modul-d`, dtos);
   }
 }

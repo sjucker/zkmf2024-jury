@@ -29,7 +29,7 @@ export class ReportComponent implements OnInit {
   saving = signal(false);
   finishing = signal(false);
   fixing = signal(false);
-  showProgressBar = computed(() => this.loading() || this.saving() || this.finishing() || this.fixing())
+  showProgressBar = computed(() => this.loading() || this.saving() || this.finishing() || this.fixing());
 
   pendingChanges = signal(false);
   readOnly = signal(false);
