@@ -12,26 +12,26 @@
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Login</mat-label>
           <input type="text"
-            autocomplete="off"
-            matInput
-            name="email"
-            id="email"
-            formControlName="email"/>
-          </mat-form-field>
-          <mat-form-field appearance="outline" color="accent">
-            <mat-label>Passwort</mat-label>
-            <input type="password"
-              autocomplete="off"
-              matInput
-              name="password"
-              formControlName="password"
-              id="password"/>
-            </mat-form-field>
-            <app-action-button buttonLabel="Login" [processing]="authenticating"></app-action-button>
-            @if (authenticationError) {
-              <span class="error-msg">Email oder Passwort nicht korrekt!</span>
-            }
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </div>
+                 autocomplete="off"
+                 matInput
+                 name="email"
+                 id="email"
+                 formControlName="email"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Passwort</mat-label>
+          <input type="password"
+                 autocomplete="off"
+                 matInput
+                 name="password"
+                 formControlName="password"
+                 id="password"/>
+        </mat-form-field>
+        <app-action-button buttonLabel="Login" [processing]="authenticating"></app-action-button>
+        @if (authenticationError) {
+          <span class="error-msg">Email oder Passwort nicht korrekt!</span>
+        }
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
