@@ -29,7 +29,7 @@
     <button mat-flat-button color="primary" (click)="openReport()">
       {{ isFinished() ? 'Ansehen' : 'Bearbeiten' }}
     </button>
-    @if(isModulD()) {
+    @if (isModulD()) {
       <button mat-stroked-button color="primary" (click)="openModulDSelection()">Komposition auswählen</button>
     }
   </mat-card-actions>
