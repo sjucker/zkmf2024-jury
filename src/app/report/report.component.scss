@@ -41,6 +41,12 @@ h4 {
     font-size: 11px;
   }
 
+  .ranking {
+    display: grid;
+    grid-template-columns: repeat(8, max-content);
+    column-gap: variables.$padding-half;
+  }
+
   @media screen and (min-width: calc(responsive.$max-width + 300px)) {
     .ranking-container {
       position: fixed;
@@ -49,12 +55,10 @@ h4 {
       margin: 0;
       max-width: 300px;
     }
-  }
 
-  .ranking {
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    column-gap: variables.$padding-half;
+    .ranking {
+      grid-template-columns: repeat(4, max-content);
+    }
   }
 
   .overall-container {
