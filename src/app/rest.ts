@@ -4,7 +4,6 @@ export interface AdhocOrchesterTeilnehmerDTO {
   name?: string;
   email?: string;
   instrument?: string;
-  notEmpty: boolean;
 }
 
 export interface CoordinatesDTO {
