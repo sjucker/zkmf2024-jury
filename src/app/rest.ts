@@ -1,5 +1,12 @@
 /* eslint-disable */
 
+export interface AdhocOrchesterTeilnehmerDTO {
+  name?: string;
+  email?: string;
+  instrument?: string;
+  notEmpty: boolean;
+}
+
 export interface CoordinatesDTO {
   latitude: number;
   longitude: number;
@@ -248,8 +255,10 @@ export interface VereinDTO {
   info: VereinsinfoDTO;
   registrationConfirmed: boolean;
   programme: VereinProgrammDTO[];
+  anmeldungDetail: VereinsanmeldungDetailDTO;
   phase1Done: boolean;
   phase2Done: boolean;
+  phase4Done: boolean;
   phase2ConfirmedBy?: string;
   phase2ConfirmedAt?: DateAsString;
   timetableEntries: TimetableOverviewEntryDTO[];
@@ -258,6 +267,7 @@ export interface VereinDTO {
   programmUpdated: boolean;
   phase1Status: PhaseStatus;
   phase2Status: PhaseStatus;
+  phase4Status: PhaseStatus;
 }
 
 export interface VereinMessageDTO {
@@ -373,6 +383,32 @@ export interface VereinsanmeldungDTO extends IsValid {
   perkussionsensemble: boolean;
   module: Modul[];
   besetzungen: Besetzung[];
+}
+
+export interface VereinsanmeldungDetailDTO extends IsValid {
+  festfuehrerAmount?: number;
+  festkartenMusikerAmount?: number;
+  festkartenBegleiterAmount?: number;
+  freitagabendAmount?: number;
+  gehbehinderung: boolean;
+  partiturenSent: boolean;
+  partiturenSentAt?: DateAsString;
+  gesamtchor: boolean;
+  adhocOrchester: boolean;
+  adhocOrchesterTeilnehmer: AdhocOrchesterTeilnehmerDTO[];
+  anreisePublicTransport: boolean;
+  anreisePublicTransportType?: string;
+  anreiseOtherwise?: string;
+  verpflegungMeat?: number;
+  verpflegungVegan?: number;
+  verpflegungAllergies?: number;
+  verpflegungNone?: number;
+  verpflegungHelper1?: string;
+  verpflegungHelper2?: string;
+  verpflegungHelper3?: string;
+  verpflegungHelper4?: string;
+  verpflegungHelper5?: string;
+  verpflegungHelper6?: string;
 }
 
 export interface VereinsinfoDTO extends IsValid {
@@ -542,6 +578,7 @@ export interface VereinOverviewDTO {
   phase2Confirmed: boolean;
   phase1: PhaseStatus;
   phase2: PhaseStatus;
+  phase4: PhaseStatus;
   hasComments: boolean;
   hasMessages: boolean;
   programmLastUpdated?: DateAsString;
