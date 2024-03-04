@@ -123,9 +123,12 @@
       </mat-accordion>
       @if (ranking.length > 0) {
         <div class="ranking-container">
-          <h3>Aktuelle Rangliste</h3>
+          <div class="ranking-header">
+            <h3>Aktuelle Rangliste</h3>
+            <mat-slide-toggle [(ngModel)]="rankingOwnOnly">nur meine</mat-slide-toggle>
+          </div>
           <div class="ranking">
-            @for (entry of ranking; track entry.verein) {
+            @for (entry of relevantRanking(); track entry.verein) {
               <div>{{ $index + 1 | number: '2.0-0' }}</div>
               <div>{{ entry.verein }}</div>
               @if (entry.score) {

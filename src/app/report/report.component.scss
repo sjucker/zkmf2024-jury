@@ -39,15 +39,27 @@ h4 {
     padding: variables.$padding;
     margin-top: variables.$padding;
     font-size: 11px;
+
+    .ranking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
   }
 
   .ranking {
     display: grid;
-    grid-template-columns: repeat(8, max-content);
+    grid-template-columns: repeat(4, max-content);
     column-gap: variables.$padding-half;
   }
 
-  @media screen and (min-width: calc(responsive.$max-width + 300px)) {
+  @media screen and (min-width: 600px) and (max-width: calc(responsive.$max-width + (2 * variables.$padding) + 300px)) {
+    .ranking {
+      grid-template-columns: repeat(8, max-content);
+    }
+  }
+
+  @media screen and (min-width: calc(responsive.$max-width + (2 * variables.$padding) + 300px)) {
     .ranking-container {
       position: fixed;
       top: calc(var(--mat-toolbar-standard-height) + variables.$padding);

@@ -35,6 +35,7 @@ import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-ch
 import {registerLocaleData} from "@angular/common";
 import {ReportCardComponent} from "./components/report-card/report-card.component";
 import {ModulDComponent} from "./modul-d/modul-d.component";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {ModulDComponent} from "./modul-d/modul-d.component";
     MatButtonToggleModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatSlideToggle,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
