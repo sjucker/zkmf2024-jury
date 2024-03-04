@@ -24,6 +24,13 @@ export class ReportComponent implements OnInit {
 
   report?: JudgeReportDTO;
   ranking: JudgeRankingEntryDTO[] = [];
+  rankingOwn: JudgeRankingEntryDTO[] = [];
+
+  rankingOwnOnly = signal(false);
+
+  relevantRanking = computed(() => {
+    return this.rankingOwnOnly() ? this.rankingOwn : this.ranking;
+  });
 
   loading = signal(false);
   saving = signal(false);
@@ -66,6 +73,12 @@ export class ReportComponent implements OnInit {
       this.backendService.ranking(reportId).subscribe({
         next: value => {
           this.ranking = value;
+        },
+      });
+
+      this.backendService.rankingOwnOnly(reportId).subscribe({
+        next: value => {
+          this.rankingOwn = value;
         },
       });
     }

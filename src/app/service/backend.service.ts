@@ -48,6 +48,10 @@ export class BackendService {
     return this.httpClient.get<JudgeRankingEntryDTO[]>(`${this.baseUrl}/secured/judge/ranking/${reportId}`);
   }
 
+  public rankingOwnOnly(reportId: number): Observable<JudgeRankingEntryDTO[]> {
+    return this.httpClient.get<JudgeRankingEntryDTO[]>(`${this.baseUrl}/secured/judge/ranking/own/${reportId}`);
+  }
+
   public confirmScores(programmId: number): Observable<void> {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/confirm-scores/${programmId}`, {});
   }
