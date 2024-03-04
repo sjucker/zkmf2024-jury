@@ -20,6 +20,13 @@ export interface ForgotPasswordRequestDTO {
   email: string;
 }
 
+export interface JudgePresentationDTO {
+  name: string;
+  modul: string;
+  cloudflareId?: string;
+  presentationText?: string;
+}
+
 export interface JudgeRankingEntryDTO {
   verein: string;
   score?: number;
@@ -124,6 +131,7 @@ export interface LocationDTO {
   capacity: string;
   modules: string;
   sortOrder: number;
+  mapId: string;
   cloudflareId?: string;
   kuulaId?: string;
   einspiellokal?: LocationDTO;
@@ -159,6 +167,11 @@ export interface NewsletterRecipientDTO {
   email: string;
   subscribedAt: DateAsString;
   unsubscribedAt?: DateAsString;
+}
+
+export interface NichtmitgliederDTO {
+  amount?: number;
+  instrument?: string;
 }
 
 export interface RegisterHelperRequestDTO {
@@ -341,9 +354,13 @@ export interface VereinTeilnahmeDTO {
 }
 
 export interface VereinTimetableEntryDTO {
+  modul: Modul;
   competition: string;
   location: LocationDTO;
   dateTime: string;
+  titel?: string;
+  description?: string;
+  programm: TitelDTO[];
 }
 
 export interface VereinsangabenDTO extends IsValid {
@@ -395,6 +412,7 @@ export interface VereinsanmeldungDetailDTO extends IsValid {
   gesamtchor: boolean;
   adhocOrchester: boolean;
   adhocOrchesterTeilnehmer: AdhocOrchesterTeilnehmerDTO[];
+  nichtmitglieder: NichtmitgliederDTO[];
   anreisePublicTransport: boolean;
   anreisePublicTransportType?: string;
   anreiseOtherwise?: string;
@@ -408,6 +426,7 @@ export interface VereinsanmeldungDetailDTO extends IsValid {
   verpflegungHelper4?: string;
   verpflegungHelper5?: string;
   verpflegungHelper6?: string;
+  stageSetup?: string;
 }
 
 export interface VereinsinfoDTO extends IsValid {
@@ -460,6 +479,7 @@ export interface JudgeReportCreateDTO {
 
 export interface JuryLoginCreateDTO {
   name: string;
+  firstName: string;
   email: string;
   password: string;
 }
@@ -690,6 +710,8 @@ export enum LocationType {
   WETTSPIELLOKAL = "WETTSPIELLOKAL",
   JURYFEEDBACK = "JURYFEEDBACK",
   PLATZKONZERT = "PLATZKONZERT",
+  INFOSTAND = "INFOSTAND",
+  FESTZELT = "FESTZELT",
 }
 
 export enum PercussionEquipmentType {
