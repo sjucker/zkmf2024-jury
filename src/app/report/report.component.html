@@ -6,195 +6,409 @@
     }
   </div>
   @if (report) {
-    <div class="max-width-container">
-      <h2>{{ report.verein }}</h2>
-      <h3>{{ report.roleDescription }}</h3>
-      <mat-accordion>
-        <mat-expansion-panel expanded>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Allgemeine Informationen</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div>
-            <span><b>Modul</b>: {{ report.modulDescription }}</span>
-            @if (report.klasse) {
-              <span>, <b>Klasse</b>: {{ report.klasse }}</span>
-            }
-            @if (report.besetzung) {
-              <span>, <b>Besetzung</b>: {{ report.besetzung }}</span>
-            }
-          </div>
-          <div><b>Wettspiellokal</b>: {{ report.location }}</div>
-          <div><b>Dirigent/in</b>: {{ report.dirigent }}</div>
-          @if (report.programmTitel) {
-            <div>
-              <b>Programmtitel</b>: {{ report.programmTitel }}
-            </div>
-          }
-          @if (report.programmInfo) {
-            <div>
-              <b>Erläuterungen</b>: {{ report.programmInfo }}
-            </div>
-          }
-          @if (hasVorgabeDauer) {
-            <div><b>Vorgabe Dauer</b>:
-              {{ formatDuration(report.minDurationInSeconds) }} - {{ formatDuration(report.maxDurationInSeconds) }}
-            </div>
-          }
-        </mat-expansion-panel>
-        @for (title of report.titles; track title) {
-          <mat-expansion-panel>
+    @if (isModulG()) {
+      <div class="max-width-container">
+        <h2>{{ report.verein }}</h2>
+        <h3>{{ report.roleDescription }}</h3>
+
+        <mat-accordion>
+          <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ title.titel.titelName }}
-                @if (title.titel.pflichtStueck) {
-                  <span>*</span>
-                }
-              </mat-panel-title>
+              <mat-panel-title>Allgemeine Informationen</mat-panel-title>
             </mat-expansion-panel-header>
             <div>
-              <div>
-                <span>{{ title.titel.composer }}</span>
-                @if (title.titel.arrangeur) {
-                  <span> (Arrangeur: {{ title.titel.arrangeur }})</span>
-                }
-                @if (title.titel.grad) {
-                  <span>, Grad: {{ title.titel.grad }}</span>
-                }
-                <span>, Dauer: {{ formatDuration(title.titel.durationInSeconds) }}</span>
+              <span><b>Modul</b>: {{ report.modulDescription }}</span>
+              @if (report.klasse) {
+                <span>, <b>Klasse</b>: {{ report.klasse }}</span>
+              }
+              @if (report.besetzung) {
+                <span>, <b>Besetzung</b>: {{ report.besetzung }}</span>
+              }
+            </div>
+            <div><b>{{ report.categoryDescription }}</b></div>
+            <div><b>Wettspiellokal</b>: {{ report.location }}</div>
+            <div><b>Dirigent/in</b>: {{ report.dirigent }}</div>
+          </mat-expansion-panel>
+
+          @if (isModulGKatA()) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Grundlage I - {{ report.modulGKatA1 }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="form-layout">
+                <mat-form-field appearance="outline">
+                  <mat-label>min. 5 Punkte, max. 10 Punkte</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="5"
+                         max="10"
+                         step="0.1"
+                         [disabled]="readOnly()"
+                         [(ngModel)]="grundlage1Rating.score"
+                         (ngModelChange)="onChange()"/>
+                </mat-form-field>
+                <div>&nbsp;</div>
               </div>
-              <mat-form-field appearance="outline">
-                <mat-label>{{ readOnly() ? '' : 'Kurzbericht' }}</mat-label>
-                <textarea matInput
-                          cdkTextareaAutosize
-                          #autosize="cdkTextareaAutosize"
-                          cdkAutosizeMinRows="3"
-                          cdkAutosizeMaxRows="6"
-                          [disabled]="readOnly()"
-                          [(ngModel)]="title.comment"
-                          (ngModelChange)="onChange()"></textarea>
-              </mat-form-field>
-              @for (group of getGroups(title); track group) {
-                @if (group.length > 0) {
-                  <h4>{{ group }}</h4>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Grundlage II - {{ report.modulGKatA2 }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="form-layout">
+                <mat-form-field appearance="outline">
+                  <mat-label>min. 5 Punkte, max. 10 Punkte</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="5"
+                         max="10"
+                         step="0.1"
+                         [disabled]="readOnly()"
+                         [(ngModel)]="grundlage2Rating.score"
+                         (ngModelChange)="onChange()"/>
+                </mat-form-field>
+                <div>&nbsp;</div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Frei gewählter Baslermarsch (BM) oder Marsch (M)</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div><b>{{ katATitel1?.titel?.titelName }}</b>, {{ katATitel1?.titel?.composer }},
+                Klasse: {{ katATitel1?.titel?.grad }}
+              </div>
+              <app-report-score [rating]="katATitel1!.ratings[0]"
+                                [readOnly]="readOnly()"
+                                [min]="12"
+                                [max]="20"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel1!.ratings[1]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel1!.ratings[2]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel1!.ratings[3]"
+                                [readOnly]="readOnly()"
+                                [min]="0"
+                                [max]="5"
+                                (changed)="onChange()"></app-report-score>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Frei gewählte Komposition</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div><b>{{ katATitel2?.titel?.titelName }}</b>, {{ katATitel2?.titel?.composer }},
+                Klasse: {{ katATitel2?.titel?.grad }}
+              </div>
+              <app-report-score [rating]="katATitel2!.ratings[0]"
+                                [readOnly]="readOnly()"
+                                [min]="12"
+                                [max]="20"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel2!.ratings[1]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel2!.ratings[2]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katATitel2!.ratings[3]"
+                                [readOnly]="readOnly()"
+                                [min]="0"
+                                [max]="5"
+                                (changed)="onChange()"></app-report-score>
+            </mat-expansion-panel>
+          } @else if (isModulGKatB()) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Kategorie B - Frei gewählter Vortrag</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div><b>{{ katBTitel?.titel?.titelName }}</b>, {{ katBTitel?.titel?.composer }},
+                Klasse: {{ katBTitel?.titel?.grad }}
+              </div>
+              <app-report-score [rating]="katBTitel!.ratings[0]"
+                                [readOnly]="readOnly()"
+                                [min]="12"
+                                [max]="20"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katBTitel!.ratings[1]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katBTitel!.ratings[2]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katBTitel!.ratings[3]"
+                                [readOnly]="readOnly()"
+                                [min]="0"
+                                [max]="5"
+                                (changed)="onChange()"></app-report-score>
+              <div class="form-layout">
+                <span>Begründung Abzug</span>
+                <div style="flex: 2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Begründung Abzug</mat-label>
+                    <input type="text"
+                           autocomplete="off"
+                           matInput
+                           [disabled]="readOnly()"
+                           [(ngModel)]="katBTitel!.ratings[3].comment"
+                           (ngModelChange)="onChange()"/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          } @else if (isModulGKatC()) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Kategorie C - Frei gewählter Vortrag</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div><b>{{ katCTitel?.titel?.titelName }}</b>, {{ katCTitel?.titel?.composer }},
+                Klasse: {{ katCTitel?.titel?.grad }}
+              </div>
+              <app-report-score [rating]="katCTitel!.ratings[0]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[1]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[2]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[3]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[4]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[5]"
+                                [readOnly]="readOnly()"
+                                [min]="5"
+                                [max]="10"
+                                (changed)="onChange()"></app-report-score>
+              <app-report-score [rating]="katCTitel!.ratings[6]"
+                                [readOnly]="readOnly()"
+                                [min]="0"
+                                [max]="1"
+                                (changed)="onChange()"></app-report-score>
+            </mat-expansion-panel>
+          }
+          <app-ranking [reportId]="report.id"></app-ranking>
+          <div class="overall-container">
+            <b>Total</b>: {{ report.score }} Punkte
+          </div>
+
+          @if (!readOnly()) {
+            <div class="action-container">
+              <app-action-button [processing]="saving()"
+                                 [color]="undefined"
+                                 [disabled]="!pendingChanges()"
+                                 buttonLabel="Speichern"
+                                 (buttonClicked)="saveReport(report)"></app-action-button>
+              <app-action-button [processing]="finishing()"
+                                 [disabled]="!canFinishModulG"
+                                 buttonLabel="Abschliessen"
+                                 (buttonClicked)="finishReport(report)"></app-action-button>
+            </div>
+          }
+        </mat-accordion>
+      </div>
+    } @else {
+      <div class="max-width-container">
+        <h2>{{ report.verein }}</h2>
+        <h3>{{ report.roleDescription }}</h3>
+        <mat-accordion>
+          <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Allgemeine Informationen</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <span><b>Modul</b>: {{ report.modulDescription }}</span>
+              @if (report.klasse) {
+                <span>, <b>Klasse</b>: {{ report.klasse }}</span>
+              }
+              @if (report.besetzung) {
+                <span>, <b>Besetzung</b>: {{ report.besetzung }}</span>
+              }
+            </div>
+            <div><b>Wettspiellokal</b>: {{ report.location }}</div>
+            <div><b>Dirigent/in</b>: {{ report.dirigent }}</div>
+            @if (report.programmTitel) {
+              <div>
+                <b>Programmtitel</b>: {{ report.programmTitel }}
+              </div>
+            }
+            @if (report.programmInfo) {
+              <div>
+                <b>Erläuterungen</b>: {{ report.programmInfo }}
+              </div>
+            }
+            @if (hasVorgabeDauer) {
+              <div><b>Vorgabe Dauer</b>:
+                {{ formatDuration(report.minDurationInSeconds) }} - {{ formatDuration(report.maxDurationInSeconds) }}
+              </div>
+            }
+          </mat-expansion-panel>
+          @for (title of report.titles; track title) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ title.titel.titelName }}
+                  @if (title.titel.pflichtStueck) {
+                    <span>*</span>
+                  }
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                <div>
+                  <span>{{ title.titel.composer }}</span>
+                  @if (title.titel.arrangeur) {
+                    <span> (Arrangeur: {{ title.titel.arrangeur }})</span>
+                  }
+                  @if (title.titel.grad) {
+                    <span>, Grad: {{ title.titel.grad }}</span>
+                  }
+                  <span>, Dauer: {{ formatDuration(title.titel.durationInSeconds) }}</span>
+                </div>
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ readOnly() ? '' : 'Kurzbericht' }}</mat-label>
+                  <textarea matInput
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="3"
+                            cdkAutosizeMaxRows="6"
+                            [disabled]="readOnly()"
+                            [(ngModel)]="title.comment"
+                            (ngModelChange)="onChange()"></textarea>
+                </mat-form-field>
+                @for (group of getGroups(title); track group) {
+                  @if (group.length > 0) {
+                    <h4>{{ group }}</h4>
+                  }
+                  @for (rating of getRatings(title, group); track rating) {
+                    <div>
+                      <app-report-rating [rating]="rating"
+                                         [readOnly]="readOnly()"
+                                         (changed)="onChange()"></app-report-rating>
+                    </div>
+                  }
                 }
-                @for (rating of getRatings(title, group); track rating) {
+                @if (!readOnly()) {
+                  <div class="action-container">
+                    <app-action-button [processing]="saving()"
+                                       [disabled]="!pendingChanges()"
+                                       buttonLabel="Speichern"
+                                       (buttonClicked)="saveReport(report)"></app-action-button>
+                  </div>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+          @if (report.overallRatings.length > 0) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Gesamteindruck</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                @for (rating of report.overallRatings; track rating) {
                   <div>
                     <app-report-rating [rating]="rating"
                                        [readOnly]="readOnly()"
                                        (changed)="onChange()"></app-report-rating>
                   </div>
                 }
-              }
-              @if (!readOnly()) {
-                <div class="action-container">
-                  <app-action-button [processing]="saving()"
-                                     [disabled]="!pendingChanges"
-                                     buttonLabel="Speichern"
-                                     (buttonClicked)="saveReport(report)"></app-action-button>
-                </div>
-              }
+                @if (!readOnly()) {
+                  <div class="action-container">
+                    <app-action-button [processing]="saving()"
+                                       [disabled]="!pendingChanges()"
+                                       buttonLabel="Speichern"
+                                       (buttonClicked)="saveReport(report)"></app-action-button>
+                  </div>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+        <app-ranking [reportId]="report.id"></app-ranking>
+        <div class="overall-container">
+          <h3>Punktzahl & Abschliessen</h3>
+          <div>
+            <div class="overall-rating-container">
+              <div style="display: flex; flex-direction: column">
+                <mat-form-field appearance="outline">
+                  <mat-label>min. 50 Punkte, max. 100 Punkte</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="50"
+                         max="100"
+                         step="1"
+                         [disabled]="report.ratingFixed"
+                         [(ngModel)]="report.score"
+                         (ngModelChange)="onChange()"/>
+                </mat-form-field>
+                @if (!report.ratingFixed) {
+                  <app-action-button [processing]="fixing()"
+                                     [disabled]="pendingChanges() || !validScore"
+                                     buttonLabel="Punktzahl einreichen"
+                                     (buttonClicked)="fixRating(report)"></app-action-button>
+                }
+              </div>
+              <ul>
+                <li [ngClass]="{'suggested': ratingAverage() >= 0.8}">90-100 Punkte für ausgezeichnete Leistungen</li>
+                <li [ngClass]="{'suggested': ratingAverage() >= 0.6 && ratingAverage() < 0.8}">
+                  80-89 Punkte für sehr gute Leistungen
+                </li>
+                <li [ngClass]="{'suggested': ratingAverage() >= 0.4 && ratingAverage() < 0.6}">
+                  70-79 Punkte für gute Leistungen
+                </li>
+                <li [ngClass]="{'suggested': ratingAverage() >= 0.2 && ratingAverage() < 0.4}">
+                  60-69 Punkte für genügende Leistungen
+                </li>
+                <li [ngClass]="{'suggested': ratingAverage() < 0.2}">50-59 Punkte für ungenügende Leistungen</li>
+              </ul>
             </div>
-          </mat-expansion-panel>
-        }
-        @if (report.overallRatings.length > 0) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Gesamteindruck</mat-panel-title>
-            </mat-expansion-panel-header>
-            <div>
-              @for (rating of report.overallRatings; track rating) {
-                <div>
-                  <app-report-rating [rating]="rating"
-                                     [readOnly]="readOnly()"
-                                     (changed)="onChange()"></app-report-rating>
-                </div>
-              }
-              @if (!readOnly()) {
-                <div class="action-container">
-                  <app-action-button [processing]="saving()"
-                                     [disabled]="!pendingChanges"
-                                     buttonLabel="Speichern"
-                                     (buttonClicked)="saveReport(report)"></app-action-button>
-                </div>
-              }
-            </div>
-          </mat-expansion-panel>
-        }
-      </mat-accordion>
-      @if (ranking.length > 0) {
-        <div class="ranking-container">
-          <div class="ranking-header">
-            <h3>Aktuelle Rangliste</h3>
-            <mat-slide-toggle [(ngModel)]="rankingOwnOnly">nur meine</mat-slide-toggle>
-          </div>
-          <div class="ranking">
-            @for (entry of relevantRanking(); track entry.verein) {
-              <div>{{ $index + 1 | number: '2.0-0' }}</div>
-              <div>{{ entry.verein }}</div>
-              @if (entry.score) {
-                <div>{{ entry.score | number: '1.2-2' }}</div>
-              } @else {
-                <div>n.v.</div>
-              }
-              <div>&nbsp;</div>
+            @if (!readOnly()) {
+              <div class="action-container">
+                <app-action-button [processing]="saving()"
+                                   [disabled]="!pendingChanges()"
+                                   buttonLabel="Speichern"
+                                   (buttonClicked)="saveReport(report)"></app-action-button>
+                <app-action-button [processing]="finishing()"
+                                   [disabled]="!canFinish"
+                                   buttonLabel="Abschliessen"
+                                   (buttonClicked)="finishReport(report)"></app-action-button>
+              </div>
             }
           </div>
         </div>
-      }
-      <div class="overall-container">
-        <h3>Punktzahl & Abschliessen</h3>
-        <div>
-          <div class="overall-rating-container">
-            <div style="display: flex; flex-direction: column">
-              <mat-form-field appearance="outline">
-                <mat-label>min. 50 Punkte, max. 100 Punkte</mat-label>
-                <input type="number"
-                       autocomplete="off"
-                       matInput
-                       min="50"
-                       max="100"
-                       step="1"
-                       [disabled]="report.ratingFixed"
-                       [(ngModel)]="report.score"
-                       (ngModelChange)="onChange()"/>
-              </mat-form-field>
-              @if (!report.ratingFixed) {
-                <app-action-button [processing]="fixing()"
-                                   [disabled]="pendingChanges() || !validScore"
-                                   buttonLabel="Punktzahl einreichen"
-                                   (buttonClicked)="fixRating(report)"></app-action-button>
-              }
-            </div>
-            <ul>
-              <li [ngClass]="{'suggested': ratingAverage() >= 0.8}">90-100 Punkte für ausgezeichnete Leistungen</li>
-              <li [ngClass]="{'suggested': ratingAverage() >= 0.6 && ratingAverage() < 0.8}">
-                80-89 Punkte für sehr gute Leistungen
-              </li>
-              <li [ngClass]="{'suggested': ratingAverage() >= 0.4 && ratingAverage() < 0.6}">
-                70-79 Punkte für gute Leistungen
-              </li>
-              <li [ngClass]="{'suggested': ratingAverage() >= 0.2 && ratingAverage() < 0.4}">
-                60-69 Punkte für genügende Leistungen
-              </li>
-              <li [ngClass]="{'suggested': ratingAverage() < 0.2}">50-59 Punkte für ungenügende Leistungen</li>
-            </ul>
-          </div>
-          @if (!readOnly()) {
-            <div class="action-container">
-              <app-action-button [processing]="saving()"
-                                 [color]="undefined"
-                                 [disabled]="!pendingChanges"
-                                 buttonLabel="Speichern"
-                                 (buttonClicked)="saveReport(report)"></app-action-button>
-              <app-action-button [processing]="finishing()"
-                                 [disabled]="!canFinish"
-                                 buttonLabel="Abschliessen"
-                                 (buttonClicked)="finishReport(report)"></app-action-button>
-            </div>
-          }
-        </div>
       </div>
-    </div>
+    }
   }
 
   @if (errorMessage) {

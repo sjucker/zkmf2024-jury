@@ -1,0 +1,20 @@
+@if (ranking.length > 0) {
+  <div class="ranking-container">
+    <div class="ranking-header">
+      <h3>Aktuelle Rangliste</h3>
+      <mat-slide-toggle [(ngModel)]="rankingOwnOnly">nur meine</mat-slide-toggle>
+    </div>
+    <div class="ranking">
+      @for (entry of relevantRanking(); track entry.verein) {
+        <div>{{ $index + 1 | number: '2.0-0' }}</div>
+        <div>{{ entry.verein }}</div>
+        @if (entry.score) {
+          <div>{{ entry.score | number: '1.2-2' }}</div>
+        } @else {
+          <div>n.v.</div>
+        }
+        <div>&nbsp;</div>
+      }
+    </div>
+  </div>
+}
