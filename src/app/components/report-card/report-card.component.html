@@ -19,6 +19,9 @@
       @if (report.besetzung) {
         <span>, {{ report.besetzung }}</span>
       }
+      @if (report.categoryDescription) {
+        <span> ({{ report.categoryDescription }})</span>
+      }
     </p>
     <p>
       <a [href]="report.locationUrl" target="_blank">{{ report.location }}</a>

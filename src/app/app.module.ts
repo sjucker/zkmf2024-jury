@@ -36,6 +36,8 @@ import {registerLocaleData} from "@angular/common";
 import {ReportCardComponent} from "./components/report-card/report-card.component";
 import {ModulDComponent} from "./modul-d/modul-d.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {ReportScoreComponent} from "./report-score/report-score.component";
+import {RankingComponent} from "./ranking/ranking.component";
 
 @NgModule({
   declarations: [
@@ -47,10 +49,12 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     ReportComponent,
     ReportFinishComponent,
     ReportRatingComponent,
+    ReportScoreComponent,
     SummaryComponent,
     PendingChangesDialogComponent,
     ReportCardComponent,
     ModulDComponent,
+    RankingComponent,
   ],
   imports: [
     BrowserModule,

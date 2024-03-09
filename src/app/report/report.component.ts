@@ -2,12 +2,14 @@ import {Component, computed, HostListener, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {
-  JudgeRankingEntryDTO,
+  JudgeReportCategory,
   JudgeReportCategoryRating,
   JudgeReportDTO,
+  JudgeReportModulCategory,
   JudgeReportRatingDTO,
   JudgeReportStatus,
-  JudgeReportTitleDTO
+  JudgeReportTitleDTO,
+  Modul
 } from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
@@ -23,14 +25,6 @@ import {PendingChangesDialogComponent} from "../pending-changes-dialog/pending-c
 export class ReportComponent implements OnInit {
 
   report?: JudgeReportDTO;
-  ranking: JudgeRankingEntryDTO[] = [];
-  rankingOwn: JudgeRankingEntryDTO[] = [];
-
-  rankingOwnOnly = signal(false);
-
-  relevantRanking = computed(() => {
-    return this.rankingOwnOnly() ? this.rankingOwn : this.ranking;
-  });
 
   loading = signal(false);
   saving = signal(false);
@@ -62,24 +56,13 @@ export class ReportComponent implements OnInit {
           this.readOnly.set(this.report.status === JudgeReportStatus.DONE);
           this.loading.set(false);
           this.calculateRatingAverage();
+          this.calculateTotalScore();
         },
         error: err => {
           console.error(err);
           this.errorMessage = "Ein Fehler ist aufgetreten";
           this.loading.set(false);
         }
-      });
-
-      this.backendService.ranking(reportId).subscribe({
-        next: value => {
-          this.ranking = value;
-        },
-      });
-
-      this.backendService.rankingOwnOnly(reportId).subscribe({
-        next: value => {
-          this.rankingOwn = value;
-        },
       });
     }
   }
@@ -156,10 +139,38 @@ export class ReportComponent implements OnInit {
 
   onChange(): void {
     this.calculateRatingAverage();
+    this.calculateTotalScore();
     this.pendingChanges.set(true);
   }
 
-  private calculateRatingAverage() {
+  private calculateTotalScore(): void {
+    if (this.report) {
+      if (!this.isModulG()) {
+        return;
+      }
+      let total = 0;
+      this.report.titles.forEach(title => {
+        title.ratings.forEach(rating => {
+          if (rating.category === JudgeReportCategory.ABZUG) {
+            total -= rating.score ?? 0;
+          } else {
+            total += rating.score ?? 0;
+          }
+        })
+      })
+      this.report.overallRatings.forEach(overallRating => {
+        total += overallRating.score ?? 0;
+      })
+
+      this.report.score = total;
+    }
+  }
+
+  private calculateRatingAverage(): void {
+    if (this.isModulG()) {
+      return;
+    }
+
     let count = 0;
     let ratingsSum = 0;
     this.report?.titles.forEach(title => {
@@ -191,9 +202,28 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  get canFinishModulG(): boolean {
+    if (this.pendingChanges()) {
+      return false;
+    }
+
+    if (this.report?.category) {
+      const score = this.report.score ?? 0;
+      switch (this.report.category) {
+        case JudgeReportModulCategory.MODUL_G_KAT_A:
+          return (score > 0 && score <= 100);
+        case JudgeReportModulCategory.MODUL_G_KAT_B:
+          return (score > 0 && score <= 40);
+        case JudgeReportModulCategory.MODUL_G_KAT_C:
+          return (score >= 30 && score <= 61);
+      }
+    }
+    return false;
+  }
+
   get canFinish(): boolean {
     if (this.report) {
-      return this.validScore && this.report.ratingFixed && !this.pendingChanges;
+      return this.validScore && this.report.ratingFixed && !this.pendingChanges();
     }
     return false;
   }
@@ -274,5 +304,55 @@ export class ReportComponent implements OnInit {
 
   getRatings(title: JudgeReportTitleDTO, group: string): JudgeReportRatingDTO[] {
     return title.ratings.filter(r => r.group === group);
+  }
+
+  isModulG(): boolean {
+    return this.report?.modul === Modul.G;
+  }
+
+  isModulGKatA(): boolean {
+    return this.report?.category === JudgeReportModulCategory.MODUL_G_KAT_A;
+  }
+
+  isModulGKatB(): boolean {
+    return this.report?.category === JudgeReportModulCategory.MODUL_G_KAT_B;
+  }
+
+  isModulGKatC(): boolean {
+    return this.report?.category === JudgeReportModulCategory.MODUL_G_KAT_C;
+  }
+
+  get grundlage1Rating(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_1) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_1,
+      categoryDescription: '',
+      group: '',
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
+  get grundlage2Rating(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_2) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_2,
+      categoryDescription: '',
+      group: '',
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
+  get katATitel1(): JudgeReportTitleDTO | undefined {
+    return this.report?.titles[0];
+  }
+
+  get katATitel2(): JudgeReportTitleDTO | undefined {
+    return this.report?.titles[1];
+  }
+
+  get katBTitel(): JudgeReportTitleDTO | undefined {
+    return this.report?.titles[0];
+  }
+
+  get katCTitel(): JudgeReportTitleDTO | undefined {
+    return this.report?.titles[0];
   }
 }

@@ -40,6 +40,8 @@ export interface JudgeReportDTO {
   roleDescription: string;
   klasse?: string;
   besetzung?: string;
+  category?: JudgeReportModulCategory;
+  categoryDescription?: string;
   location: string;
   verein: string;
   dirigent: string;
@@ -47,6 +49,8 @@ export interface JudgeReportDTO {
   programmInfo?: string;
   minDurationInSeconds?: number;
   maxDurationInSeconds?: number;
+  modulGKatA1?: string;
+  modulGKatA2?: string;
   score?: number;
   ratingFixed: boolean;
   status: JudgeReportStatus;
@@ -65,6 +69,8 @@ export interface JudgeReportOverviewDTO {
   roleDescription: string;
   klasse?: string;
   besetzung?: string;
+  category?: JudgeReportModulCategory;
+  categoryDescription?: string;
   start: DateAsString;
   end: DateAsString;
   status: JudgeReportStatus;
@@ -76,6 +82,7 @@ export interface JudgeReportRatingDTO {
   group: string;
   comment?: string;
   rating: JudgeReportCategoryRating;
+  score?: number;
 }
 
 export interface JudgeReportScoreDTO {
@@ -638,6 +645,12 @@ export enum JudgeRole {
   JUROR_4_OPTISCH = "JUROR_4_OPTISCH",
 }
 
+export enum JudgeReportModulCategory {
+  MODUL_G_KAT_A = "MODUL_G_KAT_A",
+  MODUL_G_KAT_B = "MODUL_G_KAT_B",
+  MODUL_G_KAT_C = "MODUL_G_KAT_C",
+}
+
 export enum JudgeReportStatus {
   NEW = "NEW",
   IN_PROGRESS = "IN_PROGRESS",
@@ -651,9 +664,11 @@ export enum JudgeReportCategory {
   DYNAMIK_KLANGAUSGLEICH = "DYNAMIK_KLANGAUSGLEICH",
   TECHNIK_ARTIKULATION = "TECHNIK_ARTIKULATION",
   TECHNIK_PHRASIERUNG_ARTIKULATION = "TECHNIK_PHRASIERUNG_ARTIKULATION",
+  TONKULTUR_TECHNIK_ARTIKULATION = "TONKULTUR_TECHNIK_ARTIKULATION",
   MUSIKALISCHER_AUSDRUCK = "MUSIKALISCHER_AUSDRUCK",
   INTERPRETATION = "INTERPRETATION",
   INTERPRETATION_STILEMPFINDEN = "INTERPRETATION_STILEMPFINDEN",
+  ORGANISATION_ENSEMBLEAUFSTELLUNG = "ORGANISATION_ENSEMBLEAUFSTELLUNG",
   PROGRAMMAUFBAU = "PROGRAMMAUFBAU",
   VIELSEITIGKEIT_STILEMPFINDEN = "VIELSEITIGKEIT_STILEMPFINDEN",
   SCHWIERIGKEITSGRAD = "SCHWIERIGKEITSGRAD",
@@ -693,6 +708,19 @@ export enum JudgeReportCategory {
   SCHLUSSPHASE_ARME_SCHWINGEN = "SCHLUSSPHASE_ARME_SCHWINGEN",
   SCHLUSSPHASE_ANHALTEN = "SCHLUSSPHASE_ANHALTEN",
   MUSIKALISCH_GESAMTEINDRUCK4 = "MUSIKALISCH_GESAMTEINDRUCK4",
+  GRUNDLAGE_1 = "GRUNDLAGE_1",
+  GRUNDLAGE_2 = "GRUNDLAGE_2",
+  TECHNISCHE_AUSFUEHRUNG = "TECHNISCHE_AUSFUEHRUNG",
+  RHYTHMIK = "RHYTHMIK",
+  DYNAMIK = "DYNAMIK",
+  ABZUG = "ABZUG",
+  BEWERTUNG_TAMBOUREN = "BEWERTUNG_TAMBOUREN",
+  BEWERTUNG_PERKUSSION_UND_KLEINPERKUSSION = "BEWERTUNG_PERKUSSION_UND_KLEINPERKUSSION",
+  RHYTHMUS_UND_ZUSAMMENSPIEL = "RHYTHMUS_UND_ZUSAMMENSPIEL",
+  DYNAMIK_UND_AUSGEWOGENHEIT = "DYNAMIK_UND_AUSGEWOGENHEIT",
+  STIMMUNG_KLANG_UND_WAHL_INSTRUMENTE = "STIMMUNG_KLANG_UND_WAHL_INSTRUMENTE",
+  MUSIKALISCHE_UMSETZUNG_VISUELLE_SCHLEGEL_EFFEKTE = "MUSIKALISCHE_UMSETZUNG_VISUELLE_SCHLEGEL_EFFEKTE",
+  SCHWIERIGKEITSBONUS = "SCHWIERIGKEITSBONUS",
 }
 
 export enum JudgeReportCategoryRating {
