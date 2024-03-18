@@ -80,6 +80,7 @@ export interface JudgeReportRatingDTO {
   category: JudgeReportCategory;
   categoryDescription: string;
   group: string;
+  ratingDescriptions: string[];
   comment?: string;
   rating: JudgeReportCategoryRating;
   score?: number;
@@ -299,6 +300,7 @@ export interface VereinMessageDTO {
 export interface VereinPresentationDTO {
   id: number;
   name: string;
+  direktionName?: string;
   logoImgId?: string;
   bildImgId?: string;
   homepage?: string;
@@ -346,6 +348,10 @@ export interface VereinProgrammTitelDTO {
 export interface VereinSelectionDTO {
   id: number;
   name: string;
+}
+
+export interface VereinStageSetupDTO {
+  stageSetup: string;
 }
 
 export interface VereinTeilnahmeDTO {
@@ -433,7 +439,6 @@ export interface VereinsanmeldungDetailDTO extends IsValid {
   verpflegungHelper4?: string;
   verpflegungHelper5?: string;
   verpflegungHelper6?: string;
-  stageSetup?: string;
 }
 
 export interface VereinsinfoDTO extends IsValid {
