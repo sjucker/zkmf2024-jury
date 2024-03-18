@@ -38,6 +38,7 @@ import {ModulDComponent} from "./modul-d/modul-d.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ReportScoreComponent} from "./report-score/report-score.component";
 import {RankingComponent} from "./ranking/ranking.component";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import {RankingComponent} from "./ranking/ranking.component";
     MatSnackBarModule,
     MatDialogModule,
     MatSlideToggle,
+    MatMenuModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
