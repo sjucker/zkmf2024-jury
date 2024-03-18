@@ -327,6 +327,7 @@ export class ReportComponent implements OnInit {
       category: JudgeReportCategory.GRUNDLAGE_1,
       categoryDescription: '',
       group: '',
+      ratingDescriptions: [],
       rating: JudgeReportCategoryRating.NEUTRAL
     };
   }
@@ -336,6 +337,7 @@ export class ReportComponent implements OnInit {
       category: JudgeReportCategory.GRUNDLAGE_2,
       categoryDescription: '',
       group: '',
+      ratingDescriptions: [],
       rating: JudgeReportCategoryRating.NEUTRAL
     };
   }

@@ -42,4 +42,9 @@ export class ReportRatingComponent {
   private isNegative() {
     return this.rating.rating === this.negative || this.rating.rating === this.veryNegative;
   }
+
+  apply(description: string) {
+    this.rating.comment = description;
+    this.onChange();
+  }
 }
