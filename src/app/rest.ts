@@ -16,6 +16,20 @@ export interface DoppelEinsatzDTO {
   mitspielerName: string;
 }
 
+export interface FestprogrammDayDTO {
+  day: string;
+  entries: FestprogrammEntryDTO[];
+}
+
+export interface FestprogrammEntryDTO {
+  date: DateAsString;
+  timeFrom: string;
+  timeTo?: string;
+  description: string;
+  location: string;
+  important: boolean;
+}
+
 export interface ForgotPasswordRequestDTO {
   email: string;
 }
@@ -265,6 +279,24 @@ export interface TitelDTO extends IsValid {
   infoModeration?: string;
 }
 
+export interface UnterhaltungTypeDTO {
+  type: UnterhaltungEntryType;
+  entries: UnterhaltungsEntryDTO[];
+}
+
+export interface UnterhaltungsEntryDTO {
+  type: UnterhaltungEntryType;
+  date: DateAsString;
+  start: DateAsString;
+  end?: DateAsString;
+  title: string;
+  subtitle?: string;
+  location: LocationDTO;
+  cloudflareId?: string;
+  vereinIdentifier?: string;
+  unterhaltungIdentifier?: string;
+}
+
 export interface VereinDTO {
   email: string;
   angaben: VereinsangabenDTO;
@@ -284,6 +316,7 @@ export interface VereinDTO {
   timetableEntries: TimetableOverviewEntryDTO[];
   messages: VereinMessageDTO[];
   errata: VereinErrataDTO[];
+  lunchTime: DateAsString;
   programmUpdated: boolean;
   phase1Status: PhaseStatus;
   phase2Status: PhaseStatus;
@@ -351,7 +384,11 @@ export interface VereinSelectionDTO {
 }
 
 export interface VereinStageSetupDTO {
+  locationIdentifier: string;
   stageSetup: string;
+  dirigentenpodest: boolean;
+  ablagenAmount?: number;
+  comment?: string;
 }
 
 export interface VereinTeilnahmeDTO {
@@ -787,6 +824,13 @@ export enum Einsatzzeit {
   NACHMITTAG = "NACHMITTAG",
   ABEND = "ABEND",
   NACHT = "NACHT",
+}
+
+export enum UnterhaltungEntryType {
+  FREITAG_ABEND = "FREITAG_ABEND",
+  SAMSTAG_TAG = "SAMSTAG_TAG",
+  SAMSTAG_ABEND = "SAMSTAG_ABEND",
+  SONNTAG = "SONNTAG",
 }
 
 export enum PhaseStatus {
