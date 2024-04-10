@@ -3,7 +3,8 @@
   <div>
     <mat-button-toggle-group [(ngModel)]="rating.rating"
                              (ngModelChange)="onChange()"
-                             [disabled]="readOnly">
+                             [disabled]="readOnly"
+                             [hideSingleSelectionIndicator]="true">
       <mat-button-toggle [value]="veryPositive">++</mat-button-toggle>
       <mat-button-toggle [value]="positive">+</mat-button-toggle>
       <mat-button-toggle [value]="neutral">0</mat-button-toggle>
