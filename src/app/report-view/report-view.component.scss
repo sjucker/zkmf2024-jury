@@ -1,0 +1,26 @@
+@use "../../variables";
+@import "../../responsive";
+
+.very-negative {
+  color: variables.$rot;
+  font-weight: bold;
+}
+
+.negative {
+  color: variables.$rot-half;
+  font-weight: bold;
+}
+
+.positive {
+  color: variables.$gruen-half;
+  font-weight: bold;
+}
+
+.very-positive {
+  color: variables.$gruen;
+  font-weight: bold;
+}
+
+.comment {
+  white-space: pre-wrap;
+}

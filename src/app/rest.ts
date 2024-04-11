@@ -129,6 +129,21 @@ export interface JudgeReportTitleDTO {
   ratings: JudgeReportRatingDTO[];
 }
 
+export interface JudgeReportViewDTO {
+  judge: string;
+  modul: Modul;
+  modulDescription: string;
+  klasse?: string;
+  besetzung?: string;
+  category?: JudgeReportModulCategory;
+  categoryDescription?: string;
+  verein: string;
+  score?: number;
+  status: JudgeReportStatus;
+  titles: JudgeReportTitleDTO[];
+  overallRatings: JudgeReportRatingDTO[];
+}
+
 export interface KontaktDTO extends IsValid {
   vorname?: string;
   nachname?: string;
@@ -291,6 +306,7 @@ export interface UnterhaltungsEntryDTO {
   end?: DateAsString;
   title: string;
   subtitle?: string;
+  text?: string;
   location: LocationDTO;
   cloudflareId?: string;
   vereinIdentifier?: string;
@@ -313,6 +329,7 @@ export interface VereinDTO {
   phase4Done: boolean;
   phase2ConfirmedBy?: string;
   phase2ConfirmedAt?: DateAsString;
+  phase4ConfirmedAt?: DateAsString;
   timetableEntries: TimetableOverviewEntryDTO[];
   messages: VereinMessageDTO[];
   errata: VereinErrataDTO[];
@@ -476,6 +493,7 @@ export interface VereinsanmeldungDetailDTO extends IsValid {
   verpflegungHelper4?: string;
   verpflegungHelper5?: string;
   verpflegungHelper6?: string;
+  hasPartituren: boolean;
 }
 
 export interface VereinsinfoDTO extends IsValid {
@@ -644,6 +662,7 @@ export interface VereinOverviewDTO {
   perkussionsensemble: boolean;
   registrationConfirmed: boolean;
   phase2Confirmed: boolean;
+  phase4Confirmed: boolean;
   phase1: PhaseStatus;
   phase2: PhaseStatus;
   phase4: PhaseStatus;

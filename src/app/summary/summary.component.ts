@@ -3,6 +3,8 @@ import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO} from "../
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
 import {formatDate} from "@angular/common";
+import {Router} from "@angular/router";
+import {VIEW_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-summary',
@@ -20,6 +22,7 @@ export class SummaryComponent implements OnInit {
 
   constructor(private backendService: BackendService,
               private authenticationService: AuthenticationService,
+              private router: Router,
               @Inject(LOCALE_ID) private locale: string) {
   }
 
@@ -61,8 +64,9 @@ export class SummaryComponent implements OnInit {
   protected readonly JudgeReportStatus = JudgeReportStatus;
 
   openReport(reportId: number) {
-    // TODO open report
-    console.log(reportId);
+    this.router.navigate([VIEW_PATH, reportId]).catch(reason => {
+      console.error(reason);
+    });
   }
 
   get admin(): boolean {
