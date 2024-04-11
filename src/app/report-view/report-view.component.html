@@ -1,0 +1,135 @@
+<div>
+  <app-header header="ZKMF2024 - Jury"></app-header>
+  <div class="loading-indicator">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    }
+  </div>
+  @if (report) {
+    <div class="max-width-container">
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>{{ report.verein }}</mat-card-title>
+          <mat-card-subtitle>{{ report.judge }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            <span><b>Modul</b>: {{ report.modulDescription }}</span>
+            @if (report.category) {
+              <span>, <b>Kategorie</b>: {{ report.categoryDescription }}</span>
+            }
+            @if (report.klasse) {
+              <span>, <b>Klasse</b>: {{ report.klasse }}</span>
+            }
+            @if (report.besetzung) {
+              <span>, <b>Besetzung</b>: {{ report.besetzung }}</span>
+            }
+          </p>
+          <p>Punktzahl: <b>{{ report.score ?? '-' }}</b></p>
+        </mat-card-content>
+      </mat-card>
+      @if (isModulG()) {
+        @if (isModulGKatA()) {
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <p><b>Grundlage I</b>: {{ grundlage1Rating.score ?? '-' }} Punkte</p>
+              <p><b>Grundlage II</b>: {{ grundlage2Rating.score ?? '-' }} Punkte</p>
+              <p><b>Frei gewählter Baslermarsch (BM) oder Marsch (M)</b>
+                ({{ katATitel1?.titel?.titelName }}, {{ katATitel1?.titel?.composer }})<br/>
+                {{ katATitel1!.ratings[0].categoryDescription }}: {{ katATitel1!.ratings[0].score ?? '-' }} Punkte<br/>
+                {{ katATitel1!.ratings[1].categoryDescription }}: {{ katATitel1!.ratings[1].score ?? '-' }} Punkte<br/>
+                {{ katATitel1!.ratings[2].categoryDescription }}: {{ katATitel1!.ratings[2].score ?? '-' }} Punkte<br/>
+                {{ katATitel1!.ratings[3].categoryDescription }}: {{ katATitel1!.ratings[3].score ?? '-' }} Punkte<br/>
+              </p>
+              <p><b>Frei gewählte Komposition</b>
+                ({{ katATitel2?.titel?.titelName }}, {{ katATitel2?.titel?.composer }})<br/>
+                {{ katATitel2!.ratings[0].categoryDescription }}: {{ katATitel2!.ratings[0].score ?? '-' }} Punkte<br/>
+                {{ katATitel2!.ratings[1].categoryDescription }}: {{ katATitel2!.ratings[1].score ?? '-' }} Punkte<br/>
+                {{ katATitel2!.ratings[2].categoryDescription }}: {{ katATitel2!.ratings[2].score ?? '-' }} Punkte<br/>
+                {{ katATitel2!.ratings[3].categoryDescription }}: {{ katATitel2!.ratings[3].score ?? '-' }} Punkte<br/>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        } @else if (isModulGKatB()) {
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <p><b>Frei gewählter Vortrag</b>
+                ({{ katBTitel?.titel?.titelName }}, {{ katBTitel?.titel?.composer }})<br/>
+                {{ katBTitel!.ratings[0].categoryDescription }}: {{ katBTitel!.ratings[0].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[1].categoryDescription }}: {{ katBTitel!.ratings[1].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[2].categoryDescription }}: {{ katBTitel!.ratings[2].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[3].categoryDescription }}: {{ katBTitel!.ratings[3].score ?? '-' }} Punkte<br/>
+                Begründung Abzug: {{ katBTitel!.ratings[3].comment }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        } @else if (isModulGKatC()) {
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <p><b>Frei gewählter Vortrag</b>
+                ({{ katCTitel?.titel?.titelName }}, {{ katCTitel?.titel?.composer }})<br/>
+                {{ katBTitel!.ratings[0].categoryDescription }}: {{ katBTitel!.ratings[0].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[1].categoryDescription }}: {{ katBTitel!.ratings[1].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[2].categoryDescription }}: {{ katBTitel!.ratings[2].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[3].categoryDescription }}: {{ katBTitel!.ratings[3].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[4].categoryDescription }}: {{ katBTitel!.ratings[4].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[5].categoryDescription }}: {{ katBTitel!.ratings[5].score ?? '-' }} Punkte<br/>
+                {{ katBTitel!.ratings[6].categoryDescription }}: {{ katBTitel!.ratings[6].score ?? '-' }} Punkte<br/>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        }
+
+      } @else {
+        @for (title of report.titles; track title) {
+          <mat-card appearance="outlined">
+            <mat-card-header>
+              <mat-card-title>
+                {{ title.titel.titelName }}
+                @if (title.titel.pflichtStueck) {
+                  <span>*</span>
+                }
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="comment"><b>Kurzbericht</b>:<br/>{{ title.comment ?? '-' }}</p>
+              @for (group of getGroups(title); track group) {
+                @if (group.length > 0) {
+                  <h4>{{ group }}</h4>
+                }
+                @for (rating of getRatings(title, group); track rating) {
+                  <div>
+                    {{ rating.categoryDescription }}:
+                    <span [ngClass]="getRatingClass(rating.rating)">{{ getRatingDescription(rating.rating) }}</span>
+                    @if (rating.comment) {
+                      <span> ({{ rating.comment }})</span>
+                    }
+                  </div>
+                }
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+
+        @if (report.overallRatings.length > 0) {
+          <mat-card appearance="outlined">
+            <mat-card-header>
+              <mat-card-title>Gesamteindruck</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @for (rating of report.overallRatings; track rating) {
+                <div>
+                  {{ rating.categoryDescription }}:
+                  <span [ngClass]="getRatingClass(rating.rating)">{{ getRatingDescription(rating.rating) }}</span>
+                  @if (rating.comment) {
+                    <span> ({{ rating.comment }})</span>
+                  }
+                </div>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      }
+    </div>
+  }
+</div>

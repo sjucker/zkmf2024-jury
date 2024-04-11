@@ -39,6 +39,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ReportScoreComponent} from "./report-score/report-score.component";
 import {RankingComponent} from "./ranking/ranking.component";
 import {MatMenuModule} from "@angular/material/menu";
+import {ReportViewComponent} from "./report-view/report-view.component";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MatMenuModule} from "@angular/material/menu";
     ReportCardComponent,
     ModulDComponent,
     RankingComponent,
+    ReportViewComponent,
   ],
   imports: [
     BrowserModule,

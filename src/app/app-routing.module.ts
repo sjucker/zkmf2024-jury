@@ -6,11 +6,13 @@ import {LoginComponent} from "./login/login.component";
 import {ReportComponent} from "./report/report.component";
 import {SummaryComponent} from "./summary/summary.component";
 import {ModulDComponent} from "./modul-d/modul-d.component";
+import {ReportViewComponent} from "./report-view/report-view.component";
 
 export const LOGIN_PATH = 'login';
 export const REPORT_PATH = 'report';
 export const MODUL_D = 'modul-d';
 export const SUMMARY_PATH = 'summary';
+export const VIEW_PATH = 'view';
 
 const canActivateFn: CanActivateFn = () => inject(AuthenticationGuard).canActivate();
 
@@ -25,6 +27,11 @@ const routes: Routes = [
     component: ReportComponent,
     canActivate: [canActivateFn],
     canDeactivate: [(component: ReportComponent) => component.canDeactivate()]
+  },
+  {
+    path: `${VIEW_PATH}/:id`,
+    component: ReportViewComponent,
+    canActivate: [canActivateFn],
   },
   {
     path: SUMMARY_PATH,

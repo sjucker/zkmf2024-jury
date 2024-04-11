@@ -7,6 +7,7 @@ import {
   JudgeReportDTO,
   JudgeReportOverviewDTO,
   JudgeReportSummaryDTO,
+  JudgeReportViewDTO,
   ModulDSelectionDTO
 } from "../rest";
 
@@ -26,6 +27,10 @@ export class BackendService {
 
   public get(reportId: number): Observable<JudgeReportDTO> {
     return this.httpClient.get<JudgeReportDTO>(`${this.baseUrl}/secured/judge/${reportId}`);
+  }
+
+  public view(reportId: number): Observable<JudgeReportViewDTO> {
+    return this.httpClient.get<JudgeReportViewDTO>(`${this.baseUrl}/secured/judge/view/${reportId}`);
   }
 
   public update(report: JudgeReportDTO): Observable<JudgeReportDTO> {
