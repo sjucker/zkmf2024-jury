@@ -401,6 +401,7 @@ export interface VereinSelectionDTO {
 }
 
 export interface VereinStageSetupDTO {
+  vereinId: number;
   locationIdentifier: string;
   stageSetup: string;
   dirigentenpodest: boolean;
