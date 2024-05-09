@@ -6,6 +6,15 @@ export interface AdhocOrchesterTeilnehmerDTO {
   instrument?: string;
 }
 
+export interface AppPageDTO {
+  id: number;
+  markdown: string;
+  title: string;
+  createdAt: DateAsString;
+  news: boolean;
+  cloudflareId?: string;
+}
+
 export interface CoordinatesDTO {
   latitude: number;
   longitude: number;
@@ -102,6 +111,7 @@ export interface JudgeReportRatingDTO {
 
 export interface JudgeReportScoreDTO {
   reportId: number;
+  judgeEmail: string;
   judgeName: string;
   judgeRole: string;
   score?: number;
@@ -111,9 +121,12 @@ export interface JudgeReportScoreDTO {
 
 export interface JudgeReportSummaryDTO {
   programmId: number;
-  modul: string;
-  klasse?: string;
-  besetzung?: string;
+  modul: Modul;
+  modulDescription: string;
+  klasse?: Klasse;
+  klasseDescription?: string;
+  besetzung?: Besetzung;
+  besetzungDescription?: string;
   verein: string;
   overallScore?: number;
   scores: JudgeReportScoreDTO[];
@@ -172,6 +185,8 @@ export interface LocationDTO {
   cloudflareId?: string;
   kuulaId?: string;
   einspiellokal?: LocationDTO;
+  instrumentendepotId?: number;
+  instrumentendepotParademusikId?: number;
   instrumentendepot?: LocationDTO;
   juryfeedback?: LocationDTO;
   percussionEquipmentType?: PercussionEquipmentType;
@@ -273,7 +288,8 @@ export interface TimetableOverviewEntryDTO {
   vereinsname: string;
   modul: string;
   competition: string;
-  type: string;
+  type: TimetableEntryType;
+  typeDescription: string;
   location: LocationDTO;
   date: DateAsString;
   start: DateAsString;
@@ -334,6 +350,8 @@ export interface VereinDTO {
   messages: VereinMessageDTO[];
   errata: VereinErrataDTO[];
   lunchTime: DateAsString;
+  instrumentenDepot?: LocationDTO;
+  instrumentenDepotParademusik?: LocationDTO;
   programmUpdated: boolean;
   phase1Status: PhaseStatus;
   phase2Status: PhaseStatus;
@@ -407,6 +425,7 @@ export interface VereinStageSetupDTO {
   dirigentenpodest: boolean;
   ablagenAmount?: number;
   comment?: string;
+  hasAdditionalImage: boolean;
 }
 
 export interface VereinTeilnahmeDTO {
@@ -510,6 +529,13 @@ export interface VerifyEmailRequestDTO {
   verification: string;
 }
 
+export interface AppPageCreateDTO {
+  markdown: string;
+  title: string;
+  news: boolean;
+  cloudflareId?: string;
+}
+
 export interface BroadcastCreateDTO {
   ids: number[];
   message: string;
@@ -555,6 +581,19 @@ export interface JuryLoginCreateDTO {
 export interface LocationSelectionDTO {
   id: number;
   name: string;
+}
+
+export interface MessageFavoriteDTO {
+  identifier: string;
+  title: string;
+  body: string;
+}
+
+export interface MessageSendDTO {
+  type: MessageType;
+  title: string;
+  body: string;
+  route: string;
 }
 
 export interface TimetableEntryCreateDTO {
@@ -883,6 +922,11 @@ export enum Besetzung {
   FANFARE = "FANFARE",
   TAMBOUREN = "TAMBOUREN",
   PERKUSSIONSENSEMBLE = "PERKUSSIONSENSEMBLE",
+}
+
+export enum MessageType {
+  EMERGENCY = "EMERGENCY",
+  GENERAL = "GENERAL",
 }
 
 export enum TimetableEntryType {

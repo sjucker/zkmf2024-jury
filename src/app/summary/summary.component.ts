@@ -37,7 +37,7 @@ export class SummaryComponent implements OnInit {
         this.summaries = new Map<string, JudgeReportSummaryDTO[]>();
 
         for (const dto of value) {
-          const key = `${dto.modul} ${dto.klasse ?? ''} ${dto.besetzung ?? ''}`;
+          const key = `${dto.modulDescription} ${dto.klasseDescription ?? ''} ${dto.besetzungDescription ?? ''}`;
           const entries = this.summaries.get(key);
           if (entries) {
             entries.push(dto);
