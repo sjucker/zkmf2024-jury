@@ -462,6 +462,13 @@ export interface VereinDTO {
   phase4Status: PhaseStatus;
 }
 
+export interface VereinMemberInfoDTO {
+  timetableEntries: TimetableOverviewEntryDTO[];
+  lunchTime: DateAsString;
+  instrumentenDepot?: LocationDTO;
+  instrumentenDepotParademusik?: LocationDTO;
+}
+
 export interface VereinMessageDTO {
   message: string;
   createdAt: DateAsString;
@@ -712,6 +719,13 @@ export interface MessageFavoriteDTO {
   identifier: string;
   title: string;
   body: string;
+}
+
+export interface MessageMemberDTO {
+  identifier: string;
+  title: string;
+  body: string;
+  route: string;
 }
 
 export interface MessageSendDTO {
