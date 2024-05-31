@@ -52,4 +52,11 @@ h4 {
     justify-content: flex-end;
     gap: variables.$padding;
   }
+
+  .disclaimer {
+    font-size: 12px;
+    border: 1px solid variables.$blau;
+    padding: variables.$padding-half;
+    background-color: variables.$blau-quarter;
+  }
 }
