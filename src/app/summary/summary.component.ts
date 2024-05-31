@@ -37,7 +37,7 @@ export class SummaryComponent implements OnInit {
         this.summaries = new Map<string, JudgeReportSummaryDTO[]>();
 
         for (const dto of value) {
-          const key = `${dto.modulDescription} ${dto.klasseDescription ?? ''} ${dto.besetzungDescription ?? ''}`;
+          const key = this.getKey(dto);
           const entries = this.summaries.get(key);
           if (entries) {
             entries.push(dto);
@@ -54,6 +54,22 @@ export class SummaryComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  private getKey(dto: JudgeReportSummaryDTO) {
+    let key = dto.modulDescription;
+    if (dto.klasseDescription) {
+      key += ` ${dto.klasseDescription}`;
+    }
+    if (dto.besetzungDescription) {
+      key += ` ${dto.besetzungDescription}`;
+    }
+    if (dto.categoryDescription) {
+      key += ` ${dto.categoryDescription}`;
+    }
+    key += ` (${dto.location.name})`;
+
+    return key;
   }
 
   getEntriesForCategory(category: string): JudgeReportSummaryDTO[] {

@@ -139,12 +139,16 @@ export interface JudgeReportScoreDTO {
 
 export interface JudgeReportSummaryDTO {
   programmId: number;
+  date: DateAsString;
+  location: LocationDTO;
   modul: Modul;
   modulDescription: string;
   klasse?: Klasse;
   klasseDescription?: string;
   besetzung?: Besetzung;
   besetzungDescription?: string;
+  category?: JudgeReportModulCategory;
+  categoryDescription?: string;
   verein: string;
   overallScore?: number;
   scores: JudgeReportScoreDTO[];
