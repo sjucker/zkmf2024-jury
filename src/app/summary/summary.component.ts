@@ -64,9 +64,6 @@ export class SummaryComponent implements OnInit {
     if (dto.besetzungDescription) {
       key += ` ${dto.besetzungDescription}`;
     }
-    if (dto.categoryDescription) {
-      key += ` ${dto.categoryDescription}`;
-    }
     key += ` (${dto.location.name})`;
 
     return key;
