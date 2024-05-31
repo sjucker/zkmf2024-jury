@@ -25,6 +25,10 @@ export class HeaderComponent {
     return this.authenticationService.isJudge();
   }
 
+  get username(): string {
+    return this.authenticationService.getUsername() ?? '?';
+  }
+
   logout(): void {
     this.router.navigate([LOGIN_PATH]).then(value => {
       if (value) {

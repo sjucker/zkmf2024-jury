@@ -20,3 +20,10 @@
     display: none;
   }
 }
+
+.username {
+  display: flex;
+  align-items: center;
+  gap: variables.$padding-half;
+  font-size: 12px;
+}
