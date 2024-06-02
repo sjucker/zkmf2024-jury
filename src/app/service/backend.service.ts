@@ -2,14 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {
-  JudgeRankingEntryDTO,
-  JudgeReportDTO,
-  JudgeReportOverviewDTO,
-  JudgeReportSummaryDTO,
-  JudgeReportViewDTO,
-  ModulDSelectionDTO
-} from "../rest";
+import {JudgeRankingEntryDTO, JudgeReportDTO, JudgeReportOverviewDTO, JudgeReportSummaryDTO, JudgeReportViewDTO, ModulDSelectionDTO, RankingPenaltyDTO, VereinPlayingDTO} from "../rest";
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +60,25 @@ export class BackendService {
 
   public updateModulD(dtos: ModulDSelectionDTO[]): Observable<void> {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/modul-d`, dtos);
+  }
+
+  public helper(): Observable<VereinPlayingDTO[]> {
+    return this.httpClient.get<VereinPlayingDTO[]>(`${this.baseUrl}/secured/judge/helper`);
+  }
+
+  public currentPlayStarted(timetableEntryId: number): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/started/${timetableEntryId}`, {});
+  }
+
+  public currentPlayEnded(timetableEntryId: number): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/ended/${timetableEntryId}`, {});
+  }
+
+  public penalty(timetableEntryId: number, minutesOverrun: number): Observable<void> {
+    const request: RankingPenaltyDTO = {
+      timetableEntryId: timetableEntryId,
+      minutesOverrun: minutesOverrun,
+    };
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/penalty`, request);
   }
 }

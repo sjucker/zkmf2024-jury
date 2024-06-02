@@ -7,12 +7,14 @@ import {ReportComponent} from "./report/report.component";
 import {SummaryComponent} from "./summary/summary.component";
 import {ModulDComponent} from "./modul-d/modul-d.component";
 import {ReportViewComponent} from "./report-view/report-view.component";
+import {HelperComponent} from "./helper/helper.component";
 
 export const LOGIN_PATH = 'login';
 export const REPORT_PATH = 'report';
-export const MODUL_D = 'modul-d';
+export const MODUL_D_PATH = 'modul-d';
 export const SUMMARY_PATH = 'summary';
 export const VIEW_PATH = 'view';
+export const HELPER_PATH = 'sekretariat';
 
 const canActivateFn: CanActivateFn = () => inject(AuthenticationGuard).canActivate();
 
@@ -39,8 +41,13 @@ const routes: Routes = [
     canActivate: [canActivateFn]
   },
   {
-    path: MODUL_D,
+    path: MODUL_D_PATH,
     component: ModulDComponent,
+    canActivate: [canActivateFn]
+  },
+  {
+    path: HELPER_PATH,
+    component: HelperComponent,
     canActivate: [canActivateFn]
   },
   {

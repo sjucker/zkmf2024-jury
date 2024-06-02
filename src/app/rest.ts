@@ -253,6 +253,11 @@ export interface RankingDTO {
   score: number;
 }
 
+export interface RankingPenaltyDTO {
+  timetableEntryId: number;
+  minutesOverrun: number;
+}
+
 export interface RegisterHelperRequestDTO {
   email: string;
   name: string;
@@ -412,6 +417,19 @@ export interface VereinMessageDTO {
   createdAt: DateAsString;
   createdBy: string;
   ownMessage: boolean;
+}
+
+export interface VereinPlayingDTO {
+  timetableEntryId: number;
+  vereinsname: string;
+  startTime: DateAsString;
+  endTime: DateAsString;
+  minDurationInSeconds?: number;
+  maxDurationInSeconds?: number;
+  started: boolean;
+  ended: boolean;
+  jury: string;
+  minutesOverrun?: number;
 }
 
 export interface VereinPresentationDTO {
@@ -934,6 +952,7 @@ export enum UserRole {
   ADMIN = "ADMIN",
   ADMIN_READ_ONLY = "ADMIN_READ_ONLY",
   JUDGE = "JUDGE",
+  JUDGE_HELPER = "JUDGE_HELPER",
   IMPERSONATE = "IMPERSONATE",
 }
 

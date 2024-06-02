@@ -1,21 +1,13 @@
 import {Component, computed, HostListener, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
-import {
-  JudgeReportCategory,
-  JudgeReportCategoryRating,
-  JudgeReportDTO,
-  JudgeReportModulCategory,
-  JudgeReportRatingDTO,
-  JudgeReportStatus,
-  JudgeReportTitleDTO,
-  Modul
-} from "../rest";
+import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportDTO, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportStatus, JudgeReportTitleDTO, Modul} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportFinishComponent} from "../report-finish/report-finish.component";
 import {Observable, of} from "rxjs";
 import {PendingChangesDialogComponent} from "../pending-changes-dialog/pending-changes-dialog.component";
+import {formatDuration} from "../utils";
 
 @Component({
   selector: 'app-report',
@@ -76,21 +68,6 @@ export class ReportComponent implements OnInit {
 
   get hasVorgabeDauer(): boolean {
     return !!(this.report?.minDurationInSeconds && this.report?.maxDurationInSeconds);
-  }
-
-  formatDuration(durationInSeconds?: number): string {
-    if (durationInSeconds) {
-      const seconds = Math.abs(durationInSeconds);
-      let formatted = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-
-      if (durationInSeconds < 0) {
-        formatted = "-" + formatted;
-      }
-
-      return formatted;
-    }
-
-    return '';
   }
 
   saveReport(report: JudgeReportDTO): void {
@@ -357,4 +334,6 @@ export class ReportComponent implements OnInit {
   get katCTitel(): JudgeReportTitleDTO | undefined {
     return this.report?.titles[0];
   }
+
+  protected readonly formatDuration = formatDuration;
 }

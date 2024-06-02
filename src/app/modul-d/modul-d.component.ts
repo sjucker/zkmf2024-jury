@@ -20,8 +20,6 @@ export class ModulDComponent implements OnInit {
   saving = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving());
 
-  pendingChanges = signal(false);
-
   constructor(private backendService: BackendService,
               public snackBar: MatSnackBar,
               public dialog: MatDialog) {

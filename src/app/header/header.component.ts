@@ -25,6 +25,10 @@ export class HeaderComponent {
     return this.authenticationService.isJudge();
   }
 
+  get judgeHelper(): boolean {
+    return this.authenticationService.isJudgeHelper();
+  }
+
   get username(): string {
     return this.authenticationService.getUsername() ?? '?';
   }

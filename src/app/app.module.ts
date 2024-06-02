@@ -40,6 +40,8 @@ import {ReportScoreComponent} from "./report-score/report-score.component";
 import {RankingComponent} from "./ranking/ranking.component";
 import {MatMenuModule} from "@angular/material/menu";
 import {ReportViewComponent} from "./report-view/report-view.component";
+import {HelperComponent} from "./helper/helper.component";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import {ReportViewComponent} from "./report-view/report-view.component";
     ModulDComponent,
     RankingComponent,
     ReportViewComponent,
+    HelperComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import {ReportViewComponent} from "./report-view/report-view.component";
     MatDialogModule,
     MatSlideToggle,
     MatMenuModule,
+    MatSelectModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},

@@ -14,11 +14,13 @@
         <mat-icon>home</mat-icon>
       </button>
     }
-    <button mat-icon-button
-            (click)="summaries()"
-            matTooltip="Übersicht">
-      <mat-icon>fact_check</mat-icon>
-    </button>
+    @if (!judgeHelper) {
+      <button mat-icon-button
+              (click)="summaries()"
+              matTooltip="Übersicht">
+        <mat-icon>fact_check</mat-icon>
+      </button>
+    }
     <button mat-icon-button
             (click)="logout()"
             matTooltip="Logout">

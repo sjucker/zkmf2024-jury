@@ -53,6 +53,10 @@ export class AuthenticationService {
     return localStorage.getItem(this.role) === UserRole.JUDGE;
   }
 
+  isJudgeHelper(): boolean {
+    return localStorage.getItem(this.role) === UserRole.JUDGE_HELPER;
+  }
+
   isAdmin(): boolean {
     return localStorage.getItem(this.role) === UserRole.ADMIN;
   }
