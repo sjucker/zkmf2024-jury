@@ -158,6 +158,7 @@ export interface JudgeReportSummaryDTO {
   verein: string;
   overallScore?: number;
   penalty?: number;
+  bonus?: number;
   scores: JudgeReportScoreDTO[];
   done: boolean;
   scoresConfirmed: boolean;
@@ -253,6 +254,11 @@ export interface NichtmitgliederDTO {
   instrument?: string;
 }
 
+export interface RankingBonusDTO {
+  vereinProgrammId: number;
+  bonus: number;
+}
+
 export interface RankingDTO {
   modul: string;
   score: number;
@@ -261,12 +267,18 @@ export interface RankingDTO {
 export interface RankingListDTO {
   id: number;
   modul: Modul;
+  modulDescription: string;
   klasse?: Klasse;
+  klasseDescription?: string;
   besetzung?: Besetzung;
+  besetzungDescription?: string;
   category?: JudgeReportModulCategory;
+  categoryDescription?: string;
+  location: LocationDTO;
   description: string;
   status: RankingStatus;
   entries: RankingListEntryDTO[];
+  final: boolean;
 }
 
 export interface RankingListEntryDTO {
@@ -445,6 +457,7 @@ export interface VereinPlayingDTO {
   timetableEntryId: number;
   vereinProgrammId: number;
   vereinsname: string;
+  modul: Modul;
   startTime: DateAsString;
   endTime: DateAsString;
   minDurationInSeconds?: number;
@@ -453,6 +466,7 @@ export interface VereinPlayingDTO {
   ended: boolean;
   jury: string;
   minutesOverrun?: number;
+  bonus?: number;
 }
 
 export interface VereinPresentationDTO {
@@ -828,6 +842,12 @@ export interface IsValid {
 
 export type DateAsString = string;
 
+export enum JudgeReportModulCategory {
+  MODUL_G_KAT_A = "MODUL_G_KAT_A",
+  MODUL_G_KAT_B = "MODUL_G_KAT_B",
+  MODUL_G_KAT_C = "MODUL_G_KAT_C",
+}
+
 export enum Modul {
   A = "A",
   B = "B",
@@ -847,12 +867,6 @@ export enum JudgeRole {
   JUROR_2_MUSIKALISCH = "JUROR_2_MUSIKALISCH",
   JUROR_3_MUSIKALISCH = "JUROR_3_MUSIKALISCH",
   JUROR_4_OPTISCH = "JUROR_4_OPTISCH",
-}
-
-export enum JudgeReportModulCategory {
-  MODUL_G_KAT_A = "MODUL_G_KAT_A",
-  MODUL_G_KAT_B = "MODUL_G_KAT_B",
-  MODUL_G_KAT_C = "MODUL_G_KAT_C",
 }
 
 export enum JudgeReportStatus {

@@ -35,7 +35,12 @@
               </div>
               @if (summary.penalty) {
                 <div class="score-container penalty" matTooltip="Punktabzug wegen Abweichung von der Zeitlimite">
-                  -{{ summary.penalty | number: '1.2-2' }}
+                  -{{ summary.penalty | number: '1.1-1' }}
+                </div>
+              }
+              @if (summary.bonus) {
+                <div class="score-container bonus" matTooltip="Teilnehmerzuschlag 0.1 pro Teilnehmer">
+                  +{{ summary.bonus | number: '1.1-1' }}
                 </div>
               }
 

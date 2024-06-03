@@ -41,6 +41,12 @@
       cursor: auto;
     }
 
+    &.bonus {
+      border: 2px solid variables.$gelb;
+      background-color: variables.$gelb-half;
+      cursor: auto;
+    }
+
     mat-icon {
       position: absolute;
       scale: 0.7;

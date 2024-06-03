@@ -1,7 +1,7 @@
 import {Component, computed, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {VereinPlayingDTO} from "../rest";
+import {Modul, VereinPlayingDTO} from "../rest";
 import {formatDuration} from "../utils";
 
 @Component({
@@ -124,6 +124,40 @@ export class HelperComponent implements OnInit {
         }
       });
     }
+  }
 
+  bonus() {
+    if (this.value && this.value.bonus) {
+      this.saving.set(true);
+      this.backendService.bonus(this.value.vereinProgrammId, this.value.bonus).subscribe({
+        next: () => {
+          this.snackBar.open('Speichern erfolgreich', undefined, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: 'success'
+          });
+          this.load();
+          this.saving.set(false);
+        },
+        error: () => {
+          this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: 'error'
+          });
+          this.saving.set(false);
+        }
+      });
+    }
+  }
+
+  get hasZeitlimite(): boolean {
+    return this.value?.modul !== Modul.G;
+  }
+
+  get hasBonus(): boolean {
+    return this.value?.modul === Modul.G;
   }
 }
