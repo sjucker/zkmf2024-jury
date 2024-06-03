@@ -1,7 +1,7 @@
 import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import localeDe from '@angular/common/locales/de';
-import localeDeExtra from '@angular/common/locales/extra/de';
+import localeDeCh from '@angular/common/locales/de-CH';
+import localeDeChExtra from '@angular/common/locales/extra/de-CH';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -32,7 +32,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ReportRatingComponent} from './report-rating/report-rating.component';
 import {SummaryComponent} from './summary/summary.component';
 import {PendingChangesDialogComponent} from './pending-changes-dialog/pending-changes-dialog.component';
-import {registerLocaleData} from "@angular/common";
+import {DecimalPipe, registerLocaleData} from "@angular/common";
 import {ReportCardComponent} from "./components/report-card/report-card.component";
 import {ModulDComponent} from "./modul-d/modul-d.component";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
@@ -42,6 +42,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import {ReportViewComponent} from "./report-view/report-view.component";
 import {HelperComponent} from "./helper/helper.component";
 import {MatSelectModule} from "@angular/material/select";
+import {RankingListsComponent} from "./ranking-lists/ranking-lists.component";
+import {ScorePipe} from "./pipe/score.pipe";
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import {MatSelectModule} from "@angular/material/select";
     RankingComponent,
     ReportViewComponent,
     HelperComponent,
+    RankingListsComponent,
+    ScorePipe,
   ],
   imports: [
     BrowserModule,
@@ -87,14 +91,18 @@ import {MatSelectModule} from "@angular/material/select";
     MatMenuModule,
     MatSelectModule,
   ],
+  exports: [
+    ScorePipe,
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
-    {provide: LOCALE_ID, useValue: 'de-DE'},
+    {provide: LOCALE_ID, useValue: 'de-CH'},
+    DecimalPipe
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() {
-    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+    registerLocaleData(localeDeCh, 'de-CH', localeDeChExtra);
   }
 }

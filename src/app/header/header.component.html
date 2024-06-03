@@ -21,6 +21,13 @@
         <mat-icon>fact_check</mat-icon>
       </button>
     }
+    @if (admin) {
+      <button mat-icon-button
+              (click)="rankingLists()"
+              matTooltip="Ranglisten">
+        <mat-icon>military_tech</mat-icon>
+      </button>
+    }
     <button mat-icon-button
             (click)="logout()"
             matTooltip="Logout">

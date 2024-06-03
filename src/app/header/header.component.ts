@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
-import {LOGIN_PATH, SUMMARY_PATH} from "../app-routing.module";
+import {LOGIN_PATH, RANKINGLISTS_PATH, SUMMARY_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-header',
@@ -19,6 +19,10 @@ export class HeaderComponent {
 
   get loggedIn(): boolean {
     return this.authenticationService.isLoggedIn()
+  }
+
+  get admin(): boolean {
+    return this.authenticationService.isAdmin();
   }
 
   get judge(): boolean {
@@ -49,6 +53,12 @@ export class HeaderComponent {
 
   summaries() {
     this.router.navigate([SUMMARY_PATH]).catch(reason => {
+      console.error(reason);
+    });
+  }
+
+  rankingLists() {
+    this.router.navigate([RANKINGLISTS_PATH]).catch(reason => {
       console.error(reason);
     });
   }

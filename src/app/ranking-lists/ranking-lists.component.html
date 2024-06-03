@@ -1,0 +1,36 @@
+<div>
+  <app-header header="ZKMF2024 - Ranglisten"></app-header>
+  <div class="loading-indicator">
+    @if (showProgressBar()) {
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    }
+  </div>
+  <div class="max-width-container">
+    <mat-accordion>
+      @for (list of rankingLists; track list.id) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ list.description }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="ranking-list">
+            @for (entry of list.entries; track entry) {
+              <div>{{ entry.rank }}</div>
+              <div>{{ entry.vereinsName }}</div>
+              <div>{{ entry.score | number: '1.2-2' }}</div>
+            }
+          </div>
+            <div>
+              @if (list.status !== RankingStatus.FINAL) {
+              <button mat-flat-button color="primary" (click)="publish(list)">publizieren</button>
+              } @else {
+                Rangliste ist publiziert
+              }
+            </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,13 @@
+@use "../../variables";
+@import "../../responsive";
+
+.max-width-container {
+  padding: variables.$padding;
+
+  .ranking-list {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: variables.$padding;
+    margin-bottom: variables.$padding;
+  }
+}

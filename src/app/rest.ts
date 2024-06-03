@@ -161,8 +161,6 @@ export interface JudgeReportSummaryDTO {
   scores: JudgeReportScoreDTO[];
   done: boolean;
   scoresConfirmed: boolean;
-  scoresConfirmedBy?: string;
-  scoresConfirmedAt?: DateAsString;
 }
 
 export interface JudgeReportTitleDTO {
@@ -257,6 +255,23 @@ export interface NichtmitgliederDTO {
 
 export interface RankingDTO {
   modul: string;
+  score: number;
+}
+
+export interface RankingListDTO {
+  id: number;
+  modul: Modul;
+  klasse?: Klasse;
+  besetzung?: Besetzung;
+  category?: JudgeReportModulCategory;
+  description: string;
+  status: RankingStatus;
+  entries: RankingListEntryDTO[];
+}
+
+export interface RankingListEntryDTO {
+  rank: number;
+  vereinsName: string;
   score: number;
 }
 
@@ -967,6 +982,12 @@ export enum UserRole {
 export enum ModulDSelection {
   TITEL_1 = "TITEL_1",
   TITEL_2 = "TITEL_2",
+}
+
+export enum RankingStatus {
+  PENDING = "PENDING",
+  PROVISIONAL = "PROVISIONAL",
+  FINAL = "FINAL",
 }
 
 export enum Aufgaben {

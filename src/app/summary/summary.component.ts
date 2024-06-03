@@ -1,8 +1,7 @@
 import {Component, computed, Inject, LOCALE_ID, OnInit, signal} from '@angular/core';
-import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO} from "../rest";
+import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO, Modul} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
-import {formatDate} from "@angular/common";
 import {Router} from "@angular/router";
 import {VIEW_PATH} from "../app-routing.module";
 
@@ -102,16 +101,9 @@ export class SummaryComponent implements OnInit {
     }
   }
 
-  getConfirmedTooltip(summary: JudgeReportSummaryDTO): string {
-    if (summary.scoresConfirmedAt) {
-      return `${summary.scoresConfirmedBy}, ${formatDate(summary.scoresConfirmedAt, 'dd.MM.yyyy, HH:mm', this.locale)}`;
-    } else {
-      return '';
-    }
-  }
-
   getTooltip(score: JudgeReportScoreDTO): string {
     return `${score.judgeName} (${score.judgeRole})`;
   }
 
+  protected readonly Modul = Modul;
 }

@@ -220,7 +220,7 @@
           }
           <app-ranking [reportId]="report.id"></app-ranking>
           <div class="overall-container">
-            <b>Total</b>: {{ report.score }} Punkte
+            <b>Total</b>: {{ report.score | score: report.modul }} Punkte
           </div>
 
           @if (!readOnly()) {

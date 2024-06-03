@@ -11,6 +11,7 @@ import {
   JudgeReportSummaryDTO,
   JudgeReportViewDTO,
   ModulDSelectionDTO,
+  RankingListDTO,
   RankingPenaltyDTO,
   VereinPlayingDTO
 } from "../rest";
@@ -97,4 +98,13 @@ export class BackendService {
     };
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/penalty`, request);
   }
+
+  public rankingLists(): Observable<RankingListDTO[]> {
+    return this.httpClient.get<RankingListDTO[]>(`${this.baseUrl}/secured/judge/ranking-list`);
+  }
+
+  public publishRankingList(rankingId: number): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/ranking-list/${rankingId}`, {})
+  }
+
 }
