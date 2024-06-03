@@ -23,16 +23,22 @@
     position: relative;
 
     &.overall {
-      border: 2px solid variables.$rot;
+      border: 2px solid variables.$blau;
       cursor: auto;
 
       &.done {
-        background-color: variables.$rot-half;
+        background-color: variables.$blau-half;
       }
     }
 
     &.done {
       background-color: variables.$gruen-half;
+    }
+
+    &.penalty {
+      border: 2px solid variables.$rot;
+      background-color: variables.$rot-half;
+      cursor: auto;
     }
 
     mat-icon {

@@ -33,6 +33,12 @@
                    [ngClass]="{'done': summary.done}">
                 {{ summary.overallScore | number: '1.2-2' }}
               </div>
+              @if (summary.penalty) {
+                <div class="score-container penalty" matTooltip="Punktabzug wegen Abweichung von der Zeitlimite">
+                  -{{ summary.penalty | number: '1.2-2' }}
+                </div>
+              }
+
               @if (admin && summary.done) {
                 @if (summary.scoresConfirmed) {
                   <mat-icon color="primary" [matTooltip]="getConfirmedTooltip(summary)">task_alt</mat-icon>
@@ -40,7 +46,7 @@
                   <button color="primary" mat-stroked-button
                           [disabled]="confirming()"
                           (click)="confirmScores(summary)">
-                    freigeben
+                    bestätigen
                   </button>
                 }
               }

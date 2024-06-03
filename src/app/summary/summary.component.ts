@@ -87,17 +87,19 @@ export class SummaryComponent implements OnInit {
   }
 
   confirmScores(summary: JudgeReportSummaryDTO): void {
-    this.confirming.set(true);
-    this.backendService.confirmScores(summary.programmId).subscribe({
-      next: () => {
-        this.confirming.set(false);
-        this.load();
-      },
-      error: err => {
-        console.error(err);
-        this.confirming.set(false);
-      }
-    })
+    if (summary.overallScore) {
+      this.confirming.set(true);
+      this.backendService.confirmScore(summary.programmId, summary.overallScore, summary.category).subscribe({
+        next: () => {
+          this.confirming.set(false);
+          this.load();
+        },
+        error: err => {
+          console.error(err);
+          this.confirming.set(false);
+        }
+      });
+    }
   }
 
   getConfirmedTooltip(summary: JudgeReportSummaryDTO): string {

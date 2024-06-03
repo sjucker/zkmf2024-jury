@@ -2,7 +2,18 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {JudgeRankingEntryDTO, JudgeReportDTO, JudgeReportOverviewDTO, JudgeReportSummaryDTO, JudgeReportViewDTO, ModulDSelectionDTO, RankingPenaltyDTO, VereinPlayingDTO} from "../rest";
+import {
+  ConfirmScoreDTO,
+  JudgeRankingEntryDTO,
+  JudgeReportDTO,
+  JudgeReportModulCategory,
+  JudgeReportOverviewDTO,
+  JudgeReportSummaryDTO,
+  JudgeReportViewDTO,
+  ModulDSelectionDTO,
+  RankingPenaltyDTO,
+  VereinPlayingDTO
+} from "../rest";
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +61,13 @@ export class BackendService {
     return this.httpClient.get<JudgeRankingEntryDTO[]>(`${this.baseUrl}/secured/judge/ranking/own/${reportId}`);
   }
 
-  public confirmScores(programmId: number): Observable<void> {
-    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/confirm-scores/${programmId}`, {});
+  public confirmScore(programmId: number, score: number, category?: JudgeReportModulCategory): Observable<void> {
+    const request: ConfirmScoreDTO = {
+      vereinProgrammId: programmId,
+      category: category,
+      score: score
+    };
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/confirm-score`, request);
   }
 
   public modulD(): Observable<ModulDSelectionDTO[]> {
@@ -74,9 +90,9 @@ export class BackendService {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/ended/${timetableEntryId}`, {});
   }
 
-  public penalty(timetableEntryId: number, minutesOverrun: number): Observable<void> {
+  public penalty(vereinProgrammId: number, minutesOverrun: number): Observable<void> {
     const request: RankingPenaltyDTO = {
-      timetableEntryId: timetableEntryId,
+      vereinProgrammId: vereinProgrammId,
       minutesOverrun: minutesOverrun,
     };
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/penalty`, request);

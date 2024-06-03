@@ -102,7 +102,7 @@ export class HelperComponent implements OnInit {
   penalty() {
     if (this.value && this.value.minutesOverrun) {
       this.saving.set(true);
-      this.backendService.penalty(this.value.timetableEntryId, this.value.minutesOverrun).subscribe({
+      this.backendService.penalty(this.value.vereinProgrammId, this.value.minutesOverrun).subscribe({
         next: () => {
           this.snackBar.open('Speichern erfolgreich', undefined, {
             verticalPosition: 'top',

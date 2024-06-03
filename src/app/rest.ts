@@ -15,6 +15,12 @@ export interface AppPageDTO {
   cloudflareId?: string;
 }
 
+export interface ConfirmScoreDTO {
+  vereinProgrammId: number;
+  category?: JudgeReportModulCategory;
+  score: number;
+}
+
 export interface CoordinatesDTO {
   latitude: number;
   longitude: number;
@@ -151,6 +157,7 @@ export interface JudgeReportSummaryDTO {
   categoryDescription?: string;
   verein: string;
   overallScore?: number;
+  penalty?: number;
   scores: JudgeReportScoreDTO[];
   done: boolean;
   scoresConfirmed: boolean;
@@ -254,7 +261,7 @@ export interface RankingDTO {
 }
 
 export interface RankingPenaltyDTO {
-  timetableEntryId: number;
+  vereinProgrammId: number;
   minutesOverrun: number;
 }
 
@@ -421,6 +428,7 @@ export interface VereinMessageDTO {
 
 export interface VereinPlayingDTO {
   timetableEntryId: number;
+  vereinProgrammId: number;
   vereinsname: string;
   startTime: DateAsString;
   endTime: DateAsString;

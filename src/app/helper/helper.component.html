@@ -34,7 +34,7 @@
             Bei Abweichungen von der Zeitlimite werden dem Verein pro angebrochene Minute von der Wertung 2 Punkte abgezogen.</p>
           <div>
             <mat-form-field appearance="outline">
-              <mat-label>Angebrochene Minuten über der Zeitlimite</mat-label>
+              <mat-label>Angebrochene Minuten über oder unter der Zeitlimite</mat-label>
               <input type="number"
                      autocomplete="off"
                      matInput
@@ -43,7 +43,7 @@
                      step="1"
                      [(ngModel)]="value.minutesOverrun"/>
             </mat-form-field>
-            <button color="primary" mat-flat-button [disabled]="((value?.minutesOverrun ?? 0) < 1) || saving()" (click)="penalty()">Speichern</button>
+            <button color="primary" mat-flat-button [disabled]="((value.minutesOverrun ?? 0) < 1) || saving()" (click)="penalty()">Speichern</button>
             <div></div>
           </div>
         }
