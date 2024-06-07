@@ -23,7 +23,9 @@
             @if (hasZeitlimite) {
               <b>Vorgabe Dauer</b>: {{ formatDuration(value.minDurationInSeconds) }} - {{ formatDuration(value.maxDurationInSeconds) }}<br/>
             }
-            <b>Jury</b>: {{ value.jury }}
+            @if (hasJury) {
+              <b>Jury</b>: {{ value.jury }}
+            }
           </p>
           <p class="form-layout">
             <button color="primary" mat-flat-button [disabled]="value.started || saving()" (click)="started()">Vortrag gestartet</button>

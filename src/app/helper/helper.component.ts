@@ -156,8 +156,13 @@ export class HelperComponent implements OnInit {
     }
   }
 
+  get hasJury(): boolean {
+    // not Platzkkonzert
+    return this.value?.modul !== Modul.C
+  }
+
   get hasZeitlimite(): boolean {
-    return this.value?.modul !== Modul.G;
+    return this.hasJury && this.value?.modul !== Modul.G;
   }
 
   get hasBonus(): boolean {
