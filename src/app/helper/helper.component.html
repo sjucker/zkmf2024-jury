@@ -21,7 +21,7 @@
           <h3>{{ value.vereinsname }}</h3>
           <p>
             @if (hasZeitlimite) {
-              <b>Vorgabe Dauer</b>:{{ formatDuration(value.minDurationInSeconds) }} - {{ formatDuration(value.maxDurationInSeconds) }}<br/>
+              <b>Vorgabe Dauer</b>: {{ formatDuration(value.minDurationInSeconds) }} - {{ formatDuration(value.maxDurationInSeconds) }}<br/>
             }
             <b>Jury</b>: {{ value.jury }}
           </p>
@@ -37,22 +37,37 @@
               Gemessen wird die Zeit von Beginn bis Ende des Programmes, inkl. Zwischenapplaus (ohne Schlussapplaus). Die Zeitmessung obliegt dem Jurysekretariat.<br/>
               Bei Abweichungen von der Zeitlimite werden dem Verein pro angebrochene Minute von der Wertung 2 Punkte abgezogen.</p>
             <div>
+              <b>Dauer des Programmes (vom ersten bis zum letzten Ton inkl. Zwischenapplaus)</b>
               <mat-form-field appearance="outline">
-                <mat-label>Angebrochene Minuten über oder unter der Zeitlimite</mat-label>
+                <mat-label>Minuten</mat-label>
                 <input type="number"
                        autocomplete="off"
                        matInput
                        min="0"
-                       max="100"
+                       max="60"
                        step="1"
-                       [(ngModel)]="value.minutesOverrun"/>
+                       required
+                       [(ngModel)]="durationMinutes"
+                       (ngModelChange)="calculatePenalty()"/>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Sekunden</mat-label>
+                <input type="number"
+                       autocomplete="off"
+                       matInput
+                       min="0"
+                       max="59"
+                       step="1"
+                       required
+                       [(ngModel)]="durationSeconds"
+                       (ngModelChange)="calculatePenalty()"/>
               </mat-form-field>
               <button color="primary" mat-flat-button [disabled]="((value.minutesOverrun ?? 0) < 1) || saving()" (click)="penalty()">Speichern</button>
             </div>
           }
 
           @if (hasBonus) {
-           <h2>Teilnehmerzuschlag</h2>
+            <h2>Teilnehmerzuschlag</h2>
             <p>Jede Gruppe in den verschiedenen Kategorien erhält 0.1 Punkt pro Teilnehmer. Der maximale Beteiligungszuschlag beträgt 2.0 Punkte.</p>
             <div>
               <mat-form-field appearance="outline">

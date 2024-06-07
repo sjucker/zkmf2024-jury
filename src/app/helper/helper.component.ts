@@ -14,6 +14,9 @@ export class HelperComponent implements OnInit {
   options: VereinPlayingDTO[] = [];
   value?: VereinPlayingDTO;
 
+  durationMinutes = 0;
+  durationSeconds = 0;
+
   loading = signal(false);
   saving = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving());
@@ -159,5 +162,18 @@ export class HelperComponent implements OnInit {
 
   get hasBonus(): boolean {
     return this.value?.modul === Modul.G;
+  }
+
+  calculatePenalty() {
+    if (this.value) {
+      if (this.durationMinutes) {
+        const totalDurationInSeconds = (this.durationMinutes * 60) + this.durationSeconds;
+        if (this.value.minDurationInSeconds && this.value.maxDurationInSeconds) {
+          if (totalDurationInSeconds < this.value.minDurationInSeconds) {
+
+          }
+        }
+      }
+    }
   }
 }
