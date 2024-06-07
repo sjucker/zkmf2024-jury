@@ -1,0 +1,19 @@
+@use "../../variables";
+@import "../../responsive";
+
+.duration-container {
+  width: 240px;
+  display: flex;
+  gap: variables.$padding;
+}
+
+.duration-control-container {
+  display: flex;
+  gap: variables.$padding;
+  align-items: baseline;
+
+  .penalty {
+    color: variables.$rot;
+    font-weight: bold;
+  }
+}

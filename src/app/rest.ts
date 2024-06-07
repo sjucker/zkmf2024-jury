@@ -48,6 +48,7 @@ export interface EmergencyMessageDTO {
 
 export interface FestprogrammDayDTO {
   day: string;
+  inPast: boolean;
   entries: FestprogrammEntryDTO[];
 }
 
@@ -285,10 +286,12 @@ export interface RankingListEntryDTO {
   rank: number;
   vereinsName: string;
   score: number;
+  additionalInfo?: string;
 }
 
 export interface RankingPenaltyDTO {
   vereinProgrammId: number;
+  actualDurationInSeconds: number;
   minutesOverrun: number;
 }
 
@@ -345,6 +348,7 @@ export interface SponsoringDTO {
 
 export interface TimetableDayOverviewDTO {
   day: string;
+  inPast: boolean;
   entries: TimetableOverviewEntryDTO[];
 }
 
@@ -353,6 +357,8 @@ export interface TimetableOverviewEntryDTO {
   vereinIdentifier: string;
   vereinsname: string;
   modul: string;
+  klasse?: string;
+  besetzung?: string;
   competition: string;
   type: TimetableEntryType;
   typeDescription: string;
@@ -361,6 +367,7 @@ export interface TimetableOverviewEntryDTO {
   start: DateAsString;
   end: DateAsString;
   time: string;
+  inPast: boolean;
 }
 
 export interface TimetablePreviewDTO {
@@ -389,6 +396,7 @@ export interface TitelDTO extends IsValid {
 
 export interface UnterhaltungTypeDTO {
   type: UnterhaltungEntryType;
+  inPast: boolean;
   entries: UnterhaltungsEntryDTO[];
 }
 
@@ -396,7 +404,7 @@ export interface UnterhaltungsEntryDTO {
   type: UnterhaltungEntryType;
   date: DateAsString;
   start: DateAsString;
-  end?: DateAsString;
+  end: DateAsString;
   title: string;
   subtitle?: string;
   text?: string;
@@ -404,6 +412,7 @@ export interface UnterhaltungsEntryDTO {
   cloudflareId?: string;
   vereinIdentifier?: string;
   unterhaltungIdentifier?: string;
+  inPast: boolean;
 }
 
 export interface UpcomingVereinDTO {
@@ -465,6 +474,7 @@ export interface VereinPlayingDTO {
   started: boolean;
   ended: boolean;
   jury: string;
+  actualDurationInSeconds?: number;
   minutesOverrun?: number;
   bonus?: number;
 }

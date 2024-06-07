@@ -3,6 +3,8 @@ import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Modul, VereinPlayingDTO} from "../rest";
 import {formatDuration} from "../utils";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmPenaltyDialogComponent} from "../confirm-penalty-dialog/confirm-penalty-dialog.component";
 
 @Component({
   selector: 'app-helper',
@@ -16,13 +18,15 @@ export class HelperComponent implements OnInit {
 
   durationMinutes = 0;
   durationSeconds = 0;
+  under = false;
 
   loading = signal(false);
   saving = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving());
 
   constructor(private backendService: BackendService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -103,30 +107,42 @@ export class HelperComponent implements OnInit {
   }
 
   penalty() {
-    if (this.value && this.value.minutesOverrun) {
-      this.saving.set(true);
-      this.backendService.penalty(this.value.vereinProgrammId, this.value.minutesOverrun).subscribe({
-        next: () => {
-          this.snackBar.open('Speichern erfolgreich', undefined, {
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-            duration: 4000,
-            panelClass: 'success'
-          });
-          this.load();
-          this.saving.set(false);
-        },
-        error: () => {
-          this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-            duration: 4000,
-            panelClass: 'error'
-          });
-          this.saving.set(false);
-        }
-      });
+    if (this.value) {
+      if ((this.value.minutesOverrun ?? 0) > 0) {
+        this.dialog.open(ConfirmPenaltyDialogComponent).afterClosed().subscribe(decision => {
+          if (decision) {
+            this.doSavePenalty(this.value!);
+          }
+        });
+      } else {
+        this.doSavePenalty(this.value);
+      }
     }
+  }
+
+  private doSavePenalty(value: VereinPlayingDTO) {
+    this.saving.set(true);
+    this.backendService.penalty(value.vereinProgrammId, value.actualDurationInSeconds!, value.minutesOverrun!).subscribe({
+      next: () => {
+        this.snackBar.open('Speichern erfolgreich', undefined, {
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          duration: 4000,
+          panelClass: 'success'
+        });
+        this.load();
+        this.saving.set(false);
+      },
+      error: () => {
+        this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          duration: 4000,
+          panelClass: 'error'
+        });
+        this.saving.set(false);
+      }
+    });
   }
 
   bonus() {
@@ -172,12 +188,32 @@ export class HelperComponent implements OnInit {
   calculatePenalty() {
     if (this.value) {
       if (this.durationMinutes) {
-        const totalDurationInSeconds = (this.durationMinutes * 60) + this.durationSeconds;
+        this.value.actualDurationInSeconds = (this.durationMinutes * 60) + this.durationSeconds;
         if (this.value.minDurationInSeconds && this.value.maxDurationInSeconds) {
-          if (totalDurationInSeconds < this.value.minDurationInSeconds) {
-
+          if (this.value.actualDurationInSeconds < this.value.minDurationInSeconds) {
+            this.value.minutesOverrun = Math.ceil((this.value.minDurationInSeconds - this.value.actualDurationInSeconds) / 60);
+            this.under = true;
+          } else if (this.value.actualDurationInSeconds > this.value.maxDurationInSeconds) {
+            this.value.minutesOverrun = Math.ceil((this.value.actualDurationInSeconds - this.value.maxDurationInSeconds) / 60);
+            this.under = false;
+          } else {
+            this.value.minutesOverrun = 0;
+            this.under = false;
           }
         }
+      }
+    }
+  }
+
+  onValueChange(value?: VereinPlayingDTO) {
+    if (value) {
+      if (value.actualDurationInSeconds) {
+        this.durationMinutes = Math.floor(value.actualDurationInSeconds / 60);
+        this.durationSeconds = value.actualDurationInSeconds % 60;
+        this.under = value.actualDurationInSeconds < value.minDurationInSeconds!;
+      } else {
+       this.durationMinutes = 0;
+       this.durationSeconds = 0;
       }
     }
   }

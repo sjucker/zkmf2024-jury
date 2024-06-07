@@ -15,17 +15,22 @@
           <div class="ranking-list">
             @for (entry of list.entries; track entry) {
               <div>{{ entry.rank }}</div>
-              <div>{{ entry.vereinsName }}</div>
+              <div>
+                {{ entry.vereinsName }}
+                @if (entry.additionalInfo) {
+                  <br/><span class="additional-info">{{ entry.additionalInfo }}</span>
+                }
+              </div>
               <div>{{ entry.score | number: '1.2-2' }}</div>
             }
           </div>
-            <div>
-              @if (list.status !== RankingStatus.FINAL) {
+          <div>
+            @if (list.status !== RankingStatus.FINAL) {
               <button mat-flat-button color="primary" (click)="publish(list)">publizieren</button>
-              } @else {
-                Rangliste ist publiziert
-              }
-            </div>
+            } @else {
+              Rangliste ist publiziert
+            }
+          </div>
         </mat-expansion-panel>
       }
     </mat-accordion>

@@ -92,9 +92,10 @@ export class BackendService {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/ended/${timetableEntryId}`, {});
   }
 
-  public penalty(vereinProgrammId: number, minutesOverrun: number): Observable<void> {
+  public penalty(vereinProgrammId: number, actualDurationInSeconds: number, minutesOverrun: number): Observable<void> {
     const request: RankingPenaltyDTO = {
       vereinProgrammId: vereinProgrammId,
+      actualDurationInSeconds: actualDurationInSeconds,
       minutesOverrun: minutesOverrun,
     };
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/penalty`, request);

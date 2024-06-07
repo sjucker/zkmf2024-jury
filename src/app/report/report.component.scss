@@ -59,4 +59,8 @@ h4 {
     padding: variables.$padding-half;
     background-color: variables.$blau-quarter;
   }
+
+  .programm-info {
+    white-space: pre-line;
+  }
 }
