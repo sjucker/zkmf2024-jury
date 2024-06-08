@@ -255,6 +255,10 @@ export interface NichtmitgliederDTO {
   instrument?: string;
 }
 
+export interface PublicRankingDTO {
+  intermediate: boolean;
+}
+
 export interface RankingBonusDTO {
   vereinProgrammId: number;
   category: JudgeReportModulCategory;
@@ -281,10 +285,12 @@ export interface RankingListDTO {
   status: RankingStatus;
   entries: RankingListEntryDTO[];
   final: boolean;
+  notPending: boolean;
 }
 
 export interface RankingListEntryDTO {
   rank: number;
+  vereinIdentifier: string;
   vereinsName: string;
   score: number;
   additionalInfo?: string;
@@ -494,6 +500,7 @@ export interface VereinPresentationDTO {
   instagram?: string;
   websiteText?: string;
   timetableEntries: VereinTimetableEntryDTO[];
+  rankings: RankingListDTO[];
 }
 
 export interface VereinProgrammDTO extends IsValid {
@@ -1016,7 +1023,7 @@ export enum ModulDSelection {
 
 export enum RankingStatus {
   PENDING = "PENDING",
-  PROVISIONAL = "PROVISIONAL",
+  INTERMEDIATE = "INTERMEDIATE",
   FINAL = "FINAL",
 }
 

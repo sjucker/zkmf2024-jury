@@ -14,4 +14,10 @@
   .additional-info {
     font-size: 10px;
   }
+
+  .buttons-container {
+    display: flex;
+    gap: variables.$padding;
+    align-items: baseline;
+  }
 }

@@ -11,6 +11,7 @@ import {
   JudgeReportSummaryDTO,
   JudgeReportViewDTO,
   ModulDSelectionDTO,
+  PublicRankingDTO,
   RankingBonusDTO,
   RankingListDTO,
   RankingPenaltyDTO,
@@ -114,8 +115,10 @@ export class BackendService {
     return this.httpClient.get<RankingListDTO[]>(`${this.baseUrl}/secured/judge/ranking-list`);
   }
 
-  public publishRankingList(rankingId: number): Observable<void> {
-    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/ranking-list/${rankingId}`, {})
+  public publishRankingList(rankingId: number, intermediate: boolean): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/ranking-list/${rankingId}`, <PublicRankingDTO>{
+      intermediate: intermediate
+    });
   }
 
 }

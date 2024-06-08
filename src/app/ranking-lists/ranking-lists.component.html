@@ -24,11 +24,16 @@
               <div>{{ entry.score | number: '1.2-2' }}</div>
             }
           </div>
-          <div>
-            @if (list.status !== RankingStatus.FINAL) {
-              <button mat-flat-button color="primary" (click)="publish(list)">publizieren</button>
+          <div class="buttons-container">
+            @if (list.status === RankingStatus.FINAL) {
+              <div>Rangliste ist publiziert</div>
             } @else {
-              Rangliste ist publiziert
+              @if (list.status === RankingStatus.INTERMEDIATE) {
+                <div>Zwischenrangliste publiziert</div>
+              } @else {
+                <button mat-flat-button color="primary" (click)="publish(list, true)">Zwischenrangliste publizieren</button>
+              }
+              <button mat-flat-button color="primary" (click)="publish(list, false)">def. Rangliste publizieren</button>
             }
           </div>
         </mat-expansion-panel>

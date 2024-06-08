@@ -3,6 +3,7 @@ import {RankingListDTO, RankingStatus} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
+import {ConfirmPublishDialogComponent} from "../confirm-publish-dialog/confirm-publish-dialog.component";
 
 @Component({
   selector: 'app-ranking-lists',
@@ -40,9 +41,17 @@ export class RankingListsComponent implements OnInit {
     });
   }
 
-  publish(rankingList: RankingListDTO): void {
+  publish(rankingList: RankingListDTO, intermediate: boolean): void {
+    this.dialog.open(ConfirmPublishDialogComponent).afterClosed().subscribe(decision => {
+      if (decision) {
+        this.doPublish(rankingList, intermediate);
+      }
+    });
+  }
+
+  private doPublish(rankingList: RankingListDTO, intermediate: boolean) {
     this.saving.set(true);
-    this.backendService.publishRankingList(rankingList.id).subscribe({
+    this.backendService.publishRankingList(rankingList.id, intermediate).subscribe({
       next: () => {
         this.snackBar.open('Rangliste publiziert', undefined, {
           verticalPosition: 'top',

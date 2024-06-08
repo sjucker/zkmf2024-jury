@@ -45,6 +45,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {RankingListsComponent} from "./ranking-lists/ranking-lists.component";
 import {ScorePipe} from "./pipe/score.pipe";
 import {ConfirmPenaltyDialogComponent} from "./confirm-penalty-dialog/confirm-penalty-dialog.component";
+import {ConfirmPublishDialogComponent} from "./confirm-publish-dialog/confirm-publish-dialog.component";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {ConfirmPenaltyDialogComponent} from "./confirm-penalty-dialog/confirm-pe
     RankingListsComponent,
     ScorePipe,
     ConfirmPenaltyDialogComponent,
+    ConfirmPublishDialogComponent,
   ],
   imports: [
     BrowserModule,
