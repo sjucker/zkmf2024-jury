@@ -257,6 +257,7 @@ export interface NichtmitgliederDTO {
 
 export interface RankingBonusDTO {
   vereinProgrammId: number;
+  category: JudgeReportModulCategory;
   bonus: number;
 }
 
@@ -467,6 +468,7 @@ export interface VereinPlayingDTO {
   vereinProgrammId: number;
   vereinsname: string;
   modul: Modul;
+  categories: JudgeReportModulCategory[];
   startTime: DateAsString;
   endTime: DateAsString;
   minDurationInSeconds?: number;
@@ -476,7 +478,9 @@ export interface VereinPlayingDTO {
   jury: string;
   actualDurationInSeconds?: number;
   minutesOverrun?: number;
-  bonus?: number;
+  bonusKatA?: number;
+  bonusKatB?: number;
+  bonusKatC?: number;
 }
 
 export interface VereinPresentationDTO {

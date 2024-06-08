@@ -86,19 +86,57 @@
           @if (hasBonus) {
             <h2>Teilnehmerzuschlag</h2>
             <p>Jede Gruppe in den verschiedenen Kategorien erhält 0.1 Punkt pro Teilnehmer. Der maximale Beteiligungszuschlag beträgt 2.0 Punkte.</p>
-            <div>
-              <mat-form-field appearance="outline">
-                <mat-label>Teilnehmerzuschlag</mat-label>
-                <input type="number"
-                       autocomplete="off"
-                       matInput
-                       min="0"
-                       max="2"
-                       step="0.1"
-                       [(ngModel)]="value.bonus"/>
-              </mat-form-field>
-              <button color="primary" mat-flat-button [disabled]="((value.bonus ?? 0) > 2) || saving()" (click)="bonus()">Speichern</button>
-            </div>
+            @if (modulGKatA) {
+              <div class="bonus-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>Teilnehmerzuschlag Katgeorie A</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="0"
+                         max="2"
+                         step="0.1"
+                         [(ngModel)]="value.bonusKatA"/>
+                </mat-form-field>
+                <button color="primary" mat-flat-button [disabled]="((value.bonusKatA ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_A, value.bonusKatA!)">
+                  Speichern
+                </button>
+              </div>
+            }
+            @if (modulGKatB) {
+              <div class="bonus-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>Teilnehmerzuschlag Katgeorie B</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="0"
+                         max="2"
+                         step="0.1"
+                         [(ngModel)]="value.bonusKatB"/>
+                </mat-form-field>
+                <button color="primary" mat-flat-button [disabled]="((value.bonusKatB ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_B, value.bonusKatB!)">
+                  Speichern
+                </button>
+              </div>
+            }
+            @if (modulGKatC) {
+              <div class="bonus-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>Teilnehmerzuschlag Katgeorie C</mat-label>
+                  <input type="number"
+                         autocomplete="off"
+                         matInput
+                         min="0"
+                         max="2"
+                         step="0.1"
+                         [(ngModel)]="value.bonusKatC"/>
+                </mat-form-field>
+                <button color="primary" mat-flat-button [disabled]="((value.bonusKatC ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_C, value.bonusKatC!)">
+                  Speichern
+                </button>
+              </div>
+            }
           }
         }
       </mat-card-content>

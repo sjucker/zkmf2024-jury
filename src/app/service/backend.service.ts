@@ -101,9 +101,10 @@ export class BackendService {
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/penalty`, request);
   }
 
-  public bonus(vereinProgrammId: number, bonus: number): Observable<void> {
+  public bonus(vereinProgrammId: number, category: JudgeReportModulCategory, bonus: number): Observable<void> {
     const request: RankingBonusDTO = {
       vereinProgrammId: vereinProgrammId,
+      category: category,
       bonus: bonus,
     };
     return this.httpClient.post<void>(`${this.baseUrl}/secured/judge/helper/bonus`, request);
