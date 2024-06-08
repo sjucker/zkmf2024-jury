@@ -1,7 +1,7 @@
 import {Component, computed, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Modul, VereinPlayingDTO} from "../rest";
+import {JudgeReportModulCategory, Modul, VereinPlayingDTO} from "../rest";
 import {formatDuration} from "../utils";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmPenaltyDialogComponent} from "../confirm-penalty-dialog/confirm-penalty-dialog.component";
@@ -145,10 +145,10 @@ export class HelperComponent implements OnInit {
     });
   }
 
-  bonus() {
-    if (this.value && this.value.bonus) {
+  bonus(category: JudgeReportModulCategory, bonus: number) {
+    if (this.value) {
       this.saving.set(true);
-      this.backendService.bonus(this.value.vereinProgrammId, this.value.bonus).subscribe({
+      this.backendService.bonus(this.value.vereinProgrammId, category, bonus).subscribe({
         next: () => {
           this.snackBar.open('Speichern erfolgreich', undefined, {
             verticalPosition: 'top',
@@ -185,6 +185,18 @@ export class HelperComponent implements OnInit {
     return this.value?.modul === Modul.G;
   }
 
+  get modulGKatA(): boolean {
+    return this.value?.categories.includes(JudgeReportModulCategory.MODUL_G_KAT_A) ?? false;
+  }
+
+  get modulGKatB(): boolean {
+    return this.value?.categories.includes(JudgeReportModulCategory.MODUL_G_KAT_B) ?? false;
+  }
+
+  get modulGKatC(): boolean {
+    return this.value?.categories.includes(JudgeReportModulCategory.MODUL_G_KAT_C) ?? false;
+  }
+
   calculatePenalty() {
     if (this.value) {
       if (this.durationMinutes) {
@@ -212,9 +224,11 @@ export class HelperComponent implements OnInit {
         this.durationSeconds = value.actualDurationInSeconds % 60;
         this.under = value.actualDurationInSeconds < value.minDurationInSeconds!;
       } else {
-       this.durationMinutes = 0;
-       this.durationSeconds = 0;
+        this.durationMinutes = 0;
+        this.durationSeconds = 0;
       }
     }
   }
+
+  protected readonly JudgeReportModulCategory = JudgeReportModulCategory;
 }
