@@ -10,7 +10,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class MainComponent implements OnInit {
 
-  openReports: JudgeReportOverviewDTO[] = [];
+  newReports: JudgeReportOverviewDTO[] = [];
+  inProgressReports:  JudgeReportOverviewDTO[] = [];
   doneReports: JudgeReportOverviewDTO[] = [];
 
   notFound = signal(false);
@@ -35,8 +36,10 @@ export class MainComponent implements OnInit {
         for (const dto of response) {
           if (dto.status === JudgeReportStatus.DONE) {
             this.doneReports = [...this.doneReports, dto];
+          } else if (dto.status === JudgeReportStatus.IN_PROGRESS) {
+            this.inProgressReports = [...this.inProgressReports, dto];
           } else {
-            this.openReports = [...this.openReports, dto];
+            this.newReports = [...this.newReports, dto];
           }
         }
         this.loading.set(false);
