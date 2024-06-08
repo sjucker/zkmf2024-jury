@@ -7,7 +7,15 @@
   </div>
 
   <div class="max-width-container">
-    @for (report of openReports; track report.id) {
+    @for (report of newReports; track report.id) {
+      <app-report-card [report]="report"></app-report-card>
+    }
+
+    @if (inProgressReports.length > 0) {
+      <p>&nbsp;</p>
+      <h2>In Bearbeitung</h2>
+    }
+    @for (report of inProgressReports; track report.id) {
       <app-report-card [report]="report"></app-report-card>
     }
 

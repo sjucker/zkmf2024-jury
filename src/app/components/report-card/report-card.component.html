@@ -30,7 +30,7 @@
   </mat-card-content>
   <mat-card-actions class="actions">
     <button mat-flat-button color="primary" (click)="openReport()">
-      {{ isFinished() ? 'Ansehen' : 'Bearbeiten' }}
+      {{ isFinished() ? 'Ansehen' : (isInProgress() ? 'Bearbeiten' : 'Beginnen') }}
     </button>
     @if (isModulD()) {
       <button mat-stroked-button color="primary" (click)="openModulDSelection()">Komposition auswählen</button>

@@ -28,6 +28,10 @@ export class ReportCardComponent {
     });
   }
 
+  isInProgress(): boolean {
+    return this.report.status === JudgeReportStatus.IN_PROGRESS;
+  }
+
   isFinished() {
     return this.report.status === JudgeReportStatus.DONE;
   }
