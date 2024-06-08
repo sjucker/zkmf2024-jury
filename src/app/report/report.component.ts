@@ -136,7 +136,11 @@ export class ReportComponent implements OnInit {
         })
       })
       this.report.overallRatings.forEach(overallRating => {
-        total += overallRating.score ?? 0;
+        if (overallRating.category === JudgeReportCategory.GRUNDLAGE_1_ABZUG || overallRating.category === JudgeReportCategory.GRUNDLAGE_2_ABZUG) {
+          total -= overallRating.score ?? 0;
+        } else {
+          total += overallRating.score ?? 0;
+        }
       })
 
       this.report.score = total;
@@ -309,9 +313,29 @@ export class ReportComponent implements OnInit {
     };
   }
 
+  get grundlage1Abzug(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_1_ABZUG) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_1_ABZUG,
+      categoryDescription: '',
+      group: '',
+      ratingDescriptions: [],
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
   get grundlage2Rating(): JudgeReportRatingDTO {
     return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_2) ?? {
       category: JudgeReportCategory.GRUNDLAGE_2,
+      categoryDescription: '',
+      group: '',
+      ratingDescriptions: [],
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
+  get grundlage2Abzug(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_2_ABZUG) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_2_ABZUG,
       categoryDescription: '',
       group: '',
       ratingDescriptions: [],
