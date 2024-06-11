@@ -30,7 +30,8 @@
                 </div>
               }
               <div class="score-container overall"
-                   [ngClass]="{'done': summary.done}">
+                   [ngClass]="{'done': summary.done, 'clickable': summary.modul !== Modul.D}"
+                   (click)="openFeedback(summary)">
                 {{ summary.overallScore | number: '1.2-2' }}
               </div>
               @if (summary.penalty) {

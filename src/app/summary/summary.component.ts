@@ -3,7 +3,7 @@ import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO, Modul} fr
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
-import {VIEW_PATH} from "../app-routing.module";
+import {FEEDBACK_PATH, VIEW_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-summary',
@@ -79,6 +79,22 @@ export class SummaryComponent implements OnInit {
     this.router.navigate([VIEW_PATH, reportId]).catch(reason => {
       console.error(reason);
     });
+  }
+
+  openFeedback(summary: JudgeReportSummaryDTO) {
+    if (summary.modul === Modul.D) {
+      return;
+    }
+
+    if (summary.category) {
+      this.router.navigate([FEEDBACK_PATH, summary.programmId, summary.category]).catch(reason => {
+        console.error(reason);
+      });
+    } else {
+      this.router.navigate([FEEDBACK_PATH, summary.programmId]).catch(reason => {
+        console.error(reason);
+      });
+    }
   }
 
   get admin(): boolean {

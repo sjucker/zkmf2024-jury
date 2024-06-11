@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {
   ConfirmScoreDTO,
   JudgeRankingEntryDTO,
-  JudgeReportDTO,
+  JudgeReportDTO, JudgeReportFeedbackDTO,
   JudgeReportModulCategory,
   JudgeReportOverviewDTO,
   JudgeReportSummaryDTO,
@@ -38,6 +38,14 @@ export class BackendService {
 
   public view(reportId: number): Observable<JudgeReportViewDTO> {
     return this.httpClient.get<JudgeReportViewDTO>(`${this.baseUrl}/secured/judge/view/${reportId}`);
+  }
+
+  public feedback(programmId: number, category?: string): Observable<JudgeReportFeedbackDTO> {
+    let url = `${this.baseUrl}/secured/judge/feedback/${programmId}`;
+    if (category) {
+      url += `?category=${category}`;
+    }
+    return this.httpClient.get<JudgeReportFeedbackDTO>(url);
   }
 
   public update(report: JudgeReportDTO): Observable<JudgeReportDTO> {

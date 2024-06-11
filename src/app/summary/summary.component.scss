@@ -26,6 +26,10 @@
       border: 2px solid variables.$blau;
       cursor: auto;
 
+      &.clickable {
+        cursor: pointer;
+      }
+
       &.done {
         background-color: variables.$blau-half;
       }
