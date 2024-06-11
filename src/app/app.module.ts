@@ -46,6 +46,7 @@ import {RankingListsComponent} from "./ranking-lists/ranking-lists.component";
 import {ScorePipe} from "./pipe/score.pipe";
 import {ConfirmPenaltyDialogComponent} from "./confirm-penalty-dialog/confirm-penalty-dialog.component";
 import {ConfirmPublishDialogComponent} from "./confirm-publish-dialog/confirm-publish-dialog.component";
+import {ReportFeedbackComponent} from "./report-feedback/report-feedback.component";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {ConfirmPublishDialogComponent} from "./confirm-publish-dialog/confirm-pu
     ModulDComponent,
     RankingComponent,
     ReportViewComponent,
+    ReportFeedbackComponent,
     HelperComponent,
     RankingListsComponent,
     ScorePipe,

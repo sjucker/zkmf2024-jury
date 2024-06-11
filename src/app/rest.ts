@@ -106,6 +106,17 @@ export interface JudgeReportDTO {
   overallRatings: JudgeReportRatingDTO[];
 }
 
+export interface JudgeReportFeedbackDTO {
+  verein: string;
+  modul: Modul;
+  category?: JudgeReportModulCategory;
+  modulDescription: string;
+  scoreRange: string;
+  judge1: JudgeReportViewDTO;
+  judge2: JudgeReportViewDTO;
+  judge3: JudgeReportViewDTO;
+}
+
 export interface JudgeReportOverviewDTO {
   id: number;
   verein: string;
@@ -267,7 +278,7 @@ export interface RankingBonusDTO {
 
 export interface RankingDTO {
   modul: string;
-  score: number;
+  score?: number;
 }
 
 export interface RankingListDTO {
@@ -795,20 +806,6 @@ export interface UserDTO {
   email: string;
   role: UserRole;
   lastLogin?: DateAsString;
-}
-
-export interface VereinAssignmentDTO {
-  id: number;
-  name: string;
-  programme: VereinAssignmentProgrammDTO[];
-}
-
-export interface VereinAssignmentProgrammDTO {
-  id: number;
-  modul: Modul;
-  modulDescription: string;
-  klasse?: string;
-  besetzung?: string;
 }
 
 export interface VereinCommentCreateDTO {

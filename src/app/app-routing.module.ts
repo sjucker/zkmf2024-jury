@@ -9,12 +9,14 @@ import {ModulDComponent} from "./modul-d/modul-d.component";
 import {ReportViewComponent} from "./report-view/report-view.component";
 import {HelperComponent} from "./helper/helper.component";
 import {RankingListsComponent} from "./ranking-lists/ranking-lists.component";
+import {ReportFeedbackComponent} from "./report-feedback/report-feedback.component";
 
 export const LOGIN_PATH = 'login';
 export const REPORT_PATH = 'report';
 export const MODUL_D_PATH = 'modul-d';
 export const SUMMARY_PATH = 'summary';
 export const VIEW_PATH = 'view';
+export const FEEDBACK_PATH = 'feedback';
 export const HELPER_PATH = 'sekretariat';
 export const RANKINGLISTS_PATH = 'ranglisten';
 
@@ -35,6 +37,16 @@ const routes: Routes = [
   {
     path: `${VIEW_PATH}/:id`,
     component: ReportViewComponent,
+    canActivate: [canActivateFn],
+  },
+  {
+    path: `${FEEDBACK_PATH}/:id`,
+    component: ReportFeedbackComponent,
+    canActivate: [canActivateFn],
+  },
+  {
+    path: `${FEEDBACK_PATH}/:id/:category`,
+    component: ReportFeedbackComponent,
     canActivate: [canActivateFn],
   },
   {

@@ -1,0 +1,32 @@
+@use "../../variables";
+@import "../../responsive";
+
+.judges-grid {
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(4, fit-content(25%));
+
+  div {
+    padding: 4px 44px 4px 4px;
+  }
+}
+
+.very-negative,
+.negative {
+  color: variables.$rot;
+  font-weight: bold;
+}
+
+.very-positive,
+.positive {
+  color: variables.$gruen;
+  font-weight: bold;
+}
+
+.comment {
+  white-space: pre-wrap;
+}
+
+.odd {
+  background-color: variables.$silber;
+}
