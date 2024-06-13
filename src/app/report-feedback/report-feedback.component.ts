@@ -1,7 +1,8 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
-import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportFeedbackDTO, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO, Modul} from "../rest";
+import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportFeedbackDTO, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO} from "../rest";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-report-feedback',
@@ -15,6 +16,7 @@ export class ReportFeedbackComponent implements OnInit {
   loading = signal(false);
 
   constructor(private readonly route: ActivatedRoute,
+              public snackBar: MatSnackBar,
               private backendService: BackendService) {
   }
 
@@ -31,6 +33,12 @@ export class ReportFeedbackComponent implements OnInit {
         },
         error: err => {
           console.error(err);
+          this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: 'error'
+          });
           this.loading.set(false);
         }
       });
@@ -85,22 +93,6 @@ export class ReportFeedbackComponent implements OnInit {
       case JudgeReportCategoryRating.VERY_POSITIVE:
         return "very-positive";
     }
-  }
-
-  isModulG(): boolean {
-    return this.feedback?.modul === Modul.G;
-  }
-
-  isModulGKatA(): boolean {
-    return this.feedback?.category === JudgeReportModulCategory.MODUL_G_KAT_A;
-  }
-
-  isModulGKatB(): boolean {
-    return this.feedback?.category === JudgeReportModulCategory.MODUL_G_KAT_B;
-  }
-
-  isModulGKatC(): boolean {
-    return this.feedback?.category === JudgeReportModulCategory.MODUL_G_KAT_C;
   }
 
   getJudge2Titel(titelId: number): JudgeReportTitleDTO {
