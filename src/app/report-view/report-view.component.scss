@@ -24,3 +24,9 @@
 .comment {
   white-space: pre-wrap;
 }
+
+h3 {
+  padding-top: variables.$padding;
+  margin-bottom: 0;
+  color: variables.$gruen;
+}
