@@ -95,7 +95,7 @@
               <p class="comment"><b>Kurzbericht</b>:<br/>{{ title.comment ?? '-' }}</p>
               @for (group of getGroups(title); track group) {
                 @if (group.length > 0) {
-                  <h4>{{ group }}</h4>
+                  <h3>{{ group }}</h3>
                 }
                 @for (rating of getRatings(title, group); track rating) {
                   <div>
