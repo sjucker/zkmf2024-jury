@@ -82,7 +82,7 @@ export class SummaryComponent implements OnInit {
   }
 
   openFeedback(summary: JudgeReportSummaryDTO) {
-    if (summary.modul === Modul.D) {
+    if (summary.modul === Modul.D || summary.modul === Modul.G) {
       return;
     }
 
