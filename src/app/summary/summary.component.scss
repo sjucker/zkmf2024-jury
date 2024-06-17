@@ -39,6 +39,10 @@
       background-color: variables.$gruen-half;
     }
 
+    &.my-report {
+      border: 2px dotted variables.$gruen;
+    }
+
     &.penalty {
       border: 2px solid variables.$rot;
       background-color: variables.$rot-half;

@@ -20,9 +20,9 @@
               @for (score of summary.scores; track score) {
                 <div
                   class="score-container"
-                  [ngClass]="{'done': score.done}"
+                  [ngClass]="{'done': score.done, 'my-report': isMyReport(score) }"
                   [matTooltip]="getTooltip(score)"
-                  (click)="openReport(score.reportId)">
+                  (click)="openReport(score)">
                   {{ score.score | score: summary.modul }}
                   @if (score.ratingFixed) {
                     <mat-icon color="primary">check_small</mat-icon>
