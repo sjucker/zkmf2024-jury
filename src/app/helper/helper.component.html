@@ -27,11 +27,20 @@
               <b>Jury</b>: {{ value.jury }}
             }
           </p>
-          <p class="form-layout">
-            <button color="primary" mat-flat-button [disabled]="value.started || saving()" (click)="started()">Vortrag gestartet</button>
-            <button color="primary" mat-flat-button [disabled]="(!value.started || value.ended) || saving()" (click)="ended()">Vortrag beendet</button>
+
+          <p class="disclaimer">
+            Vortrag starten/beenden steuert nur die Anzeige auf den Screens: sobald mit der Anmoderation begonnen wird, soll "Vortrag starten" geklickt werden, damit die Vereinsspezifischen
+            Informationen auf dem Screen ersichtlich sind.
+            @if (hasZeitlimite) {
+              <br/>
+              <b>Wichtig</b>: dies dient <b>nicht</b> der Zeitnahme - die Dauer des Vortrages muss auf andere Art gemessen werden (z.B. Smartphone oder Stoppuhr).
+            }
           </p>
 
+          <p class="form-layout">
+            <button color="primary" mat-flat-button [disabled]="value.started || saving()" (click)="started()">Vortrag starten</button>
+            <button color="primary" mat-flat-button [disabled]="(!value.started || value.ended) || saving()" (click)="ended()">Vortrag beenden</button>
+          </p>
 
           @if (hasZeitlimite) {
             <h2>Zeitlimite</h2>
@@ -85,7 +94,10 @@
 
           @if (hasBonus) {
             <h2>Teilnehmerzuschlag</h2>
-            <p>Jede Gruppe in den verschiedenen Kategorien erhält 0.1 Punkt pro Teilnehmer. Der maximale Beteiligungszuschlag beträgt 2.0 Punkte.</p>
+            <p class="disclaimer">
+              Jede Gruppe in den verschiedenen Kategorien erhält <b>0.1 Punkt pro Teilnehmer</b>. Der maximale Beteiligungszuschlag beträgt <b>2.0 Punkte</b>.<br/>
+              Die musikalische Leitung (DirigentIn) zählt <b>nicht</b> dazu.
+            </p>
             @if (modulGKatA) {
               <div class="bonus-container">
                 <mat-form-field appearance="outline">
