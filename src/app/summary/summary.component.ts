@@ -3,7 +3,7 @@ import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO, Modul} fr
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
-import {FEEDBACK_PATH, VIEW_PATH} from "../app-routing.module";
+import {FEEDBACK_PATH, REPORT_PATH, VIEW_PATH} from "../app-routing.module";
 
 @Component({
   selector: 'app-summary',
@@ -75,10 +75,16 @@ export class SummaryComponent implements OnInit {
 
   protected readonly JudgeReportStatus = JudgeReportStatus;
 
-  openReport(reportId: number) {
-    this.router.navigate([VIEW_PATH, reportId]).catch(reason => {
-      console.error(reason);
-    });
+  openReport(score: JudgeReportScoreDTO) {
+    if (this.isMyReport(score)) {
+      this.router.navigate([REPORT_PATH, score.reportId]).catch(reason => {
+        console.error(reason);
+      });
+    } else {
+      this.router.navigate([VIEW_PATH, score.reportId]).catch(reason => {
+        console.error(reason);
+      });
+    }
   }
 
   openFeedback(summary: JudgeReportSummaryDTO) {
@@ -122,4 +128,8 @@ export class SummaryComponent implements OnInit {
   }
 
   protected readonly Modul = Modul;
+
+  isMyReport(score: JudgeReportScoreDTO) {
+    return score.judgeEmail === this.authenticationService.getUsername();
+  }
 }
