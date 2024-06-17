@@ -1,11 +1,11 @@
-import {Component, computed, HostListener, OnInit, signal} from '@angular/core';
+import {Component, computed, HostListener, OnDestroy, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportDTO, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportStatus, JudgeReportTitleDTO, Modul} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportFinishComponent} from "../report-finish/report-finish.component";
-import {Observable, of} from "rxjs";
+import {debounceTime, Observable, of, Subject, Subscription, switchMap} from "rxjs";
 import {PendingChangesDialogComponent} from "../pending-changes-dialog/pending-changes-dialog.component";
 import {formatDuration} from "../utils";
 
@@ -14,7 +14,7 @@ import {formatDuration} from "../utils";
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
 
   report?: JudgeReportDTO;
 
@@ -30,6 +30,9 @@ export class ReportComponent implements OnInit {
   ratingAverage = signal(0.5);
 
   errorMessage?: string;
+
+  reportChangedSubject = new Subject<void>()
+  reportChangedSubscription?: Subscription;
 
   constructor(private readonly route: ActivatedRoute,
               private backendService: BackendService,
@@ -57,6 +60,19 @@ export class ReportComponent implements OnInit {
         }
       });
     }
+
+    this.reportChangedSubscription = this.reportChangedSubject.pipe(
+      debounceTime(750),
+      switchMap(() => {
+        return new Observable(() => {
+          this.saveReport(this.report!, true)
+        })
+      })
+    ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.reportChangedSubscription?.unsubscribe();
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -70,27 +86,33 @@ export class ReportComponent implements OnInit {
     return !!(this.report?.minDurationInSeconds && this.report?.maxDurationInSeconds);
   }
 
-  saveReport(report: JudgeReportDTO): void {
-    this.saving.set(true);
+  saveReport(report: JudgeReportDTO, silent: boolean): void {
+    if (!silent) {
+      this.saving.set(true);
+    }
     this.backendService.update(report).subscribe({
       next: () => {
         this.saving.set(false);
         this.pendingChanges.set(false);
-        this.snackBar.open('Speichern war erfolgreich', undefined, {
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-          duration: 2000,
-          panelClass: 'success'
-        });
+        if (!silent) {
+          this.snackBar.open('Speichern war erfolgreich', undefined, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 2000,
+            panelClass: 'success'
+          });
+        }
       },
       error: () => {
         this.saving.set(false);
-        this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-          duration: 4000,
-          panelClass: 'error'
-        });
+        if (!silent) {
+          this.snackBar.open('Ein Fehler ist aufgetreten', undefined, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            duration: 4000,
+            panelClass: 'error'
+          });
+        }
       }
     });
   }
@@ -118,6 +140,7 @@ export class ReportComponent implements OnInit {
     this.calculateRatingAverage();
     this.calculateTotalScore();
     this.pendingChanges.set(true);
+    this.reportChangedSubject.next();
   }
 
   private calculateTotalScore(): void {
