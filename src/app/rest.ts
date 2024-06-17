@@ -27,7 +27,7 @@ export interface CoordinatesDTO {
 }
 
 export interface CurrentTimetablePreviewDTO {
-  current?: TimetablePreviewDTO;
+  current?: TimetableCurrentDTO;
   next?: TimetablePreviewDTO;
   sponsoren: SponsorDTO[];
   currentTime: DateAsString;
@@ -362,6 +362,14 @@ export interface SponsoringDTO {
   sponsor: SponsorDTO[];
   musikfan: SponsorDTO[];
   goenner: SponsorDTO[];
+}
+
+export interface TimetableCurrentDTO {
+  vereinsname: string;
+  direktion: string;
+  competition: string;
+  programmTitel: string;
+  titles: string[];
 }
 
 export interface TimetableDayOverviewDTO {
