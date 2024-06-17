@@ -178,7 +178,7 @@ export class HelperComponent implements OnInit {
   }
 
   get hasZeitlimite(): boolean {
-    return this.hasJury && this.value?.modul !== Modul.G;
+    return this.hasJury && (this.value?.modul === Modul.A || this.value?.modul === Modul.B || this.value?.modul === Modul.H);
   }
 
   get hasBonus(): boolean {
