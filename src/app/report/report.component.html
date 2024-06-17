@@ -258,7 +258,7 @@
               <app-action-button [processing]="saving()"
                                  [disabled]="!pendingChanges()"
                                  buttonLabel="Speichern"
-                                 (buttonClicked)="saveReport(report)"></app-action-button>
+                                 (buttonClicked)="saveReport(report, false)"></app-action-button>
               <app-action-button [processing]="finishing()"
                                  [disabled]="!canFinishModulG"
                                  buttonLabel="Abschliessen"
@@ -347,14 +347,6 @@
                     </div>
                   }
                 }
-                @if (!readOnly()) {
-                  <div class="action-container">
-                    <app-action-button [processing]="saving()"
-                                       [disabled]="!pendingChanges()"
-                                       buttonLabel="Speichern"
-                                       (buttonClicked)="saveReport(report)"></app-action-button>
-                  </div>
-                }
               </div>
             </mat-expansion-panel>
           }
@@ -369,14 +361,6 @@
                     <app-report-rating [rating]="rating"
                                        [readOnly]="readOnly()"
                                        (changed)="onChange()"></app-report-rating>
-                  </div>
-                }
-                @if (!readOnly()) {
-                  <div class="action-container">
-                    <app-action-button [processing]="saving()"
-                                       [disabled]="!pendingChanges()"
-                                       buttonLabel="Speichern"
-                                       (buttonClicked)="saveReport(report)"></app-action-button>
                   </div>
                 }
               </div>
@@ -428,7 +412,7 @@
                 <app-action-button [processing]="saving()"
                                    [disabled]="!pendingChanges()"
                                    buttonLabel="Speichern"
-                                   (buttonClicked)="saveReport(report)"></app-action-button>
+                                   (buttonClicked)="saveReport(report, false)"></app-action-button>
                 <app-action-button [processing]="finishing()"
                                    [disabled]="!canFinish"
                                    buttonLabel="Abschliessen"
