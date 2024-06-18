@@ -32,6 +32,7 @@ export interface CurrentTimetablePreviewDTO {
   sponsoren: SponsorDTO[];
   currentTime: DateAsString;
   emergencyMessage?: EmergencyMessageDTO;
+  screen?: ScreenDTO;
 }
 
 export interface DoppelEinsatzDTO {
@@ -109,12 +110,22 @@ export interface JudgeReportDTO {
 export interface JudgeReportFeedbackDTO {
   verein: string;
   modul: Modul;
-  category?: JudgeReportModulCategory;
   modulDescription: string;
+  category?: JudgeReportModulCategory;
+  score?: number;
   scoreRange: string;
+  penalty?: number;
+  bonus?: number;
   judge1: JudgeReportViewDTO;
   judge2: JudgeReportViewDTO;
   judge3: JudgeReportViewDTO;
+  judge4?: JudgeReportViewDTO;
+}
+
+export interface JudgeReportFeedbackSelectionDTO {
+  modul: Modul;
+  modulDescription: string;
+  category?: JudgeReportModulCategory;
 }
 
 export interface JudgeReportOverviewDTO {
@@ -192,6 +203,8 @@ export interface JudgeReportViewDTO {
   categoryDescription?: string;
   verein: string;
   score?: number;
+  penalty?: number;
+  bonus?: number;
   status: JudgeReportStatus;
   titles: JudgeReportTitleDTO[];
   overallRatings: JudgeReportRatingDTO[];
@@ -277,7 +290,8 @@ export interface RankingBonusDTO {
 }
 
 export interface RankingDTO {
-  modul: string;
+  modul: Modul;
+  modulDescription: string;
   score?: number;
 }
 
@@ -347,6 +361,13 @@ export interface ResetPasswordRequestDTO {
   email: string;
   token: string;
   newPassword: string;
+}
+
+export interface ScreenDTO {
+  locationIdentifier?: string;
+  header?: string;
+  message?: string;
+  cloudflareId?: string;
 }
 
 export interface SponsorDTO {
@@ -476,6 +497,7 @@ export interface VereinDTO {
   instrumentenDepot?: LocationDTO;
   instrumentenDepotParademusik?: LocationDTO;
   programmUpdated: boolean;
+  availableFeedbacks: JudgeReportFeedbackSelectionDTO[];
   phase1Status: PhaseStatus;
   phase2Status: PhaseStatus;
   phase4Status: PhaseStatus;
