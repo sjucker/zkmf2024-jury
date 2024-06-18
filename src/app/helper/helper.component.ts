@@ -41,6 +41,8 @@ export class HelperComponent implements OnInit {
         this.loading.set(false);
         if (this.value) {
           this.value = this.options.find(e => e.timetableEntryId === this.value?.timetableEntryId);
+          this.onValueChange(this.value);
+          this.calculatePenalty();
         }
       },
       error: err => {
