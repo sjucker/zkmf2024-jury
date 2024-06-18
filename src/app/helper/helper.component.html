@@ -110,7 +110,7 @@
                          step="0.1"
                          [(ngModel)]="value.bonusKatA"/>
                 </mat-form-field>
-                <button color="primary" mat-flat-button [disabled]="((value.bonusKatA ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_A, value.bonusKatA!)">
+                <button color="primary" mat-flat-button [disabled]="!value.bonusKatA || (value.bonusKatA > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_A, value.bonusKatA!)">
                   Speichern
                 </button>
               </div>
@@ -127,7 +127,7 @@
                          step="0.1"
                          [(ngModel)]="value.bonusKatB"/>
                 </mat-form-field>
-                <button color="primary" mat-flat-button [disabled]="((value.bonusKatB ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_B, value.bonusKatB!)">
+                <button color="primary" mat-flat-button [disabled]="!value.bonusKatB || (value.bonusKatB > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_B, value.bonusKatB!)">
                   Speichern
                 </button>
               </div>
@@ -144,7 +144,7 @@
                          step="0.1"
                          [(ngModel)]="value.bonusKatC"/>
                 </mat-form-field>
-                <button color="primary" mat-flat-button [disabled]="((value.bonusKatC ?? 0) > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_C, value.bonusKatC!)">
+                <button color="primary" mat-flat-button [disabled]="!value.bonusKatC || (value.bonusKatC > 2) || saving()" (click)="bonus(JudgeReportModulCategory.MODUL_G_KAT_C, value.bonusKatC!)">
                   Speichern
                 </button>
               </div>
