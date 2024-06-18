@@ -1,22 +1,14 @@
 @use "../../variables";
 @import "../../responsive";
 
-.very-negative {
+.very-negative,
+.negative {
   color: variables.$rot;
   font-weight: bold;
 }
 
-.negative {
-  color: variables.$rot-half;
-  font-weight: bold;
-}
-
+.very-positive,
 .positive {
-  color: variables.$gruen-half;
-  font-weight: bold;
-}
-
-.very-positive {
   color: variables.$gruen;
   font-weight: bold;
 }
