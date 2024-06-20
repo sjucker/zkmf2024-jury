@@ -241,11 +241,6 @@
                                 [min]="5"
                                 [max]="10"
                                 (changed)="onChange()"></app-report-score>
-              <app-report-score [rating]="katCTitel!.ratings[6]"
-                                [readOnly]="readOnly()"
-                                [min]="0"
-                                [max]="1"
-                                (changed)="onChange()"></app-report-score>
             </mat-expansion-panel>
           }
           <app-ranking [reportId]="report.id"></app-ranking>

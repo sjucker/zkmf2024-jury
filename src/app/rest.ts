@@ -426,6 +426,7 @@ export interface TimetablePreviewDTO {
   startTime: DateAsString;
   endTime: DateAsString;
   minutesUntilStart: number;
+  startDateTime?: DateAsString;
 }
 
 export interface TitelDTO extends IsValid {
@@ -1002,7 +1003,6 @@ export enum JudgeReportCategory {
   DYNAMIK_UND_AUSGEWOGENHEIT = "DYNAMIK_UND_AUSGEWOGENHEIT",
   STIMMUNG_KLANG_UND_WAHL_INSTRUMENTE = "STIMMUNG_KLANG_UND_WAHL_INSTRUMENTE",
   MUSIKALISCHE_UMSETZUNG_VISUELLE_SCHLEGEL_EFFEKTE = "MUSIKALISCHE_UMSETZUNG_VISUELLE_SCHLEGEL_EFFEKTE",
-  SCHWIERIGKEITSBONUS = "SCHWIERIGKEITSBONUS",
 }
 
 export enum JudgeReportCategoryRating {
