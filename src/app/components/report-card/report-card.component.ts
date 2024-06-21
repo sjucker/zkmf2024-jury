@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {JudgeReportOverviewDTO, JudgeReportStatus, Modul} from "../../rest";
-import {MODUL_D_PATH, REPORT_PATH} from "../../app-routing.module";
+import {REPORT_PATH} from "../../app-routing.module";
 import {Router} from "@angular/router";
 
 @Component({
@@ -18,12 +18,6 @@ export class ReportCardComponent {
 
   openReport(): void {
     this.router.navigate([REPORT_PATH, this.report.id]).catch(reason => {
-      console.error(reason);
-    });
-  }
-
-  openModulDSelection(): void {
-    this.router.navigate([MODUL_D_PATH]).catch(reason => {
       console.error(reason);
     });
   }

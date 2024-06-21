@@ -57,7 +57,7 @@ const routes: Routes = [
   {
     path: MODUL_D_PATH,
     component: ModulDComponent,
-    canActivate: [canActivateFn]
+    canActivate: [() => false]
   },
   {
     path: HELPER_PATH,
