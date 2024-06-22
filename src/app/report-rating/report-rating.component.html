@@ -21,7 +21,7 @@
            [required]="required"
            [disabled]="readOnly"
            [(ngModel)]="rating.comment"
-           maxlength="1024"
+           maxlength="4096"
            (ngModelChange)="onChange()"/>
   </mat-form-field>
   @if (rating.ratingDescriptions.length > 0) {
