@@ -32,8 +32,12 @@
         @if (isModulGKatA()) {
           <mat-card appearance="outlined">
             <mat-card-content>
-              <p><b>Grundlage I</b>: {{ grundlage1Rating.score ?? '-' }} Punkte</p>
-              <p><b>Grundlage II</b>: {{ grundlage2Rating.score ?? '-' }} Punkte</p>
+              <p><b>Grundlage I</b>: {{ grundlage1Rating.score ?? '-' }} Punkte<br/>
+                Abzug: {{ grundlage1Abzug.score ?? '-' }}
+              </p>
+              <p><b>Grundlage II</b>: {{ grundlage2Rating.score ?? '-' }} Punkte<br/>
+                Abzug: {{ grundlage2Abzug.score ?? '-' }}
+              </p>
               <p><b>Frei gewählter Baslermarsch (BM) oder Marsch (M)</b>
                 ({{ katATitel1?.titel?.titelName }}, {{ katATitel1?.titel?.composer }})<br/>
                 {{ katATitel1!.ratings[0].categoryDescription }}: {{ katATitel1!.ratings[0].score ?? '-' }} Punkte<br/>

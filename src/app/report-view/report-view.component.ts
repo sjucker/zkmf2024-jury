@@ -1,13 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {
-  JudgeReportCategory,
-  JudgeReportCategoryRating,
-  JudgeReportModulCategory,
-  JudgeReportRatingDTO,
-  JudgeReportTitleDTO,
-  JudgeReportViewDTO,
-  Modul
-} from "../rest";
+import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO, Modul} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {ActivatedRoute} from "@angular/router";
 
@@ -107,9 +99,29 @@ export class ReportViewComponent implements OnInit {
     };
   }
 
+  get grundlage1Abzug(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_1_ABZUG) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_1_ABZUG,
+      categoryDescription: '',
+      group: '',
+      ratingDescriptions: [],
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
   get grundlage2Rating(): JudgeReportRatingDTO {
     return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_2) ?? {
       category: JudgeReportCategory.GRUNDLAGE_2,
+      categoryDescription: '',
+      group: '',
+      ratingDescriptions: [],
+      rating: JudgeReportCategoryRating.NEUTRAL
+    };
+  }
+
+  get grundlage2Abzug(): JudgeReportRatingDTO {
+    return this.report?.overallRatings.find(dto => dto.category === JudgeReportCategory.GRUNDLAGE_2_ABZUG) ?? {
+      category: JudgeReportCategory.GRUNDLAGE_2_ABZUG,
       categoryDescription: '',
       group: '',
       ratingDescriptions: [],
