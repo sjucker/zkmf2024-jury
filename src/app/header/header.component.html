@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <img src="/assets/logo.png" class="header-logo" alt="ZKMF2024 Logo"/>
-  <span class="header-title">{{ header }}</span>
+  <span class="header-title">{{ header() }}</span>
   <span class="header-spacer"></span>
   @if (loggedIn) {
     <div class="username">

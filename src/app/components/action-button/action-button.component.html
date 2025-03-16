@@ -1,6 +1,6 @@
-<button [color]="color" mat-flat-button [disabled]="disabled || processing" (click)="buttonClicked.emit()">
-  <span>{{ buttonLabel }}</span>
-  @if (processing) {
+<button [color]="color()" mat-flat-button [disabled]="disabled() || processing()" (click)="buttonClicked.emit()">
+  <span>{{ buttonLabel() }}</span>
+  @if (processing()) {
     <mat-icon>
       <mat-spinner color="accent" diameter="16"></mat-spinner>
     </mat-icon>

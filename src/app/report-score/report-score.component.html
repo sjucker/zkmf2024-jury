@@ -1,14 +1,14 @@
 <div class="score-container">
   <div>{{ rating.categoryDescription }}</div>
   <mat-form-field appearance="outline">
-    <mat-label>min. {{ min }} Punkte, max. {{ max }} Punkte</mat-label>
+    <mat-label>min. {{ min() }} Punkte, max. {{ max() }} Punkte</mat-label>
     <input type="number"
            autocomplete="off"
            matInput
-           [min]="min"
-           [max]="max"
+           [min]="min()"
+           [max]="max()"
            step="0.1"
-           [disabled]="readOnly"
+           [disabled]="readOnly()"
            [(ngModel)]="rating.score"
            (ngModelChange)="onChange()"/>
   </mat-form-field>

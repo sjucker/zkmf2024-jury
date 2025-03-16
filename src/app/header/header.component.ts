@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {LOGIN_PATH, RANKINGLISTS_PATH, SUMMARY_PATH} from "../app-routing.module";
@@ -18,8 +18,7 @@ export class HeaderComponent {
   private authenticationService = inject(AuthenticationService);
 
 
-  @Input({required: true})
-  header = '';
+  readonly header = input.required<string>();
 
   get loggedIn(): boolean {
     return this.authenticationService.isLoggedIn()

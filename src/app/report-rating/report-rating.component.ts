@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {JudgeReportCategoryRating, JudgeReportRatingDTO} from "../rest";
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {FormsModule} from '@angular/forms';
@@ -24,8 +24,7 @@ export class ReportRatingComponent {
   @Input({required: true})
   rating!: JudgeReportRatingDTO;
 
-  @Input({required: true})
-  readOnly = false;
+  readonly readOnly = input.required<boolean>();
 
 
   @Output()
@@ -36,7 +35,7 @@ export class ReportRatingComponent {
   }
 
   get label(): string {
-    if (this.readOnly) {
+    if (this.readOnly()) {
       return '';
     }
 

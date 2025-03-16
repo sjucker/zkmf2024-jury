@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {JudgeReportRatingDTO} from "../rest";
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
@@ -15,14 +15,11 @@ export class ReportScoreComponent {
   @Input({required: true})
   rating!: JudgeReportRatingDTO;
 
-  @Input({required: true})
-  readOnly = false;
+  readonly readOnly = input.required<boolean>();
 
-  @Input({required: true})
-  min = 0;
+  readonly min = input.required<number>();
 
-  @Input({required: true})
-  max = 20;
+  readonly max = input.required<number>();
 
   @Output()
   changed = new EventEmitter<void>();
