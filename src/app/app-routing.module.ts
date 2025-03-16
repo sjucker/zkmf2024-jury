@@ -1,15 +1,9 @@
 import {inject, NgModule} from '@angular/core';
 import {CanActivateFn, RouterModule, Routes} from '@angular/router';
-import {MainComponent} from "./main/main.component";
+
 import {AuthenticationGuard} from "./service/authentication.guard";
-import {LoginComponent} from "./login/login.component";
 import {ReportComponent} from "./report/report.component";
-import {SummaryComponent} from "./summary/summary.component";
-import {ModulDComponent} from "./modul-d/modul-d.component";
-import {ReportViewComponent} from "./report-view/report-view.component";
-import {HelperComponent} from "./helper/helper.component";
-import {RankingListsComponent} from "./ranking-lists/ranking-lists.component";
-import {ReportFeedbackComponent} from "./report-feedback/report-feedback.component";
+
 
 export const LOGIN_PATH = 'login';
 export const REPORT_PATH = 'report';
@@ -25,53 +19,53 @@ const canActivateFn: CanActivateFn = () => inject(AuthenticationGuard).canActiva
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
+    loadComponent: () => import('./main/main.component').then(m => m.MainComponent),
     canActivate: [canActivateFn]
   },
   {
     path: `${REPORT_PATH}/:id`,
-    component: ReportComponent,
+    loadComponent: () => import('./report/report.component').then(m => m.ReportComponent),
     canActivate: [canActivateFn],
     canDeactivate: [(component: ReportComponent) => component.canDeactivate()]
   },
   {
     path: `${VIEW_PATH}/:id`,
-    component: ReportViewComponent,
+    loadComponent: () => import('./report-view/report-view.component').then(m => m.ReportViewComponent),
     canActivate: [canActivateFn],
   },
   {
     path: `${FEEDBACK_PATH}/:id`,
-    component: ReportFeedbackComponent,
+    loadComponent: () => import('./report-feedback/report-feedback.component').then(m => m.ReportFeedbackComponent),
     canActivate: [canActivateFn],
   },
   {
     path: `${FEEDBACK_PATH}/:id/:category`,
-    component: ReportFeedbackComponent,
+    loadComponent: () => import('./report-feedback/report-feedback.component').then(m => m.ReportFeedbackComponent),
     canActivate: [canActivateFn],
   },
   {
     path: SUMMARY_PATH,
-    component: SummaryComponent,
+    loadComponent: () => import('./summary/summary.component').then(m => m.SummaryComponent),
     canActivate: [canActivateFn]
   },
   {
     path: MODUL_D_PATH,
-    component: ModulDComponent,
+    loadComponent: () => import('./modul-d/modul-d.component').then(m => m.ModulDComponent),
     canActivate: [() => false]
   },
   {
     path: HELPER_PATH,
-    component: HelperComponent,
+    loadComponent: () => import('./helper/helper.component').then(m => m.HelperComponent),
     canActivate: [canActivateFn]
   },
   {
     path: RANKINGLISTS_PATH,
-    component: RankingListsComponent,
+    loadComponent: () => import('./ranking-lists/ranking-lists.component').then(m => m.RankingListsComponent),
     canActivate: [canActivateFn]
   },
   {
     path: LOGIN_PATH,
-    component: LoginComponent
+    loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
   },
 ];
 
