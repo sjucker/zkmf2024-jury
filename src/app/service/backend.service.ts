@@ -5,7 +5,8 @@ import {Observable} from "rxjs";
 import {
   ConfirmScoreDTO,
   JudgeRankingEntryDTO,
-  JudgeReportDTO, JudgeReportFeedbackDTO,
+  JudgeReportDTO,
+  JudgeReportFeedbackDTO,
   JudgeReportModulCategory,
   JudgeReportOverviewDTO,
   JudgeReportSummaryDTO,

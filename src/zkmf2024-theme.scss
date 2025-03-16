@@ -51,13 +51,13 @@ $zkmf2024-palette-accent: (
   )
 );
 
-$zkmf2024-primary: mat.define-palette($zkmf2024-palette, 500);
-$zkmf2024-accent: mat.define-palette($zkmf2024-palette-accent, 500);
-$zkmf2024-typography: mat.define-typography-config(
+$zkmf2024-primary: mat.m2-define-palette($zkmf2024-palette, 500);
+$zkmf2024-accent: mat.m2-define-palette($zkmf2024-palette-accent, 500);
+$zkmf2024-typography: mat.m2-define-typography-config(
   $font-family: 'Poppins',
 );
 
-$zkmf2024-theme: mat.define-light-theme((
+$zkmf2024-theme: mat.m2-define-light-theme((
   color: (
     primary: $zkmf2024-primary,
     accent: $zkmf2024-accent,

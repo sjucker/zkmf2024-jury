@@ -11,7 +11,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class MainComponent implements OnInit {
 
   newReports: JudgeReportOverviewDTO[] = [];
-  inProgressReports:  JudgeReportOverviewDTO[] = [];
+  inProgressReports: JudgeReportOverviewDTO[] = [];
   doneReports: JudgeReportOverviewDTO[] = [];
 
   notFound = signal(false);
