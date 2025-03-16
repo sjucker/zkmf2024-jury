@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {ThemePalette} from "@angular/material/core";
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -17,7 +17,6 @@ export class ActionButtonComponent {
   readonly disabled = input(false);
   readonly color = input<ThemePalette>('primary');
 
-  @Output()
-  buttonClicked = new EventEmitter<void>()
+  readonly buttonClicked = output<void>();
 
 }

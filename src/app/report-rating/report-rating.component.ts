@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, input, Output} from '@angular/core';
+import {Component, Input, input, output} from '@angular/core';
 import {JudgeReportCategoryRating, JudgeReportRatingDTO} from "../rest";
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {FormsModule} from '@angular/forms';
@@ -26,9 +26,7 @@ export class ReportRatingComponent {
 
   readonly readOnly = input.required<boolean>();
 
-
-  @Output()
-  changed = new EventEmitter<void>();
+  readonly changed = output<void>();
 
   onChange(): void {
     this.changed.emit();

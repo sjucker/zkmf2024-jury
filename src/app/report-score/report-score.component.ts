@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, input, Output} from '@angular/core';
+import {Component, Input, input, output} from '@angular/core';
 import {JudgeReportRatingDTO} from "../rest";
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
@@ -21,8 +21,7 @@ export class ReportScoreComponent {
 
   readonly max = input.required<number>();
 
-  @Output()
-  changed = new EventEmitter<void>();
+  readonly changed = output<void>();
 
   onChange(): void {
     this.changed.emit();
