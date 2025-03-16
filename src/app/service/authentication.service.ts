@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {LoginRequestDTO, LoginResponseDTO, UserRole} from "../rest";
 import {environment} from "../../environments/environment";
@@ -8,15 +8,14 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private readonly httpClient = inject(HttpClient);
+
 
   private readonly token = 'token';
   private readonly userId = 'user-id';
   private readonly role = 'role';
 
   private baseUrl = environment.baseUrl;
-
-  constructor(private readonly httpClient: HttpClient) {
-  }
 
   login(email: string, password: string): Observable<LoginResponseDTO> {
     const request: LoginRequestDTO = {

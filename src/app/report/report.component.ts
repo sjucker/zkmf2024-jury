@@ -1,4 +1,4 @@
-import {Component, computed, HostListener, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, computed, HostListener, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportDTO, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportStatus, JudgeReportTitleDTO, Modul} from "../rest";
@@ -29,6 +29,11 @@ import {ScorePipe} from '../pipe/score.pipe';
   imports: [HeaderComponent, MatProgressBar, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatFormField, MatLabel, FormsModule, MatInput, ReportScoreComponent, RankingComponent, ActionButtonComponent, CdkTextareaAutosize, ReportRatingComponent, NgClass, ScorePipe]
 })
 export class ReportComponent implements OnInit, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+  private backendService = inject(BackendService);
+  snackBar = inject(MatSnackBar);
+  dialog = inject(MatDialog);
+
 
   report?: JudgeReportDTO;
 
@@ -47,12 +52,6 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   reportChangedSubject = new Subject<void>()
   reportChangedSubscription?: Subscription;
-
-  constructor(private readonly route: ActivatedRoute,
-              private backendService: BackendService,
-              public snackBar: MatSnackBar,
-              public dialog: MatDialog) {
-  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

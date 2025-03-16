@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
@@ -17,6 +17,10 @@ import {DatePipe} from '@angular/common';
   imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatButtonToggleGroup, FormsModule, MatButtonToggle, DatePipe]
 })
 export class ModulDComponent implements OnInit {
+  private backendService = inject(BackendService);
+  snackBar = inject(MatSnackBar);
+  dialog = inject(MatDialog);
+
 
   titel1 = ModulDSelection.TITEL_1;
   titel2 = ModulDSelection.TITEL_2;
@@ -26,11 +30,6 @@ export class ModulDComponent implements OnInit {
   loading = signal(false);
   saving = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving());
-
-  constructor(private backendService: BackendService,
-              public snackBar: MatSnackBar,
-              public dialog: MatDialog) {
-  }
 
   ngOnInit(): void {
     this.loading.set(true);

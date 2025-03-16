@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO, Modul} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {ActivatedRoute} from "@angular/router";
@@ -15,13 +15,12 @@ import {ScorePipe} from '../pipe/score.pipe';
   imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, NgClass, ScorePipe]
 })
 export class ReportViewComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private backendService = inject(BackendService);
+
   report?: JudgeReportViewDTO;
 
   loading = signal(false);
-
-  constructor(private readonly route: ActivatedRoute,
-              private backendService: BackendService) {
-  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

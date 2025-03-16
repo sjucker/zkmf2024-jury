@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {LOGIN_PATH, RANKINGLISTS_PATH, SUMMARY_PATH} from "../app-routing.module";
@@ -14,13 +14,12 @@ import {MatTooltip} from '@angular/material/tooltip';
   imports: [MatToolbar, MatIcon, MatIconButton, MatTooltip]
 })
 export class HeaderComponent {
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
+
 
   @Input({required: true})
   header = '';
-
-  constructor(private router: Router,
-              private authenticationService: AuthenticationService) {
-  }
 
   get loggedIn(): boolean {
     return this.authenticationService.isLoggedIn()

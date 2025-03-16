@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
@@ -16,6 +16,10 @@ import {ActionButtonComponent} from '../components/action-button/action-button.c
   imports: [HeaderComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, ActionButtonComponent]
 })
 export class LoginComponent {
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
+
 
   authenticating = false;
   authenticationError = false;
@@ -24,11 +28,6 @@ export class LoginComponent {
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
-
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private authenticationService: AuthenticationService) {
-  }
 
   login(): void {
     if (this.loginForm.valid) {

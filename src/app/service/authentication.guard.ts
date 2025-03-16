@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Router, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from "./authentication.service";
@@ -8,10 +8,9 @@ import {LOGIN_PATH} from "../app-routing.module";
   providedIn: 'root'
 })
 export class AuthenticationGuard {
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
-  }
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authenticationService.isLoggedIn()) {

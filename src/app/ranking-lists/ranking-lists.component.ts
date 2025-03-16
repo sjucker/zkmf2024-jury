@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {RankingListDTO, RankingStatus} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -17,17 +17,16 @@ import {DecimalPipe} from '@angular/common';
   imports: [HeaderComponent, MatProgressBar, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatButton, DecimalPipe]
 })
 export class RankingListsComponent implements OnInit {
+  private backendService = inject(BackendService);
+  snackBar = inject(MatSnackBar);
+  dialog = inject(MatDialog);
+
 
   rankingLists: RankingListDTO[] = [];
 
   loading = signal(false);
   saving = signal(false);
   showProgressBar = computed(() => this.loading() || this.saving());
-
-  constructor(private backendService: BackendService,
-              public snackBar: MatSnackBar,
-              public dialog: MatDialog) {
-  }
 
   ngOnInit(): void {
     this.load();

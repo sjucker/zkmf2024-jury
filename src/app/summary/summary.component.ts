@@ -1,4 +1,4 @@
-import {Component, computed, Inject, LOCALE_ID, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, LOCALE_ID, OnInit, signal} from '@angular/core';
 import {JudgeReportScoreDTO, JudgeReportStatus, JudgeReportSummaryDTO, Modul} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
@@ -20,6 +20,11 @@ import {ScorePipe} from '../pipe/score.pipe';
   imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardContent, NgClass, MatTooltip, MatIcon, MatButton, DecimalPipe, ScorePipe]
 })
 export class SummaryComponent implements OnInit {
+  private backendService = inject(BackendService);
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
+  private locale = inject(LOCALE_ID);
+
 
   summaries = new Map<string, JudgeReportSummaryDTO[]>;
   categories: string[] = [];
@@ -27,12 +32,6 @@ export class SummaryComponent implements OnInit {
   loading = signal(false);
   confirming = signal(false);
   showProgressBar = computed(() => this.loading() || this.confirming());
-
-  constructor(private backendService: BackendService,
-              private authenticationService: AuthenticationService,
-              private router: Router,
-              @Inject(LOCALE_ID) private locale: string) {
-  }
 
   ngOnInit(): void {
     this.load();

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {JudgeReportOverviewDTO, JudgeReportStatus, Modul} from "../../rest";
 import {REPORT_PATH} from "../../app-routing.module";
 import {Router} from "@angular/router";
@@ -15,12 +15,11 @@ import {DatePipe} from '@angular/common';
   imports: [MatCard, MatCardHeader, MatCardSubtitle, MatCardTitle, MatIcon, MatCardContent, MatDivider, MatCardActions, MatButton, DatePipe]
 })
 export class ReportCardComponent {
+  private readonly router = inject(Router);
+
 
   @Input({required: true})
   report!: JudgeReportOverviewDTO;
-
-  constructor(private readonly router: Router) {
-  }
 
   openReport(): void {
     this.router.navigate([REPORT_PATH, this.report.id]).catch(reason => {

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, of, throwError} from 'rxjs';
 import {AuthenticationService} from "../service/authentication.service";
@@ -7,9 +7,9 @@ import {LOGIN_PATH} from "../app-routing.module";
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
-  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(this.addAuthToken(request)).pipe(

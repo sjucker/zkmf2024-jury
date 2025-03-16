@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportFeedbackDTO, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO} from "../rest";
@@ -15,15 +15,14 @@ import {NgClass} from '@angular/common';
   imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardContent, NgClass]
 })
 export class ReportFeedbackComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  snackBar = inject(MatSnackBar);
+  private backendService = inject(BackendService);
+
 
   feedback?: JudgeReportFeedbackDTO;
 
   loading = signal(false);
-
-  constructor(private readonly route: ActivatedRoute,
-              public snackBar: MatSnackBar,
-              private backendService: BackendService) {
-  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

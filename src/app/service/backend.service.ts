@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
@@ -23,11 +23,10 @@ import {
   providedIn: 'root'
 })
 export class BackendService {
+  private readonly httpClient = inject(HttpClient);
+
 
   private baseUrl = environment.baseUrl;
-
-  constructor(private readonly httpClient: HttpClient) {
-  }
 
   public getAll(): Observable<JudgeReportOverviewDTO[]> {
     return this.httpClient.get<JudgeReportOverviewDTO[]>(`${this.baseUrl}/secured/judge`);

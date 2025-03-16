@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {JudgeReportOverviewDTO, JudgeReportStatus} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -14,6 +14,8 @@ import {MatCard, MatCardContent} from '@angular/material/card';
   imports: [HeaderComponent, MatProgressBar, ReportCardComponent, MatCard, MatCardContent]
 })
 export class MainComponent implements OnInit {
+  private backendService = inject(BackendService);
+
 
   newReports: JudgeReportOverviewDTO[] = [];
   inProgressReports: JudgeReportOverviewDTO[] = [];
@@ -26,9 +28,6 @@ export class MainComponent implements OnInit {
   saving = signal(false);
 
   showProgressBar = computed(() => (this.loading() || this.saving()));
-
-  constructor(private backendService: BackendService) {
-  }
 
   ngOnInit(): void {
     this.load();

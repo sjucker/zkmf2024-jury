@@ -1,4 +1,4 @@
-import {Component, computed, Input, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, Input, OnInit, signal} from '@angular/core';
 import {JudgeRankingEntryDTO} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {MatSlideToggle} from '@angular/material/slide-toggle';
@@ -12,6 +12,8 @@ import {DecimalPipe} from '@angular/common';
   imports: [MatSlideToggle, FormsModule, DecimalPipe]
 })
 export class RankingComponent implements OnInit {
+  private backendService = inject(BackendService);
+
   @Input({required: true})
   reportId!: number;
 
@@ -23,9 +25,6 @@ export class RankingComponent implements OnInit {
   relevantRanking = computed(() => {
     return this.rankingOwnOnly() ? this.rankingOwn : this.ranking;
   });
-
-  constructor(private backendService: BackendService) {
-  }
 
   ngOnInit(): void {
     this.backendService.ranking(this.reportId).subscribe({
