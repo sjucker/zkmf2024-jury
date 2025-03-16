@@ -1,12 +1,15 @@
 import {Component, computed, Input, OnInit, signal} from '@angular/core';
 import {JudgeRankingEntryDTO} from "../rest";
 import {BackendService} from "../service/backend.service";
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {FormsModule} from '@angular/forms';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-ranking',
   templateUrl: './ranking.component.html',
   styleUrl: './ranking.component.scss',
-  standalone: false
+  imports: [MatSlideToggle, FormsModule, DecimalPipe]
 })
 export class RankingComponent implements OnInit {
   @Input({required: true})

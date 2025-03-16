@@ -3,12 +3,18 @@ import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ModulDSelection, ModulDSelectionDTO} from "../rest";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {FormsModule} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-modul-d',
   templateUrl: './modul-d.component.html',
   styleUrl: './modul-d.component.scss',
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatButtonToggleGroup, FormsModule, MatButtonToggle, DatePipe]
 })
 export class ModulDComponent implements OnInit {
 

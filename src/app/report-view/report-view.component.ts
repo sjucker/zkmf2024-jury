@@ -2,12 +2,17 @@ import {Component, OnInit, signal} from '@angular/core';
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportModulCategory, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO, Modul} from "../rest";
 import {BackendService} from "../service/backend.service";
 import {ActivatedRoute} from "@angular/router";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {NgClass} from '@angular/common';
+import {ScorePipe} from '../pipe/score.pipe';
 
 @Component({
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
   styleUrl: './report-view.component.scss',
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, NgClass, ScorePipe]
 })
 export class ReportViewComponent implements OnInit {
   report?: JudgeReportViewDTO;

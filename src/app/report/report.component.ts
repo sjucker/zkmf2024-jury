@@ -8,12 +8,25 @@ import {ReportFinishComponent} from "../report-finish/report-finish.component";
 import {debounceTime, Observable, of, Subject, Subscription, switchMap} from "rxjs";
 import {PendingChangesDialogComponent} from "../pending-changes-dialog/pending-changes-dialog.component";
 import {formatDuration} from "../utils";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
+import {ReportScoreComponent} from '../report-score/report-score.component';
+import {RankingComponent} from '../ranking/ranking.component';
+import {ActionButtonComponent} from '../components/action-button/action-button.component';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
+import {ReportRatingComponent} from '../report-rating/report-rating.component';
+import {NgClass} from '@angular/common';
+import {ScorePipe} from '../pipe/score.pipe';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatFormField, MatLabel, FormsModule, MatInput, ReportScoreComponent, RankingComponent, ActionButtonComponent, CdkTextareaAutosize, ReportRatingComponent, NgClass, ScorePipe]
 })
 export class ReportComponent implements OnInit, OnDestroy {
 

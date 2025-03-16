@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ThemePalette} from "@angular/material/core";
+import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-action-button',
   templateUrl: './action-button.component.html',
   styleUrls: ['./action-button.component.scss'],
-  standalone: false
+  imports: [MatButton, MatIcon, MatProgressSpinner]
 })
 export class ActionButtonComponent {
 

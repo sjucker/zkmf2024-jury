@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {JudgeReportRatingDTO} from "../rest";
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-report-score',
   templateUrl: './report-score.component.html',
   styleUrl: './report-score.component.scss',
-  standalone: false
+  imports: [MatFormField, MatLabel, FormsModule, MatInput]
 })
 export class ReportScoreComponent {
 

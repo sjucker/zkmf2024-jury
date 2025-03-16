@@ -5,12 +5,22 @@ import {JudgeReportModulCategory, Modul, VereinPlayingDTO} from "../rest";
 import {formatDuration} from "../utils";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmPenaltyDialogComponent} from "../confirm-penalty-dialog/confirm-penalty-dialog.component";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatSelect} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
+import {MatOption} from '@angular/material/core';
+import {MatButton} from '@angular/material/button';
+import {MatInput} from '@angular/material/input';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-helper',
   templateUrl: './helper.component.html',
   styleUrl: './helper.component.scss',
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatCard, MatCardContent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatButton, MatInput, DatePipe]
 })
 export class HelperComponent implements OnInit {
 

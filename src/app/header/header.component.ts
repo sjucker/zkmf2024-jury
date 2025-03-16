@@ -2,12 +2,16 @@ import {Component, Input} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {LOGIN_PATH, RANKINGLISTS_PATH, SUMMARY_PATH} from "../app-routing.module";
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: false
+  imports: [MatToolbar, MatIcon, MatIconButton, MatTooltip]
 })
 export class HeaderComponent {
 

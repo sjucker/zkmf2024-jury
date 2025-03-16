@@ -4,12 +4,20 @@ import {BackendService} from "../service/backend.service";
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {FEEDBACK_PATH, REPORT_PATH, VIEW_PATH} from "../app-routing.module";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {DecimalPipe, NgClass} from '@angular/common';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {ScorePipe} from '../pipe/score.pipe';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardContent, NgClass, MatTooltip, MatIcon, MatButton, DecimalPipe, ScorePipe]
 })
 export class SummaryComponent implements OnInit {
 

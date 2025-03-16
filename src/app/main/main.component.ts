@@ -2,12 +2,16 @@ import {Component, computed, OnInit, signal} from '@angular/core';
 import {BackendService} from "../service/backend.service";
 import {JudgeReportOverviewDTO, JudgeReportStatus} from "../rest";
 import {HttpErrorResponse} from "@angular/common/http";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {ReportCardComponent} from '../components/report-card/report-card.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, ReportCardComponent, MatCard, MatCardContent]
 })
 export class MainComponent implements OnInit {
 

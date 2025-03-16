@@ -3,12 +3,16 @@ import {ActivatedRoute} from "@angular/router";
 import {BackendService} from "../service/backend.service";
 import {JudgeReportCategory, JudgeReportCategoryRating, JudgeReportFeedbackDTO, JudgeReportRatingDTO, JudgeReportTitleDTO, JudgeReportViewDTO} from "../rest";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-report-feedback',
   templateUrl: './report-feedback.component.html',
   styleUrl: './report-feedback.component.scss',
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardContent, NgClass, NgIf]
 })
 export class ReportFeedbackComponent implements OnInit {
 

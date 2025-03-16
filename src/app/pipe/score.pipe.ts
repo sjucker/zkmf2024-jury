@@ -2,10 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {DecimalPipe} from "@angular/common";
 import {Modul} from "../rest";
 
-@Pipe({
-  name: 'score',
-  standalone: false
-})
+@Pipe({name: 'score'})
 export class ScorePipe implements PipeTransform {
 
   constructor(private decimalPipe: DecimalPipe) {

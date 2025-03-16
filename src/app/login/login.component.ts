@@ -1,14 +1,19 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {HELPER_PATH, SUMMARY_PATH} from "../app-routing.module";
+import {HeaderComponent} from '../header/header.component';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {ActionButtonComponent} from '../components/action-button/action-button.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: false
+  imports: [HeaderComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, ActionButtonComponent]
 })
 export class LoginComponent {
 

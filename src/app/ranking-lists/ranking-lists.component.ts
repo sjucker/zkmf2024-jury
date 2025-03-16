@@ -4,12 +4,17 @@ import {BackendService} from "../service/backend.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmPublishDialogComponent} from "../confirm-publish-dialog/confirm-publish-dialog.component";
+import {HeaderComponent} from '../header/header.component';
+import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
+import {MatButton} from '@angular/material/button';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-ranking-lists',
   templateUrl: './ranking-lists.component.html',
   styleUrl: './ranking-lists.component.scss',
-  standalone: false
+  imports: [HeaderComponent, MatProgressBar, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatButton, DecimalPipe]
 })
 export class RankingListsComponent implements OnInit {
 
