@@ -1,4 +1,4 @@
-import {Component, Input, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {JudgeReportCategoryRating, JudgeReportRatingDTO} from "../rest";
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {FormsModule} from '@angular/forms';
@@ -21,8 +21,7 @@ export class ReportRatingComponent {
   positive = JudgeReportCategoryRating.POSITIVE;
   veryPositive = JudgeReportCategoryRating.VERY_POSITIVE;
 
-  @Input({required: true})
-  rating!: JudgeReportRatingDTO;
+  readonly rating = input.required<JudgeReportRatingDTO>();
 
   readonly readOnly = input.required<boolean>();
 
@@ -45,11 +44,12 @@ export class ReportRatingComponent {
   }
 
   private isNegative() {
-    return this.rating.rating === this.negative || this.rating.rating === this.veryNegative;
+    const rating = this.rating();
+    return rating.rating === this.negative || rating.rating === this.veryNegative;
   }
 
   apply(description: string) {
-    this.rating.comment = description;
+    this.rating().comment = description;
     this.onChange();
   }
 }

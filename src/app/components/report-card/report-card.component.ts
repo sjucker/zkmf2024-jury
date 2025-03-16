@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {JudgeReportOverviewDTO, JudgeReportStatus, Modul} from "../../rest";
 import {REPORT_PATH} from "../../app-routing.module";
 import {Router} from "@angular/router";
@@ -18,24 +18,23 @@ export class ReportCardComponent {
   private readonly router = inject(Router);
 
 
-  @Input({required: true})
-  report!: JudgeReportOverviewDTO;
+  readonly report = input.required<JudgeReportOverviewDTO>();
 
   openReport(): void {
-    this.router.navigate([REPORT_PATH, this.report.id]).catch(reason => {
+    this.router.navigate([REPORT_PATH, this.report().id]).catch(reason => {
       console.error(reason);
     });
   }
 
   isInProgress(): boolean {
-    return this.report.status === JudgeReportStatus.IN_PROGRESS;
+    return this.report().status === JudgeReportStatus.IN_PROGRESS;
   }
 
   isFinished() {
-    return this.report.status === JudgeReportStatus.DONE;
+    return this.report().status === JudgeReportStatus.DONE;
   }
 
   isModulD() {
-    return this.report.modul == Modul.D;
+    return this.report().modul == Modul.D;
   }
 }

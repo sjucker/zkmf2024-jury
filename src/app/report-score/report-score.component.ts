@@ -1,4 +1,4 @@
-import {Component, Input, input, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {JudgeReportRatingDTO} from "../rest";
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
@@ -12,8 +12,7 @@ import {MatInput} from '@angular/material/input';
 })
 export class ReportScoreComponent {
 
-  @Input({required: true})
-  rating!: JudgeReportRatingDTO;
+  readonly rating = input.required<JudgeReportRatingDTO>();
 
   readonly readOnly = input.required<boolean>();
 

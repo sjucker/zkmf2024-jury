@@ -1,7 +1,7 @@
-<div><b>{{ rating.categoryDescription }}</b></div>
+<div><b>{{ rating().categoryDescription }}</b></div>
 <div class="rating-container">
   <div>
-    <mat-button-toggle-group [(ngModel)]="rating.rating"
+    <mat-button-toggle-group [(ngModel)]="rating().rating"
                              (ngModelChange)="onChange()"
                              [disabled]="readOnly()"
                              [hideSingleSelectionIndicator]="true">
@@ -20,16 +20,16 @@
            matInput
            [required]="required"
            [disabled]="readOnly()"
-           [(ngModel)]="rating.comment"
+           [(ngModel)]="rating().comment"
            maxlength="4096"
            (ngModelChange)="onChange()"/>
   </mat-form-field>
-  @if (rating.ratingDescriptions.length > 0) {
+  @if (rating().ratingDescriptions.length > 0) {
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>quickreply</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="rating-description-menu">
-      @for (description of rating.ratingDescriptions; track description) {
+      @for (description of rating().ratingDescriptions; track description) {
         <button mat-menu-item [class]="'rating-description-item-' + $index"
                 (click)="apply(description)">{{ description }}
         </button>
