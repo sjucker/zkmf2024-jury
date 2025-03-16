@@ -58,19 +58,23 @@
                       <span> ({{ rating.comment }})</span>
                     }
                   </div>
-                  <div *ngIf="getJudgeRating(getJudge2Titel(title.titel.id!), rating.category) as judge2Rating" [ngClass]="{'odd' : index % 2 === 1}">
-                    <span [ngClass]="getRatingClass(judge2Rating.rating)">{{ getRatingDescription(judge2Rating.rating) }}</span>
-                    @if (judge2Rating.comment) {
-                      <span> ({{ judge2Rating.comment }})</span>
-                    }
-                  </div>
+                  @if (getJudgeRating(getJudge2Titel(title.titel.id!), rating.category); as judge2Rating) {
+                    <div [ngClass]="{'odd' : index % 2 === 1}">
+                      <span [ngClass]="getRatingClass(judge2Rating.rating)">{{ getRatingDescription(judge2Rating.rating) }}</span>
+                      @if (judge2Rating.comment) {
+                        <span> ({{ judge2Rating.comment }})</span>
+                      }
+                    </div>
+                  }
 
-                  <div *ngIf="getJudgeRating(getJudge3Titel(title.titel.id!), rating.category) as judge3Rating" [ngClass]="{'odd' : index % 2 === 1}">
-                    <span [ngClass]="getRatingClass(judge3Rating.rating)">{{ getRatingDescription(judge3Rating.rating) }}</span>
-                    @if (judge3Rating.comment) {
-                      <span> ({{ judge3Rating.comment }})</span>
-                    }
-                  </div>
+                  @if (getJudgeRating(getJudge3Titel(title.titel.id!), rating.category); as judge3Rating) {
+                    <div [ngClass]="{'odd' : index % 2 === 1}">
+                      <span [ngClass]="getRatingClass(judge3Rating.rating)">{{ getRatingDescription(judge3Rating.rating) }}</span>
+                      @if (judge3Rating.comment) {
+                        <span> ({{ judge3Rating.comment }})</span>
+                      }
+                    </div>
+                  }
                 }
               }
             </div>
@@ -99,19 +103,23 @@
                   }
                 </div>
 
-                <div *ngIf="getJudge2OverallRating(rating.category) as judge2OverallRating" [ngClass]="{'odd' : index % 2 === 1}">
-                  <span [ngClass]="getRatingClass(judge2OverallRating.rating)">{{ getRatingDescription(judge2OverallRating.rating) }}</span>
-                  @if (judge2OverallRating.comment) {
-                    <span> ({{ judge2OverallRating.comment }})</span>
-                  }
-                </div>
+                @if (getJudge2OverallRating(rating.category); as judge2OverallRating) {
+                  <div [ngClass]="{'odd' : index % 2 === 1}">
+                    <span [ngClass]="getRatingClass(judge2OverallRating.rating)">{{ getRatingDescription(judge2OverallRating.rating) }}</span>
+                    @if (judge2OverallRating.comment) {
+                      <span> ({{ judge2OverallRating.comment }})</span>
+                    }
+                  </div>
+                }
 
-                <div *ngIf="getJudge3OverallRating(rating.category) as judge3OverallRating" [ngClass]="{'odd' : index % 2 === 1}">
-                  <span [ngClass]="getRatingClass(judge3OverallRating.rating)">{{ getRatingDescription(judge3OverallRating.rating) }}</span>
-                  @if (judge3OverallRating.comment) {
-                    <span> ({{ judge3OverallRating.comment }})</span>
-                  }
-                </div>
+                @if (getJudge3OverallRating(rating.category); as judge3OverallRating) {
+                  <div [ngClass]="{'odd' : index % 2 === 1}">
+                    <span [ngClass]="getRatingClass(judge3OverallRating.rating)">{{ getRatingDescription(judge3OverallRating.rating) }}</span>
+                    @if (judge3OverallRating.comment) {
+                      <span> ({{ judge3OverallRating.comment }})</span>
+                    }
+                  </div>
+                }
               }
             </div>
           </mat-card-content>
