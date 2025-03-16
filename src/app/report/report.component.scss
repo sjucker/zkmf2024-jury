@@ -1,5 +1,5 @@
 @use "../../variables";
-@import "../../responsive";
+@use "../../responsive";
 
 .error-msg {
   color: variables.$rot
@@ -32,7 +32,7 @@ h4 {
     }
   }
 
-  @include responsive('lt-md') {
+  @include responsive.responsive('lt-md') {
     .overall-rating-container {
       flex-direction: column;
       gap: 0;

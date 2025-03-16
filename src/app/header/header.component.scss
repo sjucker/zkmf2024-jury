@@ -1,5 +1,5 @@
 @use "../../variables";
-@import "../../responsive";
+@use "../../responsive";
 
 .header-logo {
   max-height: 80%;
@@ -15,7 +15,7 @@
   text-overflow: ellipsis;
 }
 
-@include responsive('lt-sm') {
+@include responsive.responsive('lt-sm') {
   .header-logo {
     display: none;
   }

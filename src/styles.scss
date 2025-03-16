@@ -1,14 +1,14 @@
 @use "@angular/material" as mat;
 @use "variables";
-@import "@angular/cdk/overlay-prebuilt.css";
-@import "src/zkmf2024-theme";
-@import "responsive";
+@use "@angular/cdk/overlay-prebuilt.css";
+@use "src/zkmf2024-theme";
+@use "responsive";
 
 @include mat.all-component-typographies();
 @include mat.elevation-classes();
 @include mat.app-background();
 
-@include mat.all-component-themes($zkmf2024-theme);
+@include mat.all-component-themes(zkmf2024-theme.$zkmf2024-theme);
 
 html, body {
   height: 100%;
@@ -63,7 +63,7 @@ mat-form-field {
   }
 }
 
-@include responsive('lt-sm') {
+@include responsive.responsive('lt-sm') {
   .form-layout {
     flex-direction: column;
     gap: 0;
@@ -88,17 +88,17 @@ mat-form-field {
 .show-gt-sm {
   display: none;
 
-  @include responsive('gt-sm') {
+  @include responsive.responsive('gt-sm') {
     display: inherit;
   }
 }
 
 .hide-gt-sm {
-  @include responsive('gt-sm') {
+  @include responsive.responsive('gt-sm') {
     display: none;
   }
 }
 
 .max-width-container {
-  max-width: $max-width;
+  max-width: responsive.$max-width;
 }
