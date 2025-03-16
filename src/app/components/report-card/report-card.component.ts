@@ -6,7 +6,8 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-report-card',
   templateUrl: './report-card.component.html',
-  styleUrl: './report-card.component.scss'
+  styleUrl: './report-card.component.scss',
+  standalone: false
 })
 export class ReportCardComponent {
 

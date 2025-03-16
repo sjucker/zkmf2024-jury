@@ -4,7 +4,8 @@ import {ThemePalette} from "@angular/material/core";
 @Component({
   selector: 'app-action-button',
   templateUrl: './action-button.component.html',
-  styleUrls: ['./action-button.component.scss']
+  styleUrls: ['./action-button.component.scss'],
+  standalone: false
 })
 export class ActionButtonComponent {
 

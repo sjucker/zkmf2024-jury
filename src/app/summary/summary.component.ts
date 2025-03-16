@@ -8,7 +8,8 @@ import {FEEDBACK_PATH, REPORT_PATH, VIEW_PATH} from "../app-routing.module";
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss']
+  styleUrls: ['./summary.component.scss'],
+  standalone: false
 })
 export class SummaryComponent implements OnInit {
 

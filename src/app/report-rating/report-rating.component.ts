@@ -4,7 +4,8 @@ import {JudgeReportCategoryRating, JudgeReportRatingDTO} from "../rest";
 @Component({
   selector: 'app-report-rating',
   templateUrl: './report-rating.component.html',
-  styleUrls: ['./report-rating.component.scss']
+  styleUrls: ['./report-rating.component.scss'],
+  standalone: false
 })
 export class ReportRatingComponent {
   veryNegative = JudgeReportCategoryRating.VERY_NEGATIVE;

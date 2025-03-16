@@ -4,7 +4,8 @@ import {JudgeReportRatingDTO} from "../rest";
 @Component({
   selector: 'app-report-score',
   templateUrl: './report-score.component.html',
-  styleUrl: './report-score.component.scss'
+  styleUrl: './report-score.component.scss',
+  standalone: false
 })
 export class ReportScoreComponent {
 

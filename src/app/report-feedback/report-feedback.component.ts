@@ -7,7 +7,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
   selector: 'app-report-feedback',
   templateUrl: './report-feedback.component.html',
-  styleUrl: './report-feedback.component.scss'
+  styleUrl: './report-feedback.component.scss',
+  standalone: false
 })
 export class ReportFeedbackComponent implements OnInit {
 

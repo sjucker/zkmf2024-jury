@@ -7,7 +7,8 @@ import {ModulDSelection, ModulDSelectionDTO} from "../rest";
 @Component({
   selector: 'app-modul-d',
   templateUrl: './modul-d.component.html',
-  styleUrl: './modul-d.component.scss'
+  styleUrl: './modul-d.component.scss',
+  standalone: false
 })
 export class ModulDComponent implements OnInit {
 

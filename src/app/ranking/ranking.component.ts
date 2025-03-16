@@ -5,7 +5,8 @@ import {BackendService} from "../service/backend.service";
 @Component({
   selector: 'app-ranking',
   templateUrl: './ranking.component.html',
-  styleUrl: './ranking.component.scss'
+  styleUrl: './ranking.component.scss',
+  standalone: false
 })
 export class RankingComponent implements OnInit {
   @Input({required: true})

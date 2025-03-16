@@ -4,6 +4,7 @@ import {Modul} from "../rest";
 
 @Pipe({
   name: 'score',
+  standalone: false
 })
 export class ScorePipe implements PipeTransform {
 

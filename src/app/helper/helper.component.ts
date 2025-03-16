@@ -9,7 +9,8 @@ import {ConfirmPenaltyDialogComponent} from "../confirm-penalty-dialog/confirm-p
 @Component({
   selector: 'app-helper',
   templateUrl: './helper.component.html',
-  styleUrl: './helper.component.scss'
+  styleUrl: './helper.component.scss',
+  standalone: false
 })
 export class HelperComponent implements OnInit {
 

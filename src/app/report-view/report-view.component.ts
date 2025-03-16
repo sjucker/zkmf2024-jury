@@ -6,7 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
-  styleUrl: './report-view.component.scss'
+  styleUrl: './report-view.component.scss',
+  standalone: false
 })
 export class ReportViewComponent implements OnInit {
   report?: JudgeReportViewDTO;

@@ -8,7 +8,8 @@ import {ConfirmPublishDialogComponent} from "../confirm-publish-dialog/confirm-p
 @Component({
   selector: 'app-ranking-lists',
   templateUrl: './ranking-lists.component.html',
-  styleUrl: './ranking-lists.component.scss'
+  styleUrl: './ranking-lists.component.scss',
+  standalone: false
 })
 export class RankingListsComponent implements OnInit {
 
